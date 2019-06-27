@@ -1,5 +1,6 @@
+from rest_framework.decorators import api_view, permission_classes
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -12,6 +13,26 @@ import logging
 import json
 from django.contrib import auth
 from django.http import JsonResponse
+from django.forms.models import model_to_dict
+
+class UniViewSet(viewsets.ModelViewSet):
+    queryset = University.objects.all()
+    serializer_class = UniSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    @action(detail=True, methods=['post'])
+    def getuseruni(self, request):
+        logging.error(University.objects.get(enrollment__user=request.user))
+        serializer = UniSerializer()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(http_method_names=['GET'])
+@permission_classes([IsAuthenticated])
+def getuseruni(request):
+    logging.error(request.user)
+    university = University.objects.get(enrollment__user=request.user)
+    serializer = UniSerializer(university)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
@@ -56,10 +77,6 @@ class PostViewSet(viewsets.ModelViewSet):
 
     # def destroy(self, request, pk=None):
     #     pass
-
-class UniViewSet(viewsets.ModelViewSet):
-    queryset = University.objects.all()
-    serializer_class = UniSerializer
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()

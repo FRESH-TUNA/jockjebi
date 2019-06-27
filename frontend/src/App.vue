@@ -5,7 +5,6 @@
     </component> -->
     <!-- <router-view></router-view> -->
 </template>
-
 <script>
     import vueBaseLayout from './layouts/VuebaseLayout'
 

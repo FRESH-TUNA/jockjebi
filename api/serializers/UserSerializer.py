@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from api.models import University
+from django.contrib.auth.models import User
 
 class UniSerializer(serializers.ModelSerializer):
     class Meta:
-        model = University
-        fields = ('title',)
+        model = User
+        fields = 'Username'
