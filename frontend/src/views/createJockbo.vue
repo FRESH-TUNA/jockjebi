@@ -26,6 +26,10 @@
                      <label style="padding-right:20px;font-size:1.5em"for="male">분류</label>
                      <input style="width:100px;height:25px;"type="text" v-model="category">
                 </span>
+                <span>
+                     <label style="padding-left:20px;font-size:1.5em"for="male">대학교</label>
+                     <input style="width:100px;height:25px;"type="text" v-model="category">
+                </span>
             </div>
             <div style="padding: 20px 20px 20px 20px">
                 <label style="padding-right:20px;font-size:1.5em" for="male">파일</label>
