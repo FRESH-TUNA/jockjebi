@@ -5,7 +5,7 @@
             </div>
             <div style="font-size:3em;padding-bottom:20px;color:white">쉽고 빠르게 시험 대비하기</div>
             <div id="hello"
-                 style="border-radius: 0.5em;box-shadow: 0 10px 5px #c2bfbe;background-color:white;height:200px; width:500px;display: inline-block;">
+                 style="border-radius: 0.5em;box-shadow: 0 10px 5px #292f64;background-color:white;height:200px; width:500px;display: inline-block;">
                 <div class="input-field">
                     <div style="padding-bottom: 20px">
                         <div style="padding-bottom:10px;float:left;font-size:24px;"><b>숙명여자대학교 시각영상디자인전공</b></div>
