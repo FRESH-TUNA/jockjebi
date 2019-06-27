@@ -2,7 +2,7 @@
     <div>
         <v-toolbar
                 dense
-                color="primary"
+                color="#CDCAC9"
                 dark
                 extended
                 extension-height="300"
