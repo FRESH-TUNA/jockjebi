@@ -9,27 +9,28 @@
                 flat
         >
             <v-toolbar-title class="mx-auto" slot="extension">
-                <span>Welcome to Vuebase</span>
-                <h2>Everything starts here.</h2>
-                <v-layout row>
-                    <v-flex wrap>
-                        <v-btn outline large fab color="white" class="outine-2">
-                            <i class="fab fa-vuejs fa-3x"></i>
-                        </v-btn>
-                    </v-flex>
-                    <v-flex wrap>
-                        <v-btn outline large fab color="white" class="outine-2">
-                            <i class="fab fa-node fa-3x"></i>
-                        </v-btn>
-                    </v-flex>
-                    <v-flex wrap>
-                        <v-btn outline large fab color="white" class="outine-2">
-                            <i class="fab fa-laravel fa-2x"></i>
-                        </v-btn>
-                    </v-flex>
-                </v-layout>
+
+                <h2 style="text-align:center">족보마켓</h2>
+                <router-view class="view one"></router-view>
+
+                <div :class="{'searching--closed': !searching}" class="searching">
+                    <v-text-field
+                            id="search"
+                            v-model="search"
+                            append-icon="close"
+                            @click:append="searchEnd"
+                            label="Search"
+                            hide-details
+                            single-line
+                            color="white"
+                            @blur="onBlur"
+                    ></v-text-field>
+                </div>
+
             </v-toolbar-title>
         </v-toolbar>
+
+        <router-link :to="hello">hello</router-link>
 
         <v-container>
             <v-layout row>
@@ -110,6 +111,23 @@
                         color: 'purple'
                     }
                 ]
+            }
+        },
+        methods: {
+            onBlur() {
+                this.searching = false
+                this.search = ''
+            },
+
+            searchBegin() {
+                this.searching = true
+                setTimeout(() => document.querySelector('#search').focus(), 50)
+            },
+
+            searchEnd() {
+                this.searching = false
+                this.search = ''
+                document.querySelector('#search').blur()
             }
         }
     }
