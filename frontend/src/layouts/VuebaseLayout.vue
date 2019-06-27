@@ -12,8 +12,9 @@
                     width="960"
             >
                 <v-spacer></v-spacer>
+                <img style="height:40px;padding-right:15px;"src="../assets/favicon.png">
                 <div class="v-toolbar-title">
-                    <router-link to="/"><h2 style="color:#d8d8d8;text-decoration:none">Jokjebi</h2></router-link>
+                    <router-link to="/"><h2 style="color:#989898;text-decoration:none">Jokjebi</h2></router-link>
                 </div>
                 <v-spacer></v-spacer>
                     <div class="hideit" style="padding-right:40px">
@@ -223,7 +224,7 @@
             getUserScrapedData() {
                 axios({
                     method: 'post',
-                    url: 'http://127.0.0.1:8000/api/post/scrap', 
+                    url: 'http://127.0.0.1:8000/api/post/scrap',
                     headers: {
                         authorization: this.$store.state.jwt,
                     },
