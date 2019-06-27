@@ -1,8 +1,8 @@
 {
   "name": "Jokjebi",
   "version": "1.2.0",
-  "description": "Vuebase, a Firebase-like theme",
-  "author": "Nasirou Wagana <wnasirou@gmail.com>",
+  "description": "족보공유 플랫폼!",
+  "author": "족보마켓 - openhack 28조",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
