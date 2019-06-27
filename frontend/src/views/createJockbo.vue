@@ -74,11 +74,11 @@ export default {
             bodyFormData.append('university', 1);
             bodyFormData.append('explain', this.explain);
             bodyFormData.append('file', this.file);
-            
+
             console.log(this.$store.state.jwt)
             axios({
                 method: 'post',
-                url: 'http://127.0.0.1:8000/api/post', 
+                url: 'http://127.0.0.1:8000/api/post',
                 data: bodyFormData,
                 headers: {
                     authorization: this.$store.state.jwt,
@@ -124,11 +124,11 @@ export default {
         -moz-border-radius: 5px;
         border-radius: 5px;
     }
-    @media screen and (max-width: 1000px) {
-        input {
-            background: black;
-        }
-    }
+    /*@media screen and (max-width: 1000px) {*/
+    /*    input {*/
+    /*        background: black;*/
+    /*    }*/
+    /*}*/
 
     #wrapper {
         padding-top:10px;

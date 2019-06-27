@@ -1,11 +1,11 @@
 <template>
     <div id="wrapper">
         <div style="background-color:#fefefe">
-            <div style="padding-left:110px">
-                <div style="display: flex;">
-                    <img src="https://skkujokbo.com/download/5d10e796e9e85546035e7d45/preview/0"
-                         style="padding: 40px 20px 20px 20px;width:240px; height:320px;border-radius: 30px; ">
-                    <span style="padding: 40px 20px 20px 20px">
+        <div style="padding-left:110px">
+            <div style="display: flex;">
+                <img src="https://skkujokbo.com/download/5d10e796e9e85546035e7d45/preview/0"
+                     style="padding: 40px 20px 20px 20px;width:240px; height:320px;border-radius: 30px; ">
+                <span style="padding: 40px 20px 20px 20px">
                 <div style="font-size:17px;">2018년도 1학기</div>
                 <div style="display: flex;">
                     <span style="padding-right:5px;font-size:25px;"><b>시각영상디자인원론</b></span>
@@ -32,42 +32,41 @@
                     </div>
                 </div>
             </span>
-                </div>
             </div>
-            <div>
-                <div style="padding-left:20px">
-                    <div style="padding-bottom:20px;color:#6c60f5;font-size:18px;"><b>업로더의 코멘트</b></div>
 
-                    <div>2019~~</div>
-                    <div style="padding-top:10px;">
-                    <div style="padding-top:50px;background-color:#fefefe;">
-                        <div style="font-size:18px; color:#6c60f5"><b>댓글(18)</b></div>
-                        <br/>
-                        <div><b>우울한 아르마딜로</b></div>
-                        <br/>
-                        <div><b>배고픈 호랑이</b></div>
-                        <br/>
-                        <div><b>방탕한 고슴토치</b></div>
-                        <br/>
-                        <div style="font-size:18px; color:#6c60f5"><b>의견 남기기</b></div>
-                        <div style="display: flex;">
-                            <div style="border-style:solid;width:900px;">
-                                <star-rating :max="5"
-                                             :star-size="20"
-                                             :rounded-corners="true"
-                                             :fixed-points="3"
-                                             :show-rating="false"
-                                             style="inline"
-                                ></star-rating>
-                                <textarea rows="4" cols="50">
+            <div style="padding-left:20px">
+                <div style="padding-bottom:20px;color:#6c60f5;font-size:18px;"><b>업로더의 코멘트</b></div>
+
+                <div>2019~~</div>
+
+                <div style="padding-top:50px;">
+                    <div style="font-size:18px; color:#6c60f5"><b>댓글(18)</b></div>
+                    <br/>
+                    <div><b>우울한 아르마딜로</b></div>
+                    <br/>
+                    <div><b>배고픈 호랑이</b></div>
+                    <br/>
+                    <div><b>방탕한 고슴도치</b></div>
+                    <br/>
+                    <div style="font-size:18px; color:#6c60f5"><b>의견 남기기</b></div>
+                    <div style="display: flex;">
+                        <div style="border-style:solid;width:900px;">
+                            <star-rating :max="5"
+                                         :star-size="20"
+                                         :rounded-corners="true"
+                                         :fixed-points="3"
+                                         :show-rating="false"
+                                         style="inline"
+                            ></star-rating>
+                            <textarea rows="4" cols="50">
 At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
 </textarea>
-                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
+
+        </div>
         </div>
     </div>
 
@@ -86,7 +85,7 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
 
 <style scoped>
     #wrapper {
-        padding-top: 10px;
+        padding-top:10px;
         width: 960px;
         margin: 0 auto;
         /*border-style:solid;*/
