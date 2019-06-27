@@ -1,5 +1,6 @@
 <template>
     <div id="wrapper">
+        <div style="background-color: #fefefe;height:100vh;">
         <div style="padding-up:50px;padding-left:110px">
             <div style="padding: 20px 20px 20px 20px"><span  style="font-size:1.5em"><b>족보 업로드</b></span><span style="padding-right:450px;"></span><span style="text-align:left;font-size:1.5em">업로드가 처음이세요?</span></div><br/>
             <div style="padding: 20px 20px 5px 20px">
@@ -40,6 +41,7 @@
         <div style="text-align:center">
             <button style="background:#e0e0e0;border-color:#bababa;width:200px;height:35px" @click="createJockbo">submit</button>
         </div>
+        </div>
     </div>
 
 </template>
@@ -72,19 +74,31 @@ export default {
             bodyFormData.append('university', 1);
             bodyFormData.append('explain', this.explain);
             bodyFormData.append('file', this.file);
-
+            
+            console.log(this.$store.state.jwt)
             axios({
                 method: 'post',
-                url: 'http://127.0.0.1:8000/api/post',
+                url: 'http://127.0.0.1:8000/api/post', 
                 data: bodyFormData,
-                config: { headers: {'Content-Type': 'multipart/form-data' }}
-                })
-                .then(function (response) {
-                    console.log(response.data);
-                })
-                .catch(function (response) {
-                    console.log(response);
-                });
+                headers: {
+                    authorization: this.$store.state.jwt,
+                    'Content-Type': 'multipart/form-data'
+                },
+            }).then((response) => {console.log(response.data)})
+
+
+            // axios({
+            //     method: 'post',
+            //     url: 'http://127.0.0.1:8000/api/post',
+            //     data: bodyFormData,
+            //     config: { headers: {'Content-Type': 'multipart/form-data' }}
+            //     })
+            //     .then(function (response) {
+            //         console.log(response.data);
+            //     })
+            //     .catch(function (response) {
+            //         console.log(response);
+            //     });
         }
     }
 }
@@ -117,6 +131,7 @@ export default {
     }
 
     #wrapper {
+        padding-top:10px;
         width: 960px;
         margin: 0 auto;
         /*border-style:solid;*/
