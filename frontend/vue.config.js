@@ -1,12 +1,12 @@
 module.exports = {
-    publicPath: '/static/',
+    publicPath: '/',
     outputDir: '../static',
 
-    pages: {
-        index :{
-            entry: 'src/main.js',
-            template: 'public/index.html',
-            filename: 'index.html'
-        }
-    }
+    // pages: {
+    //     index :{
+    //         entry: 'src/main.js',
+    //         template: 'public/index.html',
+    //         filename: 'index.html'
+    //     }
+    // }
 }

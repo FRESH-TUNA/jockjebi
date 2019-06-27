@@ -1,23 +1,25 @@
 <template>
-    <component :is="component">
+    <vue-base-layout></vue-base-layout>
+    <!-- <component :is="component">
         <slot/>
-    </component>
+    </component> -->
+    <!-- <router-view></router-view> -->
 </template>
 
 <script>
-    import VuebaseLayout from './layouts/VuebaseLayout'
+    import vueBaseLayout from './layouts/VuebaseLayout'
 
     export default {
         name: 'App',
 
         components: {
-            VuebaseLayout
+            vueBaseLayout
         },
 
-        computed: {
-            component() {
-                return VuebaseLayout
-            }
-        }
+        // computed: {
+        //     component() {
+        //         return VuebaseLayout
+        //     }
+        // }
     }
 </script>

@@ -1,37 +1,5 @@
 <template>
     <div>
-<!--        <v-toolbar-->
-<!--                dense-->
-<!--                color="#CDCAC9"-->
-<!--                dark-->
-<!--                extended-->
-<!--                extension-height="300"-->
-<!--                flat-->
-<!--        >-->
-<!--            <v-toolbar-title class="mx-auto" slot="extension">-->
-
-<!--                <h2 style="text-align:center">족보마켓</h2>-->
-<!--                <router-view class="view one"></router-view>-->
-
-<!--                <input type="text" class="form-control" placeholder="할일을 입력하세요">-->
-
-<!--                <div :class="{'searching&#45;&#45;closed': !searching}" class="searching">-->
-<!--                    <v-text-field-->
-<!--                            id="search"-->
-<!--                            v-model="search"-->
-<!--                            append-icon="close"-->
-<!--                            @click:append="searchEnd"-->
-<!--                            label="Search"-->
-<!--                            hide-details-->
-<!--                            single-line-->
-<!--                            color="white"-->
-<!--                            @blur="onBlur"-->
-<!--                    ></v-text-field>-->
-<!--                </div>-->
-
-<!--            </v-toolbar-title>-->
-<!--        </v-toolbar>-->
-<!--        <div style="height:70px"></div>-->
         <div style="height:530px;text-align:center;background-image: URL(https://img.freepik.com/free-vector/blue-abstract-acrylic-brush-stroke-textured-background_53876-86373.jpg?size=626&ext=jpg);background-size: cover">
             <div style="font-size:3em;padding-top:80px">클릭 한 번으로!</div>
             <div style="font-size:3em;padding-bottom:20px">쉽고 빠르게 시험 대비하기</div>
@@ -52,7 +20,7 @@
                             </v-layout>
                             <v-layout row wrap>
 
-                                <v-flex xs12 sm6 md6 lg4 v-for="item in links" :key="item.id">
+                                <v-flex xs12 sm6 md6 lg4 v-for="item in dummy" :key="item.id">
                                     <v-hover>
                                         {{item.year}}
                                         <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 2}`">
@@ -146,7 +114,7 @@
             }
         },
         mounted() {
-            axios({ method: "GET", "url": "http://demo2166682.mockable.io/testtest" }).then(result => {
+            axios({ method: "GET", "url": "http://127.0.0.1:8000/api/post" }).then(result => {
                 this.dummy = result.data;
                 console.log(this.dummy);
             }, error => {
@@ -177,6 +145,7 @@
                 this.searching = false
                 this.search = ''
                 document.querySelector('#search').blur()
+                this.$router.push('/hello')
             }
         }
     }
