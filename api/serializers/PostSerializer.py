@@ -10,4 +10,4 @@ class PostSerializer(serializers.ModelSerializer):
 class PostListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        exclude = ('file',)
+        fields = '__all__'

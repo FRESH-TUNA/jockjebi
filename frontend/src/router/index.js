@@ -10,11 +10,15 @@ const routes = [
         component: () => import('../views/Home')
     },
     {
-        path: '/hello',
-        name: 'hello',
-        componenet: () => import('../views/hello')
+        path: '/jockbolist',
+        name: 'jockbolist',
+        component: () => import('../views/jockboList')
     },
-
+    {
+        path: '/createjockbo',
+        name: 'createJockbo',
+        component: () => import('../views/createJockbo')
+    },
     {
         path: '/dashboard',
         name: 'dashboard',
