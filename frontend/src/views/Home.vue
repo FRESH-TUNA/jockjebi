@@ -11,13 +11,13 @@
             <v-toolbar-title class="mx-auto" slot="extension">
 
                 <h2 style="text-align:center">족보마켓</h2>
-                <router-view class="view one"></router-view>
+                <!-- <router-view class="view one"></router-view> -->
 
                 <div :class="{'searching--closed': !searching}" class="searching">
                     <v-text-field
                             id="search"
                             v-model="search"
-                            append-icon="close"
+                            append-icon="search"
                             @click:append="searchEnd"
                             label="Search"
                             hide-details
@@ -128,6 +128,7 @@
                 this.searching = false
                 this.search = ''
                 document.querySelector('#search').blur()
+                this.$router.push('/hello')
             }
         }
     }

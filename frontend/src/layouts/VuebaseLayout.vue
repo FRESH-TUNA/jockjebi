@@ -11,7 +11,7 @@
                 <v-toolbar-title
                         class="tertiary--text font-weight-light"
                 >
-                   Jockbo.io
+                    Jockbo
                 </v-toolbar-title>
             </div>
 

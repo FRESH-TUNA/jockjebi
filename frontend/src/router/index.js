@@ -12,7 +12,7 @@ const routes = [
     {
         path: '/hello',
         name: 'hello',
-        componenet: () => import('../views/hello')
+        component: () => import('../views/hello')
     },
     {
         path: '/dashboard',
