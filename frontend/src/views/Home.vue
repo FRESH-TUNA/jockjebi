@@ -31,8 +31,11 @@
 
 <!--            </v-toolbar-title>-->
 <!--        </v-toolbar>-->
-        <div style="height:500px;text-align:center">
-            <div style="outline-style:solid;height:150px; width:200px;display: inline-block;"></div>
+<!--        <div style="height:70px"></div>-->
+        <div style="height:530px;text-align:center;background-image: URL(https://img.freepik.com/free-vector/blue-abstract-acrylic-brush-stroke-textured-background_53876-86373.jpg?size=626&ext=jpg);background-size: cover">
+            <div style="font-size:3em;padding-top:80px">클릭 한 번으로!</div>
+            <div style="font-size:3em;padding-bottom:20px">쉽고 빠르게 시험 대비하기</div>
+            <div style="border-radius: 0.5em;box-shadow: 0 10px 5px #c2bfbe;background-color:white;height:200px; width:500px;display: inline-block;"></div>
         </div>
 
         <router-link to="/hello">hello</router-link>
