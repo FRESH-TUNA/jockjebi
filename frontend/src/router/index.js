@@ -14,6 +14,7 @@ const routes = [
         name: 'hello',
         componenet: () => import('../views/hello')
     },
+
     {
         path: '/dashboard',
         name: 'dashboard',
