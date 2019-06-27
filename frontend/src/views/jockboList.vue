@@ -47,14 +47,13 @@
         margin-right: auto;
 
         height: 50px;
-        width: 500px;
+        width: 800px;
 
-        background-color: aqua;
+        background-color: rgb(200, 200, 200)
     }
     .jockboList-body {
         padding-top: 10px;
         width: 800px;
-        border: 1px solid black;
 
         display: flex;
         justify-content: space-between;
@@ -70,7 +69,7 @@
         width: 590px;
         height: 500px;
         overflow: scroll;
-        background-color:antiquewhite;
+        background-color: rgb(200, 200, 200)
     }
     .jockbo {
         width: 580px;
@@ -79,7 +78,7 @@
         border: 1px solid black;
     }
 
-    @media screen and (max-width: 700px){
+    @media screen and (max-width: 750px){
         .jockboList {
             border: 1px solid black;
 
@@ -95,9 +94,7 @@
         .jockboBundle {
             width: 100%;
             height: auto;
-        }
 
-        .jockboList-body {
             display: flex;
             flex-flow: column;
             justify-content: center;

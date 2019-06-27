@@ -13,15 +13,7 @@
         >
             <v-spacer></v-spacer>
             <div class="v-toolbar-title">
-<<<<<<< HEAD
-                <v-toolbar-title
-                        class="tertiary--text font-weight-light"
-                >
-                    Jockbo
-                </v-toolbar-title>
-=======
                 <h2 style="color:#b0b0b0">족보.io</h2>
->>>>>>> 897673f315b5ac59a7cd608041754deeb81f5426
             </div>
 
             <v-toolbar-side-icon
