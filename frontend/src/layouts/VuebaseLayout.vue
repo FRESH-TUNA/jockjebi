@@ -18,15 +18,17 @@
                 </div>
                 <v-spacer></v-spacer>
                     <div class="hideit" style="padding-right:40px">
-                        <router-link to="/jockbolist"><h2 style="color:#7d7d7d;font-size:15px"><b>스크랩한 족보</b></h2>
-                        </router-link>
+                        <!-- <router-link to="/jockbolist"><h2 style="color:#7d7d7d;font-size:15px"><b>스크랩한 족보</b></h2>
+                        </router-link> -->
+                        <a @click="getUserScrapedData"><h2 style="color:#7d7d7d;font-size:15px"><b>스크랩한 족보</b></h2>
+                        </a>
                     </div>
 
                     <div class="hideit" style="padding-right:70px">
                         <router-link to="/createjockbo"><h2 style="color:#7d7d7d;font-size:15px"><b>족보 업로드</b></h2>
                         </router-link>
                 </div>
-                <div style="  border-left: 1px solid #e5e5e5; height: 70px;"></div>
+                <div style="border-left: 1px solid #e5e5e5; height: 70px;"></div>
                 <div style="padding-left:20px;padding-right:40px">
 
                     <v-tooltip bottom>
@@ -56,7 +58,7 @@
                     <v-menu offset-y>
                         <v-btn icon slot="activator">
                             <v-avatar class="white" size="32">
-                                <h2 style="color:#796ef6;font-size:15px">졸린토끼▾</h2>
+                                <h2 style="color:#796ef6;font-size:15px">{{loginname}}</h2>
                             </v-avatar>
                         </v-btn>
                         <v-list class="pa-0" light>
@@ -67,8 +69,8 @@
                                     </v-avatar>
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
-                                    <v-list-tile-title>졸린토끼</v-list-tile-title>
-                                    <v-list-tile-sub-title>숙명여자대학교</v-list-tile-sub-title>
+                                    <v-list-tile-title>{{userstate}}</v-list-tile-title>
+                                    <v-list-tile-sub-title>{{useruni}}</v-list-tile-sub-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                             <v-divider></v-divider>
@@ -86,7 +88,7 @@
                                     <v-icon>lock_open</v-icon>
                                 </v-list-tile-action>
                                 <v-list-tile-content @click="changeAuthModalState">
-                                    <v-list-tile-title>Logout</v-list-tile-title>
+                                    <v-list-tile-title>{{loginState}}</v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                         </v-list>
@@ -104,6 +106,7 @@
             <div class="auth-modal-body" @click="blockPropagate">
                 <label for="male">아이디</label>
                 <input type="text" v-model="username">
+                <label for="male"></label>
                 <label for="male">비밀번호</label>
                 <input type="password" v-model="password">
                 <button class="login-button" @click="login">로그인</button>
@@ -121,8 +124,11 @@
                 appName: process.env.VUE_APP_APP_NAME,
                 drawer: true,
                 fixed: false,
-                username: '',
+                useruni: '',
+                userstate: '계정',
+                loginname: '로그인',
                 password: '',
+                loginState: '로그인',
                 analyticsItems: [
                     {
                         icon: 'dashboard',
@@ -212,7 +218,15 @@
             },
 
             changeAuthModalState() {
-                this.$store.commit('changeAuthModalState');
+                if(this.loginState !== '로그아웃')
+                    this.$store.commit('changeAuthModalState');
+                else {
+                    this.$store.commit('removeToken')
+                    this.loginState = '로그인'
+                    this.loginname = '로그인'
+                    this.userstate = '계정'
+                    this.useruni = ''
+                }
             },
             closeAuthModal(event) {
                 if (this.$store.state.authModalState === true)
@@ -228,11 +242,21 @@
                     headers: {
                         authorization: this.$store.state.jwt,
                     },
-                }).then((response) => {console.log(response.data)})
+                }).then((response) => {
+                    this.$store.state.jockboList=response.data;
+                    this.$router.push('/jockbolist');
+                })
             },
             login() {
-                this.$store.dispatch('obtainToken', {username:this.username, password:this.password});
-            }
+                this.$store.dispatch('obtainToken', {username:this.username, password:this.password}).then(() => {
+                    this.password=''
+                    this.loginState = '로그아웃'
+                    this.closeAuthModal()
+                    this.loginname = this.$store.state.username
+                    this.userstate = this.$store.state.username
+                    this.$store.dispatch('findUserUni').then(() => {this.useruni = this.$store.state.useruni})
+                })
+            },
         }
     }
 </script>
@@ -348,3 +372,4 @@
         background-color: white;
     }
 </style>
+
