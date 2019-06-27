@@ -30,7 +30,8 @@
             </v-toolbar-title>
         </v-toolbar>
 
-        <router-link :to="hello">hello</router-link>
+        <router-link to="/hello">hello</router-link>
+
 
         <v-container>
             <v-layout row>
@@ -85,6 +86,13 @@
     export default {
         data() {
             return {
+                id: '1',
+                subject: 'Dashboard',
+                professor: 'Get detailed anlytics to measure and analyze how users engage with your app',
+                year: 'orange',
+                semester: '2019',
+                category: '전필',
+                file : 'aaaa.png',
                 links: [
                     {
                         id: '1',
@@ -109,11 +117,28 @@
                         title: 'Authentification',
                         description: 'Authenticate and manage users from a variety of providers without server-side-code',
                         color: 'purple'
-                    }
+                    },
+
                 ]
             }
         },
+        mounted() {
+            axios({ method: "GET", "url": "https://httpbin.org/ip" }).then(result => {
+                this.ip = result.data.origin;
+            }, error => {
+                console.error(error);
+            });
+        },
+
         methods: {
+            sendData() {
+                axios({ method: "POST", "url": "https://httpbin.org/post", "data": this.input, "headers": { "content-type": "application/json" } }).then(result => {
+                    this.response = result.data;
+                }, error => {
+                    console.error(error);
+                });
+            },
+
             onBlur() {
                 this.searching = false
                 this.search = ''
