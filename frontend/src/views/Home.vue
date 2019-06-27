@@ -13,16 +13,17 @@
                         <b>족보 검색하기</b>
                     </v-btn>
                     <!-- <div :class="{'searching--closed': !searching}" class="searching"> -->
-                </div>
+                <!-- </div> -->
             </div>
             </div>
         </div>
-        <div class="gif">
-            <img src="../assets/1.jpg">
-            <img src="http://ww3.sinaimg.cn/large/006tNc79gy1g4g6vgfjdsg30zk0k04ky.gif">
-            <img src="../assets/2.jpg">
+            <div class="gif">
+                <img src="../assets/1.jpg">
+                <img src="http://ww3.sinaimg.cn/large/006tNc79gy1g4g6vgfjdsg30zk0k04ky.gif">
+                <img src="../assets/2.jpg">
+            </div>
         </div>
-    </div>
+    
 </template>
 
 <script>

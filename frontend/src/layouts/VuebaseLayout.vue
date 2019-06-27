@@ -232,6 +232,7 @@
             login() {
                 this.$store.dispatch('obtainToken', {username:this.username, password:this.password});
             }
+        }
     }
 </script>
 
