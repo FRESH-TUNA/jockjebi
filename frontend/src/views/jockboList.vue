@@ -2,16 +2,31 @@
     <div class="jockboList">
         <div class="jockboList-header">
         </div>
+        <div class="status-header">
+            <div class="status-header-item search-field-label">검색필터</div>
+            <div class="status-header-item">29개의 족보가 있네요!</div>
+        </div>
         <div class="jockboList-body">
             <div class="left-nav-bar">
-                <div>
+                <div class="left-nav-bar-item">
+                </div>
+                <div class="left-nav-bar-item">
+                </div>
+                <div class="left-nav-bar-item">
+                </div>
+                <div class="left-nav-bar-item">
+                </div>
+                <div class="left-nav-bar-item">
                 </div>
             </div>
             <div class="jockboBundle">
+                <div>
+                    관련된 족보가 있네요!
+                </div>
                 <div class="jockbo" v-for="item in jockboList" key="item.year">
-                    <h3 class="headline mb-0">{{item.year}}-{{item.semester}}</h3>
-                    <h3 class="headline mb-0">{{item.subject}}</h3>
-                    <h3 class="headline mb-0">{{item.professor}}</h3>
+                    <h5 class="headline mb-0">{{item.year}}-{{item.semester}}</h5>
+                    <h5 class="headline mb-0">{{item.subject}}</h5>
+                    <h5 class="headline mb-0">{{item.professor}}</h5>
                 </div>
             </div>
         </div>
@@ -42,6 +57,9 @@
         flex-flow: column;
         justify-content: center;
         align-items: center;
+        background-color: rgb(200, 200, 200);
+
+        height: 100%;
     }
     .jockboList-header {
         margin-top: 20px;
@@ -51,8 +69,27 @@
         height: 50px;
         width: 800px;
 
-        background-color: rgb(200, 200, 200)
+        background-color: white;
     }
+    .status-header {
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+
+        height: 50px;
+        width: 800px;
+        border: 1px solid black;
+    }
+
+    .status-header-item {
+        display: inline-block;
+        line-height: 50px;
+    }
+
+    .search-field-label {
+        padding-right: 150px;
+    }
+
     .jockboList-body {
         padding-top: 10px;
         width: 800px;
@@ -64,7 +101,11 @@
         display: inline-block;
         width: 200px;
         height: 500px;
+    }
+    .left-nav-bar-item {
         border: 1px solid black;
+        margin-top: 5px;
+        height: 80px;
     }
     .jockboBundle {
         display: inline-block;
@@ -75,7 +116,7 @@
     }
     .jockbo {
         width: 550px;
-        height: 100px;
+        height: 80px;
         margin-left: auto;
         margin-right: auto;
         margin-top: 20px; 
