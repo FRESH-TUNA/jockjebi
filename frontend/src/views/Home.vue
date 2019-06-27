@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="height:800px;text-align:center;">
+        <div style="height:800px;text-align:center;background-image: URL(http://ww1.sinaimg.cn/large/006tNc79gy1g4fxoimyeij30p00e6jrl.jpg);background-size: cover">>
 
         <!--background-image: URL();background-size: cover">-->
 
@@ -41,46 +41,6 @@
             return {
                 subject: '',
                 dummy: [],
-
-                links: [
-                    {
-                        id: '1',
-                        subject: 'Dashboard',
-                        professor: 'Get detailed anlytics to measure and analyze how users engage with your app',
-                        year: 'orange',
-                        semester: '2019',
-                        category: '전필',
-                        file : 'aaaa.png',
-                    },
-                    {
-                        id: '1',
-                        subject: 'Dashboard',
-                        professor: 'Get detailed anlytics to measure and analyze how users engage with your app',
-                        year: 'orange',
-                        semester: '2019',
-                        category: '전필',
-                        file : 'aaaa.png',
-                    },
-                    {
-                        id: '1',
-                        subject: 'Dashboard',
-                        professor: 'Get detailed anlytics to measure and analyze how users engage with your app',
-                        year: 'orange',
-                        semester: '2019',
-                        category: '전필',
-                        file : 'aaaa.png',
-                    },
-                    {
-                        id: '1',
-                        subject: '데이터통신',
-                        professor: '이영석',
-                        year: '2019',
-                        semester: '1학기',
-                        category: '전필',
-                        file : 'aaaa.png',
-                    },
-
-                ]
             }
         },
         mounted() {

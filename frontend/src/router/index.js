@@ -20,6 +20,11 @@ const routes = [
         component: () => import('../views/createJockbo')
     },
     {
+        path: '/detail',
+        name: 'detail',
+        component: () => import('../views/detail')
+    },
+    {
         path: '/dashboard',
         name: 'dashboard',
         component: () => import('../views/Dashboard/Layout'),
