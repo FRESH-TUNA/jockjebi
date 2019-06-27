@@ -26,16 +26,17 @@
                      <label style="padding-right:20px;font-size:1.5em"for="male">분류</label>
                      <input style="width:100px;height:25px;"type="text" v-model="category">
                 </span>
-                <span>
-                     <label style="padding-left:20px;font-size:1.5em"for="male">대학교</label>
-                     <input style="width:100px;height:25px;"type="text" v-model="category">
-                </span>
             </div>
-            <div style="padding: 20px 20px 20px 20px">
+            <span style="padding: 20px 20px 20px 20px">
                 <label style="padding-right:20px;font-size:1.5em" for="male">파일</label>
-                <input type="file" ref="file" v-on:change="handleFileUpload">
-            </div>
+                <input style="width:275px"type="file" ref="file" v-on:change="handleFileUpload">
+            </span>
+            <span>
+                     <label style="padding-right:20px;padding-left:20px;font-size:1.5em"for="male">대학</label>
+                     <input style="width:275px;padding-left:10px;height:25px;"type="text" v-model="category">
+            </span>
         </div>
+        <br/>
         <div style="text-align:center">
             <div>
                 <textarea style="height:300px; width:700px; background:white" v-model="explain">코멘트를 작성하세</textarea>
