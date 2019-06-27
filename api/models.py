@@ -10,9 +10,12 @@ class Post(models.Model):
     year = models.IntegerField()
     semester = models.IntegerField(default = 0)
     category = models.CharField(max_length=50)
-    file = models.FileField(null = True)
+    file = models.ImageField(blank=True)
+    explain = models.TextField(blank=True)
+    
     
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     content = models.TextField()
+
