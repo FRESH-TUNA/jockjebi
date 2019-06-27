@@ -1,22 +1,62 @@
 <template>
     <div class="jockboList">
-        <div class="jockboList-header">
-        </div>
-        <div class="status-header">
-            <div class="status-header-item search-field-label">검색필터</div>
-            <div class="status-header-item">29개의 족보가 있네요!</div>
-        </div>
+
         <div class="jockboList-body">
             <div class="left-nav-bar">
-                <div class="left-nav-bar-item">
+                <div style="font-size:1.5em">검색 필터</div>
+                <div style="padding-top:30px; padding-bottom:50px">
+                    <div style="font-size:1.2em">기간</div>
+                    <div style="padding-left:10px;width:150px;">
+                        <vue-slider v-model="value1"
+                                    :min="2009"
+                                    :max="2019"
+                                    :marks="marks1"
+                                    :interval="1"
+                                    :process-style="{ backgroundColor: '#d8d8d8' }"
+                                    :tooltip-style="{ backgroundColor: '#d8d8d8', borderColor: '#d8d8d8' }"
+                                    :tooltip-formatter="formatter1">
+                            <template v-slot:dot="{ value, focus }">
+                                <div :class="['custom-dot', { focus }]"></div>
+                            </template>
+                        </vue-slider>
+                    </div>
                 </div>
-                <div class="left-nav-bar-item">
+
+                <div style="font-size:1.2em">평점</div>
+                <div style="padding-left:10px;width:150px;">
+                    <vue-slider v-model="value1" :min="0"
+                                :max="5"
+                                :marks="marks2"
+                                :interval="1"
+                                :process-style="{ backgroundColor: '#d8d8d8' }"
+                                :tooltip-style="{ backgroundColor: '#d8d8d8', borderColor: '#d8d8d8' }"
+                                :tooltip-formatter="formatter1">
+                        <template v-slot:dot="{ value, focus }">
+                            <div :class="['custom-dot', { focus }]"></div>
+                        </template>
+                    </vue-slider>
                 </div>
-                <div class="left-nav-bar-item">
+                <div>
+                    <div style="font-size:1.2em; padding-top:50px;">유형</div>
+                    <input type="checkbox" name="demo" value="one" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 전공필수</label>
+                    <br/>
+                    <input type="checkbox" name="demo" value="one" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 전공선택</label>
+                    <br/>
+                    <input type="checkbox" name="demo" value="one" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 필수교양</label>
+                    <br/>
+                    <input type="checkbox" name="demo" value="one" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 교선핵심</label>
+                    <br/>
+                    <input type="checkbox" name="demo" value="one" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 공통</label>
                 </div>
-                <div class="left-nav-bar-item">
-                </div>
-                <div class="left-nav-bar-item">
+                <div>
+                    <div style="font-size:1.2em; padding-top:50px;">정답 및 해설</div>
+                    <input type="checkbox" name="demo" value="one" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 해설있음</label>
                 </div>
             </div>
             <div class="jockboBundle">
@@ -34,14 +74,27 @@
 </template>
 
 <script>
+    import VueSlider from 'vue-slider-component'
+    import 'vue-slider-component/theme/antd.css'
+
     export default {
+        components: {
+            VueSlider
+        },
         data() {
             return {
+                value: '2009',
+                formatter1: '{value}',
+                marks1: {'2009': '2009', '2019': '2019'},
+                marks2: {'0': '0', '5': '5'},
+                data: ['2009', '2019'],
+                value2: '1',
+                data2: ['1', '5'],
                 jockboList: []
             }
         },
         mounted() {
-            axios({ method: "GET", "url": "http://127.0.0.1:8000/api/post" }).then(result => {
+            axios({method: "GET", "url": "http://127.0.0.1:8000/api/post"}).then(result => {
                 this.jockboList = result.data;
             }, error => {
                 console.error(error);
@@ -52,15 +105,84 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    .form-radio {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        display: inline-block;
+        position: relative;
+        background-color: #d8d8d8;
+        color: #666;
+        top: 5px;
+        height: 20px;
+        width: 20px;
+        border: 0;
+        border-radius: 50px;
+        cursor: pointer;
+        margin-right: 7px;
+        outline: none;
+    }
+
+    .form-radio:checked::before {
+        position: absolute;
+        font: 13px/1 'Open Sans', sans-serif;
+        left: 5px;
+        top: 5px;
+        content: '\02143';
+        transform: rotate(40deg);
+    }
+
+    .form-radio:hover {
+        background-color: #f7f7f7;
+    }
+
+    .form-radio:checked {
+        background-color: #f1f1f1;
+    }
+
+    label {
+        font: 15px/1.7 'Open Sans', sans-serif;
+        color: #333;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        cursor: pointer;
+    }
+
+    .form-checkbox {
+        border-radius: 3px;
+    }
+
+    .form-radio {
+        border-radius: 50px;
+    }
+
+
+    .custom-dot {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        background-color: #d8d8d8;
+        transition: all .3s;
+    }
+
+    .custom-dot:hover {
+        transform: rotateZ(45deg);
+    }
+
+    .custom-dot.focus {
+        border-radius: 50%;
+    }
+
     .jockboList {
         display: flex;
         flex-flow: column;
-        justify-content: center;
+        /*justify-content: center;*/
         align-items: center;
-        background-color: rgb(200, 200, 200);
+        background-color: rgb(243, 243, 243);
 
         height: 100%;
     }
+
     .jockboList-header {
         margin-top: 20px;
         margin-left: auto;
@@ -71,6 +193,7 @@
 
         background-color: white;
     }
+
     .status-header {
         margin-top: 20px;
         margin-left: auto;
@@ -92,21 +215,25 @@
 
     .jockboList-body {
         padding-top: 10px;
-        width: 800px;
+        width: 1000px;
 
         display: flex;
         justify-content: space-between;
     }
+
     .left-nav-bar {
+        padding-top: 20px;
         display: inline-block;
         width: 200px;
         height: 500px;
     }
+
     .left-nav-bar-item {
         border: 1px solid black;
         margin-top: 5px;
         height: 80px;
     }
+
     .jockboBundle {
         display: inline-block;
         width: 590px;
@@ -114,25 +241,26 @@
         overflow: scroll;
         background-color: rgb(200, 200, 200)
     }
+
     .jockbo {
         width: 550px;
         height: 80px;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 20px; 
+        margin-top: 20px;
         border: 1px solid black;
 
         background-color: white;
     }
 
-    @media screen and (max-width: 750px){
+    @media screen and (max-width: 1000px) {
         .jockboList {
             border: 1px solid black;
 
             display: flex;
             justify-content: center;
             align-items: center;
-        }  
+        }
 
         .jockboList-header, .jockboList-body {
             width: 100%;
@@ -155,7 +283,7 @@
         .jockbo {
             width: 300px;
             height: 100px;
-            margin-top: 5px; 
+            margin-top: 5px;
             border: 1px solid black;
         }
     }
