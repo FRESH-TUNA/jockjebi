@@ -13,6 +13,8 @@
                 <h2 style="text-align:center">족보마켓</h2>
                 <!-- <router-view class="view one"></router-view> -->
 
+                <input type="text" class="form-control" placeholder="할일을 입력하세요">
+
                 <div :class="{'searching--closed': !searching}" class="searching">
                     <v-text-field
                             id="search"
@@ -30,7 +32,7 @@
             </v-toolbar-title>
         </v-toolbar>
 
-        <router-link :to="hello">hello</router-link>
+        <router-link to="/hello">hello</router-link>
 
         <v-container>
             <v-layout row>
@@ -43,25 +45,27 @@
                                 </v-flex>
                             </v-layout>
                             <v-layout row wrap>
+
                                 <v-flex xs12 sm6 md6 lg4 v-for="item in links" :key="item.id">
                                     <v-hover>
+                                        {{item.year}}
                                         <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 2}`">
+                                            <v-card-title primary-title>
+                                                <div>
+                                                    <h3 class="headline mb-0">{{item.year}}-{{item.semester}}</h3>
+                                                    <h3 class="headline mb-0">{{item.subject}}</h3>
+                                                    <h3 class="headline mb-0">{{item.professor}}</h3>
+                                                    <div>
+                                                        {{item.file}}
+                                                    </div>
+                                                </div>
+                                            </v-card-title>
                                             <v-img
                                                     src=""
                                                     aspect-ratio="2.75"
                                                     height="125px"
                                                     :class="item.color"
                                             ></v-img>
-
-                                            <v-card-title primary-title>
-                                                <div>
-                                                    <h3 class="headline mb-0">{{item.title}}</h3>
-                                                    <div>
-                                                        {{item.description}}
-                                                    </div>
-                                                </div>
-                                            </v-card-title>
-
                                             <v-card-actions>
                                                 <v-btn flat color="primary" class="learn-more-btn">
                                                     Learn more
@@ -85,35 +89,74 @@
     export default {
         data() {
             return {
+                search: "",
+                dummy: [],
+                id: '1',
+                subject: 'Dashboard',
+                professor: 'Get detailed anlytics to measure and analyze how users engage with your app',
+                year: 'orange',
+                semester: '2019',
+                category: '전필',
+                file : 'aaaa.png',
                 links: [
                     {
                         id: '1',
-                        title: 'Dashboard',
-                        description: 'Get detailed anlytics to measure and analyze how users engage with your app',
-                        color: 'orange'
+                        subject: 'Dashboard',
+                        professor: 'Get detailed anlytics to measure and analyze how users engage with your app',
+                        year: 'orange',
+                        semester: '2019',
+                        category: '전필',
+                        file : 'aaaa.png',
                     },
                     {
-                        id: '2',
-                        title: 'Storage',
-                        description: 'Store and retrieve user-generated content, such as images, audio, and videos, without server-side code.',
-                        color: 'teal'
+                        id: '1',
+                        subject: 'Dashboard',
+                        professor: 'Get detailed anlytics to measure and analyze how users engage with your app',
+                        year: 'orange',
+                        semester: '2019',
+                        category: '전필',
+                        file : 'aaaa.png',
                     },
                     {
-                        id: '3',
-                        title: 'Notifications',
-                        description: 'Manage your notification campaigns and send messages to reach the right users at the right time',
-                        color: 'blue'
+                        id: '1',
+                        subject: 'Dashboard',
+                        professor: 'Get detailed anlytics to measure and analyze how users engage with your app',
+                        year: 'orange',
+                        semester: '2019',
+                        category: '전필',
+                        file : 'aaaa.png',
                     },
                     {
-                        id: '4',
-                        title: 'Authentification',
-                        description: 'Authenticate and manage users from a variety of providers without server-side-code',
-                        color: 'purple'
-                    }
+                        id: '1',
+                        subject: '데이터통신',
+                        professor: '이영석',
+                        year: '2019',
+                        semester: '1학기',
+                        category: '전필',
+                        file : 'aaaa.png',
+                    },
+
                 ]
             }
         },
+        mounted() {
+            axios({ method: "GET", "url": "http://demo2166682.mockable.io/testtest" }).then(result => {
+                this.dummy = result.data;
+                console.log(this.dummy);
+            }, error => {
+                console.error(error);
+            });
+        },
+
         methods: {
+            sendData() {
+                axios({ method: "POST", "url": "https://httpbin.org/post", "data": this.input, "headers": { "content-type": "application/json" } }).then(result => {
+                    this.response = result.data;
+                }, error => {
+                    console.error(error);
+                });
+            },
+
             onBlur() {
                 this.searching = false
                 this.search = ''
