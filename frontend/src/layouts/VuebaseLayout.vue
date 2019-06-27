@@ -296,20 +296,26 @@
                 event.stopPropagation();
             },
             login() {
-                axios({
-                    method: 'post',
-                    url: 'http://127.0.0.1:8000/signin/',
-                    data: {
-                        username: this.username,
-                        password: this.password
-                    },
-                })
-                .then(function (response) {
-                    console.log(response.data);
-                })
-                .catch(function (response) {
-                    console.log(response);
-                });
+                this.$store.dispatch('obtainToken', {username:this.username, password:this.password});
+                // axios({
+                //     method: 'post',
+                //     url: 'http://127.0.0.1:8000/signin/',
+                //     data: {
+                //         username: this.username,
+                //         password: this.password
+                //     },
+                // })
+                // .then(function (response) {
+                //     axios({
+                //         method: 'get',
+                //         withCredentials: true,
+                //         url: 'http://127.0.0.1:8000/api/post?',
+                //     }).then(function (response) {
+                //         console.log(response.data);
+                //     })
+                // }).catch(function (response) {
+                //     console.log(response);
+                // });                
             }
         }
     }

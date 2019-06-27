@@ -72,19 +72,31 @@ export default {
             bodyFormData.append('university', 1);
             bodyFormData.append('explain', this.explain);
             bodyFormData.append('file', this.file);
-
+            
+            console.log(this.$store.state.jwt)
             axios({
                 method: 'post',
-                url: 'http://127.0.0.1:8000/api/post',
+                url: 'http://127.0.0.1:8000/api/post', 
                 data: bodyFormData,
-                config: { headers: {'Content-Type': 'multipart/form-data' }}
-                })
-                .then(function (response) {
-                    console.log(response.data);
-                })
-                .catch(function (response) {
-                    console.log(response);
-                });
+                headers: {
+                    authorization: this.$store.state.jwt,
+                    'Content-Type': 'application/form-data'
+                },
+            }).then((response) => {console.log(response.data)})
+
+
+            // axios({
+            //     method: 'post',
+            //     url: 'http://127.0.0.1:8000/api/post',
+            //     data: bodyFormData,
+            //     config: { headers: {'Content-Type': 'multipart/form-data' }}
+            //     })
+            //     .then(function (response) {
+            //         console.log(response.data);
+            //     })
+            //     .catch(function (response) {
+            //         console.log(response);
+            //     });
         }
     }
 }
