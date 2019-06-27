@@ -98,12 +98,11 @@
 
 <script>
     import StarRating from 'vue-star-rating'
-    new Vue({
+
+    export default {
         data: {
             test: 3
         },
-    });
-    export default {
         components: {
             StarRating
         },
