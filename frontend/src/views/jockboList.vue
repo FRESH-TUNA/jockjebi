@@ -1,6 +1,5 @@
 <template>
     <div class="jockboList">
-
         <div class="jockboList-body">
             <div class="left-nav-bar">
                 <div style="font-size:1.5em">검색 필터</div>
@@ -60,13 +59,13 @@
                 </div>
             </div>
             <div class="jockboBundle">
-                <div>
-                    관련된 족보가 있네요!
-                </div>
-                <div class="jockbo" v-for="item in jockboList" key="item.year">
-                    <h5 class="headline mb-0">{{item.year}}-{{item.semester}}</h5>
-                    <h5 class="headline mb-0">{{item.subject}}</h5>
-                    <h5 class="headline mb-0">{{item.professor}}</h5>
+                <h2>
+                    관련된 족보가 {{jockboList.length}}개있네요!
+                </h2>
+                <div class="jockbo" v-for="item in jockboList" key="item.id">
+                    <p class="headline mb-0">{{item.year}}-{{item.semester}}학기</p>
+                    <p class="headline mb-0">{{item.subject}}</p>
+                    <p class="headline mb-0">{{item.professor}} 교수님</p>
                 </div>
             </div>
         </div>
@@ -106,6 +105,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@font-face { font-family: 'BBTreeGB'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff'); font-weight: normal; font-style: normal; }
     .form-radio {
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -182,6 +182,7 @@
         background-color: rgb(243, 243, 243);
 
         height: 100%;
+        font-family: BBTreeGB
     }
 
     .jockboList-header {
@@ -216,7 +217,7 @@
 
     .jockboList-body {
         padding-top: 10px;
-        width: 1000px;
+        width: 800px;
 
         display: flex;
         justify-content: space-between;
@@ -240,18 +241,30 @@
         width: 590px;
         height: 500px;
         overflow: scroll;
-        background-color: rgb(200, 200, 200)
+        background-color: rgb(243, 243, 243);
+
+        padding-top: 20px;
     }
 
     .jockbo {
         width: 550px;
         height: 80px;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 20px;
-        border: 1px solid black;
 
+        margin-top: 20px;
+
+        
         background-color: white;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        border: 2px solid rgb(200, 200, 200);
+        border-radius: 10px;
+    }
+
+    p {
+        
     }
 
     @media screen and (max-width: 1000px) {
