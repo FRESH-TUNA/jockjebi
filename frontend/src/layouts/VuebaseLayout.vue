@@ -83,7 +83,7 @@
                                 <v-list-tile-action>
                                     <v-icon>lock_open</v-icon>
                                 </v-list-tile-action>
-                                <v-list-tile-content>
+                                <v-list-tile-content @click="changeAuthModalState">
                                     <v-list-tile-title>Logout</v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
@@ -219,27 +219,17 @@
             blockPropagate(event) {
                 event.stopPropagation();
             },
+            getUserScrapedData() {
+                axios({
+                    method: 'post',
+                    url: 'http://127.0.0.1:8000/api/post/scrap', 
+                    headers: {
+                        authorization: this.$store.state.jwt,
+                    },
+                }).then((response) => {console.log(response.data)})
+            },
             login() {
                 this.$store.dispatch('obtainToken', {username:this.username, password:this.password});
-                // axios({
-                //     method: 'post',
-                //     url: 'http://127.0.0.1:8000/signin/',
-                //     data: {
-                //         username: this.username,
-                //         password: this.password
-                //     },
-                // })
-                // .then(function (response) {
-                //     axios({
-                //         method: 'get',
-                //         withCredentials: true,
-                //         url: 'http://127.0.0.1:8000/api/post?',
-                //     }).then(function (response) {
-                //         console.log(response.data);
-                //     })
-                // }).catch(function (response) {
-                //     console.log(response);
-                // });                
             }
         }
     }

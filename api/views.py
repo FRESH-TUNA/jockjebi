@@ -23,30 +23,28 @@ class PostViewSet(viewsets.ModelViewSet):
         subject = request.GET.get('subject', False)
         bookmark = request.GET.get('bookmark', False)
 
-        logging.error(request.user.username)
-
-        if bookmark is False:
-            if university is False:
-                serializer = PostListSerializer(Post.objects.all(), many=True)
-            elif subject is False:
-                serializer = PostListSerializer(Post.objects.all().filter(university=university), many=True)
-            else:
-                serializer = PostListSerializer(Post.objects.all().filter(university=university).filter(subject=subject), many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+        if university is False:
+            serializer = PostListSerializer(Post.objects.all(), many=True)
+        elif subject is False:
+            serializer = PostListSerializer(Post.objects.all().filter(university=university), many=True)
         else:
-            serializer = PostListSerializer(Post.objects.all().filter(user=request.user), many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            serializer = PostListSerializer(Post.objects.all().filter(university=university).filter(subject=subject), many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
     def create(self, request):
         serializer = PostSerializer(data=request.data)
-        # logging.error(serializer)
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(detail=False, methods=['post'])
+    def scrap(self, request):
+        posts = Post.objects.all().filter(bookmark__user=request.user)
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     #def retrieve(self, request, pk, format=None):
 
