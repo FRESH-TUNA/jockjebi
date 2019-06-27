@@ -1,6 +1,10 @@
 <template>
     <div>
-        <div style="height:800px;text-align:center;background-image: URL(http://ww1.sinaimg.cn/large/006tNc79gy1g4fvgimorbj30qo0f8jta.jpg);background-size: cover">
+        <div style="height:800px;text-align:center;">
+
+        <!--background-image: URL();background-size: cover">-->
+
+
             <div style="font-size:3em;padding-top:80px">클릭 한 번으로!</div>
             <div style="font-size:3em;padding-bottom:20px">쉽고 빠르게 시험 대비하기</div>
             <div style="border-radius: 0.5em;box-shadow: 0 10px 5px #c2bfbe;background-color:white;height:200px; width:500px;display: inline-block;">
@@ -115,7 +119,7 @@
     }
 
     .input-field {
-        padding-top: 50px; 
+        padding-top: 50px;
         display: inline-block;
         width: 400px;
     }
