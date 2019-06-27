@@ -55,7 +55,7 @@
                     <v-menu offset-y>
                         <v-btn icon slot="activator">
                             <v-avatar class="white" size="32">
-                                <h2 style="color:#796ef6;font-size:15px">졸린토끼▾</h2>
+                                <h2 style="color:#796ef6;font-size:15px">{{loginname}}</h2>
                             </v-avatar>
                         </v-btn>
                         <v-list class="pa-0" light>
@@ -85,7 +85,7 @@
                                     <v-icon>lock_open</v-icon>
                                 </v-list-tile-action>
                                 <v-list-tile-content @click="changeAuthModalState">
-                                    <v-list-tile-title>Logout</v-list-tile-title>
+                                    <v-list-tile-title>{{loginState}}</v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                         </v-list>
@@ -120,8 +120,9 @@
                 appName: process.env.VUE_APP_APP_NAME,
                 drawer: true,
                 fixed: false,
-                username: '',
+                loginname: '로그인',
                 password: '',
+                loginState: '로그인',
                 analyticsItems: [
                     {
                         icon: 'dashboard',
@@ -231,6 +232,11 @@
             },
             login() {
                 this.$store.dispatch('obtainToken', {username:this.username, password:this.password});
+                // this.$store.dispatch('userAttentation');
+                this.password=''
+                this.loginState = '로그아웃'
+                this.loginname = this.$store.state.username
+                this.changeAuthModalState()
             }
         }
     }
@@ -347,3 +353,4 @@
         background-color: white;
     }
 </style>
+

@@ -10,10 +10,14 @@ export default new Vuex.Store({
         authModalState: false,
 
         jwt: localStorage.getItem('t'),
+
         endpoints: {
             obtainJWT: 'http://127.0.0.1:8000/token',
             refreshJWT: 'http://127.0.0.1:8000/refresh'
         },
+
+        username: '로그인', 
+        useruni: ''
     },
     mutations: {
         changeAuthModalState: function() {
@@ -47,6 +51,7 @@ export default new Vuex.Store({
             .then((response)=>{
                 console.log(response.data.token)
                 this.commit('updateToken', response.data.token);
+                this.state.username = payload.username
                 })
             .catch((error)=>{
                 console.log(error);
@@ -66,6 +71,17 @@ export default new Vuex.Store({
         },
         inspectToken(){
             // WE WILL ADD THIS LATER
+        },
+        userAttentation() {
+            axios({
+                method: 'post',
+                url: 'http://127.0.0.1:8000/api/userdata', 
+                headers: {
+                    authorization: this.$store.state.jwt,
+                },
+            }).then((response) => {this.$store.state.userData = response.data})
         }
     }
 })
+
+
