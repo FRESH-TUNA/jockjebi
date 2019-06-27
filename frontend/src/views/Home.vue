@@ -3,11 +3,31 @@
         <div style="height:800px;text-align:center;background-image: URL(http://ww1.sinaimg.cn/large/006tNc79gy1g4fvgimorbj30qo0f8jta.jpg);background-size: cover">
             <div style="font-size:3em;padding-top:80px">클릭 한 번으로!</div>
             <div style="font-size:3em;padding-bottom:20px">쉽고 빠르게 시험 대비하기</div>
-            <div style="border-radius: 0.5em;box-shadow: 0 10px 5px #c2bfbe;background-color:white;height:200px; width:500px;display: inline-block;"></div>
+            <div style="border-radius: 0.5em;box-shadow: 0 10px 5px #c2bfbe;background-color:white;height:200px; width:500px;display: inline-block;">
+                <div class="input-field">
+                    <span>
+                    &#128269;
+                    </span>
+                    <!-- <v-text-field
+                            id="search"
+                            v-model="subject"
+                            append-icon="close"
+                            @click:append="searchEnd"
+                            label="search"
+                            hide-details
+                            single-line
+                            color="white"
+                            @blur="onBlur"
+                    ></v-text-field> -->
+                    <input type="text" v-model="subject">
+                    <v-btn icon @click.native.stop="searchBegin">
+                    <v-icon>search</v-icon>
+                    </v-btn>
+                    <div :class="{'searching--closed': !searching}" class="searching">
+                </div>
+            </div>
+            </div>
         </div>
-
-        <button @click="searchJockbo">searchTest</button>
-
     </div>
 </template>
 
@@ -68,11 +88,10 @@
         },
 
         methods: {
-            searchJockbo() {
-                axios({ method: "GET", "url": "http://127.0.0.1:8000/api/post?university=1&subject=수학"}).then(result => {
+            searchBegin() {
+                axios({ method: "GET", "url": "http://127.0.0.1:8000/api/post?university=1&subject=" + this.subject}).then(result => {
                     this.$store.state.jockboList = result.data;
-                    console.log(this.$store.state.jockboList)
-                    this.$router.push('/jockbolist')
+                    this.$router.push({ path: '/jockbolist' });
                 }, error => {
                     console.error(error);
                 });
@@ -93,5 +112,11 @@
     .learn-more-btn {
         text-transform: initial;
         text-decoration: underline;
+    }
+
+    .input-field {
+        padding-top: 50px; 
+        display: inline-block;
+        width: 400px;
     }
 </style>
