@@ -10,9 +10,9 @@ const routes = [
         component: () => import('../views/Home')
     },
     {
-        path: '/hello',
-        name: 'hello',
-        component: () => import('../views/hello')
+        path: '/jockbolist',
+        name: 'jockbolist',
+        component: () => import('../views/jockboList')
     },
 
     {

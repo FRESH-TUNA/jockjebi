@@ -46,7 +46,7 @@
                             </v-layout>
                             <v-layout row wrap>
 
-                                <v-flex xs12 sm6 md6 lg4 v-for="item in links" :key="item.id">
+                                <v-flex xs12 sm6 md6 lg4 v-for="item in dummy" :key="item.id">
                                     <v-hover>
                                         {{item.year}}
                                         <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 2}`">
@@ -140,7 +140,7 @@
             }
         },
         mounted() {
-            axios({ method: "GET", "url": "http://demo2166682.mockable.io/testtest" }).then(result => {
+            axios({ method: "GET", "url": "http://127.0.0.1:8000/api/post" }).then(result => {
                 this.dummy = result.data;
                 console.log(this.dummy);
             }, error => {
