@@ -72,14 +72,14 @@ export default new Vuex.Store({
         inspectToken(){
             // WE WILL ADD THIS LATER
         },
-        userAttentation() {
+        findUserUni() {
             axios({
-                method: 'post',
-                url: 'http://127.0.0.1:8000/api/userdata', 
+                method: 'get',
+                url: 'http://127.0.0.1:8000/api/getuseruni', 
                 headers: {
-                    authorization: this.$store.state.jwt,
+                    authorization: this.state.jwt,
                 },
-            }).then((response) => {this.$store.state.userData = response.data})
+            }).then((response) => {this.state.useruni = response.data.title})
         }
     }
 })
