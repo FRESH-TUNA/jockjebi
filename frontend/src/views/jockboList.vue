@@ -4,6 +4,8 @@
         </div>
         <div class="jockboList-body">
             <div class="left-nav-bar">
+                <div>
+                </div>
             </div>
             <div class="jockboBundle">
                 <div class="jockbo" v-for="item in jockboList" key="item.year">
@@ -72,10 +74,14 @@
         background-color: rgb(200, 200, 200)
     }
     .jockbo {
-        width: 580px;
+        width: 550px;
         height: 100px;
-        margin-top: 5px; 
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px; 
         border: 1px solid black;
+
+        background-color: white;
     }
 
     @media screen and (max-width: 750px){

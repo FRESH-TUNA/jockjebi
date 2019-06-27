@@ -7,6 +7,7 @@
                 flat
                 dense
                 color="white"
+                style="opacity: 0.80;"
                 dark
                 height="70"
                 width="960"
@@ -16,22 +17,22 @@
                 <h2 style="color:#b0b0b0">족보.io</h2>
             </div>
 
-            <v-toolbar-side-icon
-                    @click.stop="drawer = !drawer"
-                    class="hidden-lg-and-up"
-                    :class="searching ? 'hidden-xs-only' : ''"
-            />
-            <v-menu :nudge-width="100" :class="searching ? 'hidden-xs-only' : ''">
-                <v-toolbar-title slot="activator" class="pl-2">
-                    <span>{{ menuItems[0] }}</span>
-                    <v-icon>arrow_drop_down</v-icon>
-                </v-toolbar-title>
-                <v-list light>
-                    <v-list-tile v-for="item in menuItems" :key="item" @click="">
-                        <v-list-tile-title v-text="item"></v-list-tile-title>
-                    </v-list-tile>
-                </v-list>
-            </v-menu>
+<!--            <v-toolbar-side-icon-->
+<!--                    @click.stop="drawer = !drawer"-->
+<!--                    class="hidden-lg-and-up"-->
+<!--                    :class="searching ? 'hidden-xs-only' : ''"-->
+<!--            />-->
+<!--            <v-menu :nudge-width="100" :class="searching ? 'hidden-xs-only' : ''">-->
+<!--                <v-toolbar-title slot="activator" class="pl-2">-->
+<!--                    <span>{{ menuItems[0] }}</span>-->
+<!--                    <v-icon>arrow_drop_down</v-icon>-->
+<!--                </v-toolbar-title>-->
+<!--                <v-list light>-->
+<!--                    <v-list-tile v-for="item in menuItems" :key="item" @click="">-->
+<!--                        <v-list-tile-title v-text="item"></v-list-tile-title>-->
+<!--                    </v-list-tile>-->
+<!--                </v-list>-->
+<!--            </v-menu>-->
             <v-spacer></v-spacer>
 
             <div style="padding-right:40px">
