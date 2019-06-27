@@ -9,20 +9,21 @@
                         <div style="padding-bottom:10px;float:left;font-size:24px;"><b>숙명여자대학교 시각영상디자인전공</b></div>
                     <input placeholder="🔍 과목명, 교수명으로 검색" style="width:400px;border-bottom: 5px solid #8a7afa;" type="text" v-model="subject">
                     </div>
-                    <v-btn style="width:200px;font-size:18px;color:white;background-color:#d0c9fd" @click.native.stop="searchBegin">
+                    <v-btn class="searchBeginButton" style="width:200px;font-size:18px;color:white;background-color:#d0c9fd" @click="searchBegin">
                         <b>족보 검색하기</b>
                     </v-btn>
-                    <div :class="{'searching--closed': !searching}" class="searching">
-                </div>
+                    <!-- <div :class="{'searching--closed': !searching}" class="searching"> -->
+                <!-- </div> -->
             </div>
             </div>
         </div>
-        <div class="gif">
-            <img src="../assets/1.jpg">
-            <img src="http://ww3.sinaimg.cn/large/006tNc79gy1g4g6vgfjdsg30zk0k04ky.gif">
-            <img src="../assets/2.jpg">
+            <div class="gif">
+                <img src="../assets/1.jpg">
+                <img src="http://ww3.sinaimg.cn/large/006tNc79gy1g4g6vgfjdsg30zk0k04ky.gif">
+                <img src="../assets/2.jpg">
+            </div>
         </div>
-    </div>
+    
 </template>
 
 <script>
@@ -50,6 +51,15 @@
                     console.error(error);
                 });
             }
+        },
+        watch: {
+            subject: function() {
+                let searchBeginButton = document.getElementsByClassName('searchBeginButton')[0]
+                if(this.subject.length == 0)
+                    searchBeginButton.style.backgroundColor = '#d0c9fd'
+                else
+                    searchBeginButton.style.backgroundColor = '#6A4CFF'
+            }   
         }
     }
 </script>
