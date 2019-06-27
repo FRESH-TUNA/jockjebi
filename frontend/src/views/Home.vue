@@ -1,31 +1,16 @@
 <template>
     <div>
-        <div style="height:800px;text-align:center;background-image: URL(http://ww1.sinaimg.cn/large/006tNc79gy1g4fxoimyeij30p00e6jrl.jpg);background-size: cover">>
-
-        <!--background-image: URL();background-size: cover">-->
-
-
-            <div style="font-size:3em;padding-top:80px">클릭 한 번으로!</div>
-            <div style="font-size:3em;padding-bottom:20px">쉽고 빠르게 시험 대비하기</div>
+        <div style="height:600px;text-align:center;background-image: URL(http://ww1.sinaimg.cn/large/006tNc79gy1g4fxoimyeij30p00e6jrl.jpg);background-size: cover">
+            <div style="font-size:3em;padding-top:80px;color:white"><b style="font-size:1em;color:#fce054">클릭 한 번</b>으로!</div>
+            <div style="font-size:3em;padding-bottom:20px;color:white">쉽고 빠르게 시험 대비하기</div>
             <div style="border-radius: 0.5em;box-shadow: 0 10px 5px #c2bfbe;background-color:white;height:200px; width:500px;display: inline-block;">
                 <div class="input-field">
-                    <span>
-                    &#128269;
-                    </span>
-                    <!-- <v-text-field
-                            id="search"
-                            v-model="subject"
-                            append-icon="close"
-                            @click:append="searchEnd"
-                            label="search"
-                            hide-details
-                            single-line
-                            color="white"
-                            @blur="onBlur"
-                    ></v-text-field> -->
-                    <input type="text" v-model="subject">
-                    <v-btn icon @click.native.stop="searchBegin">
-                    <v-icon>search</v-icon>
+                    <div style="padding-bottom: 20px">
+                        <div style="padding-bottom:10px;float:left;font-size:24px;"><b>숙명여자대학교 시각영상디자인전공</b></div>
+                    <input placeholder="🔍 과목명, 교수명으로 검색" style="::placeholder {color:#cecece; opacity:0.7;};width:400px;border-bottom: 5px solid #8a7afa;" type="text" v-model="subject">
+                    </div>
+                    <v-btn style="width:200px;font-size:18px;color:white;background-color:#d0c9fd" @click.native.stop="searchBegin">
+                        <b>족보 검색하기</b>
                     </v-btn>
                     <div :class="{'searching--closed': !searching}" class="searching">
                 </div>
@@ -79,9 +64,15 @@
     }
 
     .input-field {
-        padding-top: 50px;
+        padding-top: 30px;
         display: inline-block;
         width: 400px;
+        outline: none;
+        font-size:18px;
+
+    }
+    input[type="text"], input[type="password"], textarea, select {
+        outline: none;
     }
 </style>
 

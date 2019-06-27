@@ -1,18 +1,18 @@
 <template>
     <div class="jockboList">
         <div class="jockboList-body">
-            <div class="left-nav-bar">
-                <div style="font-size:1.5em">검색 필터</div>
+            <div class="left-nav-bar" style="padding-left:20px;background-color:#fefefe">
+                <div style="font-size:1.5em;color:#4758dd"><b>검색 필터</b></div>
                 <div style="padding-top:30px; padding-bottom:50px">
-                    <div style="font-size:1.2em">기간</div>
+                    <div style="font-size:1.2em">연도</div>
                     <div style="padding-left:10px;width:150px;">
                         <vue-slider v-model="value1"
                                     :min="2009"
                                     :max="2019"
                                     :marks="marks1"
                                     :interval="1"
-                                    :process-style="{ backgroundColor: '#d8d8d8' }"
-                                    :tooltip-style="{ backgroundColor: '#d8d8d8', borderColor: '#d8d8d8' }"
+                                    :process-style="{ backgroundColor: '#f5c453' }"
+                                    :tooltip-style="{ backgroundColor: '#f5c453', borderColor: '#f5c453' }"
                                     :tooltip-formatter="formatter1">
                             <template v-slot:dot="{ value, focus }">
                                 <div :class="['custom-dot', { focus }]"></div>
@@ -20,15 +20,29 @@
                         </vue-slider>
                     </div>
                 </div>
-
+                <div style="padding-bottom:30px;">
+                    <div style="font-size:1.2em;">학기</div>
+                    <input type="radio" name="1" value="one" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 1학기</label>
+                    <br/>
+                    <input type="radio" name="1" value="one" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 여름학기</label>
+                    <br/>
+                    <input type="radio" name="1" value="one" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 2학기</label>
+                    <br/>
+                    <input type="radio" name="1" value="one" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 겨울학기</label>
+                    <br/>
+                </div>
                 <div style="font-size:1.2em">평점</div>
                 <div style="padding-left:10px;width:150px;">
                     <vue-slider v-model="value1" :min="0"
                                 :max="5"
                                 :marks="marks2"
                                 :interval="1"
-                                :process-style="{ backgroundColor: '#d8d8d8' }"
-                                :tooltip-style="{ backgroundColor: '#d8d8d8', borderColor: '#d8d8d8' }"
+                                :process-style="{ backgroundColor: '#F5C453' }"
+                                :tooltip-style="{ backgroundColor: '#F5C453', borderColor: '#F5C453' }"
                                 :tooltip-formatter="formatter1">
                         <template v-slot:dot="{ value, focus }">
                             <div :class="['custom-dot', { focus }]"></div>
@@ -37,19 +51,19 @@
                 </div>
                 <div>
                     <div style="font-size:1.2em; padding-top:50px;">유형</div>
-                    <input type="checkbox" name="demo" value="one" id="radio-one" class="form-radio"><label
+                    <input type="radio" name="demo" value="one" id="radio-one" class="form-radio"><label
                         for="radio-one"> 전공필수</label>
                     <br/>
-                    <input type="checkbox" name="demo" value="one" id="radio-one" class="form-radio"><label
+                    <input type="radio" name="demo" value="one" id="radio-one" class="form-radio"><label
                         for="radio-one"> 전공선택</label>
                     <br/>
-                    <input type="checkbox" name="demo" value="one" id="radio-one" class="form-radio"><label
+                    <input type="radio" name="demo" value="one" id="radio-one" class="form-radio"><label
                         for="radio-one"> 필수교양</label>
                     <br/>
-                    <input type="checkbox" name="demo" value="one" id="radio-one" class="form-radio"><label
+                    <input type="radio" name="demo" value="one" id="radio-one" class="form-radio"><label
                         for="radio-one"> 교선핵심</label>
                     <br/>
-                    <input type="checkbox" name="demo" value="one" id="radio-one" class="form-radio"><label
+                    <input type="radio" name="demo" value="one" id="radio-one" class="form-radio"><label
                         for="radio-one"> 공통</label>
                 </div>
                 <div>
@@ -58,9 +72,11 @@
                         for="radio-one"> 해설있음</label>
                 </div>
             </div>
+
+
             <div class="jockboBundle">
                 <h2>
-                    관련된 족보가 {{jockboList.length}}개있네요!
+                    관련된 족보가 <b style="color:#6256f5;">{{jockboList.length}}</b>개있네요!
                 </h2>
                 <div class="jockbo" v-for="item in jockboList" key="item.id">
                     <p class="headline mb-0">{{item.year}}-{{item.semester}}학기</p>
@@ -112,12 +128,14 @@
         appearance: none;
         display: inline-block;
         position: relative;
-        background-color: #d8d8d8;
+        background-color: #fefefe;
         color: #666;
         top: 5px;
         height: 20px;
         width: 20px;
-        border: 0;
+        border: 1px;
+        border-style: solid;
+        border-color: #f6c548;
         border-radius: 50px;
         cursor: pointer;
         margin-right: 7px;
@@ -125,12 +143,8 @@
     }
 
     .form-radio:checked::before {
-        position: absolute;
-        font: 13px/1 'Open Sans', sans-serif;
-        left: 5px;
-        top: 5px;
-        content: '\02143';
-        transform: rotate(40deg);
+        background: #f6c548;
+
     }
 
     .form-radio:hover {
@@ -138,7 +152,7 @@
     }
 
     .form-radio:checked {
-        background-color: #f1f1f1;
+        background: #f6c548;
     }
 
     label {
@@ -161,8 +175,8 @@
     .custom-dot {
         width: 100%;
         height: 100%;
-        border-radius: 0;
-        background-color: #d8d8d8;
+        border-radius: 100%;
+        background-color: #f5c453;
         transition: all .3s;
     }
 
@@ -227,7 +241,7 @@
         padding-top: 20px;
         display: inline-block;
         width: 200px;
-        height: 500px;
+        height: 100vh;
     }
 
     .left-nav-bar-item {
@@ -239,38 +253,27 @@
     .jockboBundle {
         display: inline-block;
         width: 590px;
-        height: 500px;
+        height: 100vh;
         overflow: scroll;
-        background-color: rgb(243, 243, 243);
-
-        padding-top: 20px;
+        background-color: rgb(254, 254, 254);
+        padding: 20px 20px 20px 20px;
     }
 
     .jockbo {
         width: 550px;
         height: 80px;
-
         margin-top: 20px;
-
-        
         background-color: white;
-
         display: flex;
         align-items: center;
         justify-content: space-around;
-
         border: 2px solid rgb(200, 200, 200);
         border-radius: 10px;
-    }
-
-    p {
-        
     }
 
     @media screen and (max-width: 1000px) {
         .jockboList {
             border: 1px solid black;
-
             display: flex;
             justify-content: center;
             align-items: center;
