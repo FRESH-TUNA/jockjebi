@@ -6,7 +6,7 @@
             <div style="border-radius: 0.5em;box-shadow: 0 10px 5px #c2bfbe;background-color:white;height:200px; width:500px;display: inline-block;"></div>
         </div>
 
-        <router-link to="/hello">hello</router-link>
+        <button @click="searchJockbo">searchTest</button>
 
         <v-container>
             <v-layout row>
@@ -63,15 +63,9 @@
     export default {
         data() {
             return {
-                search: "",
+                subject: '',
                 dummy: [],
-                id: '1',
-                subject: 'Dashboard',
-                professor: 'Get detailed anlytics to measure and analyze how users engage with your app',
-                year: 'orange',
-                semester: '2019',
-                category: '전필',
-                file : 'aaaa.png',
+                
                 links: [
                     {
                         id: '1',
@@ -116,36 +110,20 @@
         mounted() {
             axios({ method: "GET", "url": "http://127.0.0.1:8000/api/post" }).then(result => {
                 this.dummy = result.data;
-                console.log(this.dummy);
             }, error => {
                 console.error(error);
             });
         },
 
         methods: {
-            sendData() {
-                axios({ method: "POST", "url": "https://httpbin.org/post", "data": this.input, "headers": { "content-type": "application/json" } }).then(result => {
-                    this.response = result.data;
+            searchJockbo() {
+                axios({ method: "GET", "url": "http://127.0.0.1:8000/api/post?university=1&subject=수학"}).then(result => {
+                    this.$store.state.jockboList = result.data;
+                    console.log(this.$store.state.jockboList)
+                    this.$router.push('/jockbolist')
                 }, error => {
                     console.error(error);
                 });
-            },
-
-            onBlur() {
-                this.searching = false
-                this.search = ''
-            },
-
-            searchBegin() {
-                this.searching = true
-                setTimeout(() => document.querySelector('#search').focus(), 50)
-            },
-
-            searchEnd() {
-                this.searching = false
-                this.search = ''
-                document.querySelector('#search').blur()
-                this.$router.push('/hello')
             }
         }
     }
