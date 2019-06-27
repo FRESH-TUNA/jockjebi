@@ -106,6 +106,7 @@
             <div class="auth-modal-body" @click="blockPropagate">
                 <label for="male">아이디</label>
                 <input type="text" v-model="username">
+                <label for="male"></label>
                 <label for="male">비밀번호</label>
                 <input type="password" v-model="password">
                 <button class="login-button" @click="login">로그인</button>
