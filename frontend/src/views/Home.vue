@@ -1,36 +1,39 @@
 <template>
     <div>
-        <v-toolbar
-                dense
-                color="#CDCAC9"
-                dark
-                extended
-                extension-height="300"
-                flat
-        >
-            <v-toolbar-title class="mx-auto" slot="extension">
+<!--        <v-toolbar-->
+<!--                dense-->
+<!--                color="#CDCAC9"-->
+<!--                dark-->
+<!--                extended-->
+<!--                extension-height="300"-->
+<!--                flat-->
+<!--        >-->
+<!--            <v-toolbar-title class="mx-auto" slot="extension">-->
 
-                <h2 style="text-align:center">족보마켓</h2>
-                <router-view class="view one"></router-view>
+<!--                <h2 style="text-align:center">족보마켓</h2>-->
+<!--                <router-view class="view one"></router-view>-->
 
-                <input type="text" class="form-control" placeholder="할일을 입력하세요">
+<!--                <input type="text" class="form-control" placeholder="할일을 입력하세요">-->
 
-                <div :class="{'searching--closed': !searching}" class="searching">
-                    <v-text-field
-                            id="search"
-                            v-model="search"
-                            append-icon="close"
-                            @click:append="searchEnd"
-                            label="Search"
-                            hide-details
-                            single-line
-                            color="white"
-                            @blur="onBlur"
-                    ></v-text-field>
-                </div>
+<!--                <div :class="{'searching&#45;&#45;closed': !searching}" class="searching">-->
+<!--                    <v-text-field-->
+<!--                            id="search"-->
+<!--                            v-model="search"-->
+<!--                            append-icon="close"-->
+<!--                            @click:append="searchEnd"-->
+<!--                            label="Search"-->
+<!--                            hide-details-->
+<!--                            single-line-->
+<!--                            color="white"-->
+<!--                            @blur="onBlur"-->
+<!--                    ></v-text-field>-->
+<!--                </div>-->
 
-            </v-toolbar-title>
-        </v-toolbar>
+<!--            </v-toolbar-title>-->
+<!--        </v-toolbar>-->
+        <div style="height:500px;text-align:center">
+            <div style="outline-style:solid;height:150px; width:200px;display: inline-block;"></div>
+        </div>
 
         <router-link to="/hello">hello</router-link>
 
