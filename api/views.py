@@ -9,6 +9,44 @@ from api.serializers.CommentSerializer import CommentSerializer
 from api.models import *
 from django.contrib.auth.models import User
 import logging
+import json
+from django.contrib import auth
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+
+@csrf_exempt
+def signup(request):
+    if request.method == 'POST':
+        body = json.loads(request.body.decode('utf-8'))
+        if body['password1'] == body['password2']:
+            User.objects.create_user(
+                username=body['username'],
+                password=body['password1']
+            )
+            return JsonResponse({'result': 'success'})
+
+@csrf_exempt
+def signin(request):
+    if request.method == 'POST':
+        body = json.loads(request.body.decode('utf-8'))
+        user = auth.authenticate(
+            request,
+            username=body['username'],
+            password=body['password']
+        )
+
+        if user is not None:
+            auth.login(request, user)
+            return JsonResponse({'result': 'success'})
+        else:
+            return JsonResponse({'result': 'failed'})
+    return JsonResponse({'result': 'failed'})
+
+def signout(request):
+    auth.logout(request)
+    return JsonResponse({'result': 'success'})
+    
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()

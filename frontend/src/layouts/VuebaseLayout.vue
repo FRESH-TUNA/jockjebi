@@ -121,7 +121,7 @@
                                 <v-icon>lock_open</v-icon>
                             </v-list-tile-action>
                             <v-list-tile-content>
-                                <v-list-tile-title>Logout</v-list-tile-title>
+                                <v-list-tile-title @click="changeAuthModalState">Login</v-list-tile-title>
                             </v-list-tile-content>
                         </v-list-tile>
                     </v-list>
@@ -173,6 +173,16 @@
 <!--                </v-list-tile>-->
 <!--            </v-list>-->
 <!--        </v-navigation-drawer>-->
+
+    <div class="auth-modal" @click="closeAuthModal">
+        <div class="auth-modal-body" @click="blockPropagate">
+            <label for="male">아이디</label>
+            <input type="text" v-model="username">
+            <label for="male">비밀번호</label>
+            <input type="password" v-model="password">
+            <button class="login-button" @click="login">로그인</button>
+        </div>
+    </div>
     </v-app>
 </template>
 
@@ -185,6 +195,8 @@
                 appName: process.env.VUE_APP_APP_NAME,
                 drawer: true,
                 fixed: false,
+                username: '',
+                password: '',
                 analyticsItems: [
                     {
                         icon: 'dashboard',
@@ -271,6 +283,33 @@
                 this.searching = false
                 this.search = ''
                 document.querySelector('#search').blur()
+            },
+
+            changeAuthModalState() {
+                this.$store.commit('changeAuthModalState');
+            },
+            closeAuthModal(event) {
+                if(this.$store.state.authModalState === true)
+                    this.$store.commit('changeAuthModalState')
+            },
+            blockPropagate(event) {
+                event.stopPropagation();
+            },
+            login() {
+                axios({
+                    method: 'post',
+                    url: 'http://127.0.0.1:8000/signin/',
+                    data: {
+                        username: this.username,
+                        password: this.password
+                    },
+                })
+                .then(function (response) {
+                    console.log(response.data);
+                })
+                .catch(function (response) {
+                    console.log(response);
+                });
             }
         }
     }
@@ -321,5 +360,59 @@
         max-width: 960px; /* 2 */
         padding-right: 10px; /* 3 */
         padding-left:  10px; /* 3 */
+    }
+
+    .auth-modal {
+        display: none;
+        
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+
+        z-index: 3;
+
+        background-color: rgba(0, 0, 0, 0.5);
+
+        align-items: center;
+        justify-content: center;
+    }
+
+    .auth-modal-body {
+        width: 600px;
+        height: 400px;
+        padding-top: 100px;
+        background-color: rgb(230, 230, 230)
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        height: 100%;
+
+        border: 1px solid black;
+    }
+
+    label, input {
+        display: block;
+        width: 90%;
+        height: 40px;
+        margin: auto;
+    }
+
+    input {
+        background-color: white;
+    }
+
+    .login-button {
+        margin-top: 20px;
+        margin-left: 470px;
+        width: 100px;
+        height: 50px;
+        background-color: white;
     }
 </style>
