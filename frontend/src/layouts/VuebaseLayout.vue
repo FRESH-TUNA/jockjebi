@@ -13,16 +13,17 @@
             >
                 <v-spacer></v-spacer>
                 <div class="v-toolbar-title">
-                    <router-link to="/"><h2 style="color:#d8d8d8;text-decoration:none">족보.io</h2></router-link>
+                    <router-link to="/"><h2 style="color:#d8d8d8;text-decoration:none">Jokjebi</h2></router-link>
                 </div>
                 <v-spacer></v-spacer>
+                    <div class="hideit" style="padding-right:40px">
+                        <router-link to="/jockbolist"><h2 style="color:#7d7d7d;font-size:15px"><b>스크랩한 족보</b></h2>
+                        </router-link>
+                    </div>
 
-                <div style="padding-right:40px">
-                    <router-link to="/jockbolist"><h2 style="color:#7d7d7d;font-size:15px"><b>스크랩한 족보</b></h2></router-link>
-                </div>
-
-                <div style="padding-right:70px">
-                    <router-link to="/createjockbo"><h2 style="color:#7d7d7d;font-size:15px"><b>족보 업로드</b></h2></router-link>
+                    <div class="hideit" style="padding-right:70px">
+                        <router-link to="/createjockbo"><h2 style="color:#7d7d7d;font-size:15px"><b>족보 업로드</b></h2>
+                        </router-link>
                 </div>
                 <div style="  border-left: 1px solid #e5e5e5; height: 70px;"></div>
                 <div style="padding-left:20px;padding-right:40px">
@@ -83,7 +84,7 @@
                                 <v-list-tile-action>
                                     <v-icon>lock_open</v-icon>
                                 </v-list-tile-action>
-                                <v-list-tile-content>
+                                <v-list-tile-content @click="changeAuthModalState">
                                     <v-list-tile-title>Logout</v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
@@ -213,33 +214,23 @@
                 this.$store.commit('changeAuthModalState');
             },
             closeAuthModal(event) {
-                if(this.$store.state.authModalState === true)
+                if (this.$store.state.authModalState === true)
                     this.$store.commit('changeAuthModalState')
             },
             blockPropagate(event) {
                 event.stopPropagation();
             },
+            getUserScrapedData() {
+                axios({
+                    method: 'post',
+                    url: 'http://127.0.0.1:8000/api/post/scrap', 
+                    headers: {
+                        authorization: this.$store.state.jwt,
+                    },
+                }).then((response) => {console.log(response.data)})
+            },
             login() {
                 this.$store.dispatch('obtainToken', {username:this.username, password:this.password});
-                // axios({
-                //     method: 'post',
-                //     url: 'http://127.0.0.1:8000/signin/',
-                //     data: {
-                //         username: this.username,
-                //         password: this.password
-                //     },
-                // })
-                // .then(function (response) {
-                //     axios({
-                //         method: 'get',
-                //         withCredentials: true,
-                //         url: 'http://127.0.0.1:8000/api/post?',
-                //     }).then(function (response) {
-                //         console.log(response.data);
-                //     })
-                // }).catch(function (response) {
-                //     console.log(response);
-                // });                
             }
         }
     }
@@ -247,7 +238,16 @@
 
 <style scoped lang="stylus">
     @import '../../node_modules/vuetify/src/stylus/settings/_variables.styl';
-    a {  text-decoration: none;}
+    a {
+        text-decoration: none;
+    }
+
+    @media screen and (max-width: 960px) {
+        .hideit {
+            display: none;
+        }
+
+    }
 
     .bottom-menu {
         position: absolute;
@@ -295,7 +295,7 @@
 
     .auth-modal {
         display: none;
-        
+
         position: fixed;
         top: 0;
         left: 0;
