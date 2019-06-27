@@ -80,7 +80,7 @@ export default {
                 data: bodyFormData,
                 headers: {
                     authorization: this.$store.state.jwt,
-                    'Content-Type': 'application/form-data'
+                    'Content-Type': 'multipart/form-data'
                 },
             }).then((response) => {console.log(response.data)})
 
