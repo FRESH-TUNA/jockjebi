@@ -11,7 +11,9 @@
 ## Opensource를 사용한 것
 - vuebase : UI 구성 참고 | fully opensource
   - openhack 기간 내에 아래와 같이 issue로 답변 받음
+  
 ![img](http://ww4.sinaimg.cn/large/006tNc79gy1g4gfgbhks3j30xu0u01kx.jpg)
+
 - Vue.js : frontend 구성 | MIT Lisence
 - axios : REST API 통신 | MIT  Lisence
 - vuetify : 컴포넌트 레이아웃 구성 | MIT Lisence

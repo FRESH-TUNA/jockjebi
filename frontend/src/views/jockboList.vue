@@ -79,9 +79,10 @@
                     관련된 족보가 <b style="color:#6256f5;">{{jockboList.length}}</b>개있네요!
                 </h2>
                 <div class="jockbo" v-for="item in jockboList" key="item.id">
-                    <p class="headline mb-0">{{item.year}}-{{item.semester}}학기</p>
-                    <p class="headline mb-0">{{item.subject}}</p>
-                    <p class="headline mb-0">{{item.professor}} 교수님</p>
+                    <div class="headline mb-0">{{item.subject}}</div>
+                    <span class="headline mb-0">{{item.year}}-{{item.semester}}학기</span>
+                    <span class="headline mb-0">{{item.professor}} 교수님</span>
+                    <div>2018.7.14등록   다운로드 139건, 스크랩 81</div>
                 </div>
             </div>
         </div>

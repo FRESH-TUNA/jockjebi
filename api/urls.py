@@ -6,7 +6,8 @@ from django.urls import path
 
 router = DefaultRouter(trailing_slash=False)
 urlpatterns = [
-    path('getuseruni', getuseruni)
+    path('getuseruni', getuseruni),
+    path('signup', signup),
 ]
 
 router.register(r'post', PostViewSet, basename='post')
