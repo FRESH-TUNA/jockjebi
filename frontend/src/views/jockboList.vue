@@ -78,10 +78,11 @@
                 <h2>
                     관련된 족보가 <b style="color:#6256f5;">{{jockboList.length}}</b>개있네요!
                 </h2>
-                <div class="jockbo" v-for="item in jockboList" key="item.id">
-                    <p class="headline mb-0">{{item.year}}-{{item.semester}}학기</p>
-                    <p class="headline mb-0">{{item.subject}}</p>
-                    <p class="headline mb-0">{{item.professor}} 교수님</p>
+                <div style="padding: 20px 20px 20px 20px"class="jockbo" v-for="item in jockboList" key="item.id">
+                
+                    <p style="font-size:5px;" >{{item.subject}}</p>
+                    <p style="font-size:5px;" >{{item.year}}-{{item.semester}}학기</p>
+                    <p style="font-size:5px;" >{{item.professor}} 교수님</p>
                 </div>
             </div>
         </div>
@@ -261,13 +262,12 @@
 
     .jockbo {
         width: 550px;
-        height: 80px;
         margin-top: 20px;
         background-color: white;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        border: 2px solid rgb(200, 200, 200);
+        /* display: flex; */
+        /* align-items: center; */
+        /* justify-content: space-around; */
+        border: 1px solid rgb(200, 200, 200);
         border-radius: 10px;
     }
 
