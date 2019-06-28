@@ -135,12 +135,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    @font-face {
-        font-family: 'BBTreeGB';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
 
     .form-radio {
         -webkit-appearance: none;
