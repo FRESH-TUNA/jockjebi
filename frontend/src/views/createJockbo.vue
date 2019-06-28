@@ -80,6 +80,7 @@ export default {
             bodyFormData.append('explain', this.explain);
             bodyFormData.append('file', this.file);
 
+
             console.log(this.$store.state.jwt)
             axios({
                 method: 'post',

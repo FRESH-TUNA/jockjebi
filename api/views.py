@@ -49,7 +49,7 @@ class PostViewSet(viewsets.ModelViewSet):
         elif subject is False:
             serializer = PostListSerializer(Post.objects.all().filter(university=university), many=True)
         else:
-            serializer = PostListSerializer(Post.objects.all().filter(university=university).filter(subject=subject), many=True)
+            serializer = PostListSerializer(Post.objects.all().filter(university=university).filter(subject__contains=subject), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -78,15 +78,16 @@ class PostViewSet(viewsets.ModelViewSet):
     # def destroy(self, request, pk=None):
     #     pass
 
+
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
-    def list(self, request):
-        post = request.GET.get('post', False)
-
-        if post is False:
-            serializer = CommentSerializer(Comment.objects.all(), many=True)
+    def create(self, request):
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user, post=Post.objects.get(pk=2))
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            serializer = CommentSerializer(Comment.objects.all().filter(post=post), many=True)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

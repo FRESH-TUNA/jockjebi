@@ -16,8 +16,8 @@ export default new Vuex.Store({
             refreshJWT: 'http://127.0.0.1:8000/refresh'
         },
 
-        username: '로그인', 
-        useruni: ''
+            username: '로그인', 
+            useruni: ''
     },
     mutations: {
         changeAuthModalState: function() {
@@ -39,6 +39,8 @@ export default new Vuex.Store({
         removeToken(state){
             localStorage.removeItem('t');
             state.jwt = null;
+            this.state.username = '로그인',
+            this.state.useruni= ''
         }
     },
     actions: {
@@ -52,7 +54,18 @@ export default new Vuex.Store({
                 console.log(response.data.token)
                 this.commit('updateToken', response.data.token);
                 this.state.username = payload.username
+            }).then(() => {
+                axios({
+                    method: 'get',
+                    url: 'http://127.0.0.1:8000/api/getuseruni', 
+                    headers: {
+                        authorization: this.state.jwt,
+                    },
+                }).then((response) => {
+                    this.state.useruni = response.data.title
+                    console.log(this.state.useruni)
                 })
+            })
             .catch((error)=>{
                 console.log(error);
                 })
@@ -72,15 +85,15 @@ export default new Vuex.Store({
         inspectToken(){
             // WE WILL ADD THIS LATER
         },
-        findUserUni() {
-            axios({
-                method: 'get',
-                url: 'http://127.0.0.1:8000/api/getuseruni', 
-                headers: {
-                    authorization: this.state.jwt,
-                },
-            }).then((response) => {this.state.useruni = response.data.title})
-        }
+        // findUserUni() {
+        //     axios({
+        //         method: 'get',
+        //         url: 'http://127.0.0.1:8000/api/getuseruni', 
+        //         headers: {
+        //             authorization: this.state.jwt,
+        //         },
+        //     }).then((response) => {this.state.useruni = response.data.title})
+        // }
     }
 })
 

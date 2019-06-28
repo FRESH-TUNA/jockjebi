@@ -8,7 +8,7 @@
                  style="border-radius: 0.5em;box-shadow: 0 10px 5px #292f64;background-color:white;height:200px; width:500px;display: inline-block;">
                 <div class="input-field">
                     <div style="padding-bottom: 20px">
-                        <div style="padding-bottom:10px;float:left;font-size:24px;"><b>숙명여자대학교 시각영상디자인전공</b></div>
+                        <div style="padding-bottom:10px;float:left;font-size:24px;"><b>{{this.$store.state.useruni}}</b></div>
                         <input placeholder="🔍 과목명, 교수명으로 검색" style="width:400px;border-bottom: 5px solid #8a7afa;"
                                type="text" v-model="subject">
                     </div>
