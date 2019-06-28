@@ -76,7 +76,7 @@
                                 </v-list-tile-content>
                             </v-list-tile>
                             <v-divider></v-divider>
-                            <v-list-tile key="profile" @click="changeAuthModalState">
+                            <v-list-tile key="profile" @click="showSignupModal">
                                 <v-list-tile-action>
                                     <v-icon>person</v-icon>
                                 </v-list-tile-action>
@@ -117,10 +117,10 @@
         <div class="signup-modal" @click="closeSignUpModal">
             <div class="auth-modal-body" @click="blockPropagate">
                 <input placeholder="User ID"type="text" v-model="username">
-                <label for="male"></label>
+                <div style="padding-top:20px;"></div>
                 <input placeholder="Password" type="password" v-model="password1">
-                <input placeholder="repeat Password" type="password" v-model="password2">
-                <label for="male"></label>
+                <input placeholder="Repeat Password" type="password" v-model="password2">
+                <div style="padding-top:20px;"></div>
                 <input placeholder="university" type="text" v-model="university">
                 <button style="backgroud-color:black" class="login-button" @click="signup"><b>회원가입</b></button>
             </div>
@@ -231,8 +231,11 @@
             },
 
             changeAuthModalState() {
-                if(this.loginState !== '로그아웃')
+                if(this.loginState !== '로그아웃') {
                     this.$store.commit('changeAuthModalState');
+                    this.username = '';
+                    this.password = '';
+                }
                 else {
                     this.$store.commit('removeToken')
                     this.loginState = '로그인'
@@ -246,6 +249,10 @@
             closeSignUpModal() {
                 let signupModal = document.getElementsByClassName('signup-modal')[0]
                 signupModal.style.display = 'none';
+                this.password1 = '';
+                this.password2 = '';
+                this.username = '';
+                this.university = '';
             },
             signup() {
                 axios({

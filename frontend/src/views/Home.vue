@@ -7,15 +7,17 @@
             <div id="hello"
                  style="border-radius: 0.5em;box-shadow: 0 10px 5px #292f64;background-color:white;height:200px; width:500px;display: inline-block;">
                 <div class="input-field">
-                    <div style="padding-bottom: 20px">
-                        <div style="padding-bottom:10px;float:left;font-size:24px;"><b>{{this.$store.state.useruni}}</b></div>
-                        <input placeholder="🔍 과목명, 교수명으로 검색" style="width:400px;border-bottom: 5px solid #8a7afa;"
+                    <div style="padding-bottom: 10px; padding-top:10px;">
+                        <div style="float:left;font-size:24px;"><b>{{this.$store.state.useruni}}</b></div>
+                        <input placeholder="🔍 과목명, 교수명으로 검색" style="width:400px;border-bottom: 2px solid #8a7afa;"
                                type="text" v-model="subject">
-                    </div>
+                    </div >
+                    <div style="padding-top:20px;">
                     <v-btn class="searchBeginButton"
-                           style="width:200px;font-size:18px;color:white;background-color:#d0c9fd" @click="searchBegin">
+                           style="border-radius:10px;width:200px;height:50px;font-size:18px;color:white;background-color:#d0c9fd" @click="searchBegin">
                         <b>족보 검색하기</b>
                     </v-btn>
+                    </div>
                     <!-- <div :class="{'searching--closed': !searching}" class="searching"> -->
                     <!-- </div> -->
                 </div>
