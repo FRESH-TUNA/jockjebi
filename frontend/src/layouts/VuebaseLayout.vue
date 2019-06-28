@@ -66,6 +66,7 @@
                                 <h2 style="color:#796ef6;font-size:15px" @click="showSignupModal">회원가입</h2>
                             </v-avatar>
                         </v-btn>
+                        
                         <v-list class="pa-0" light>
                             <v-list-tile avatar>
                                 <v-list-tile-avatar>
@@ -241,9 +242,10 @@
                     this.loginState = '로그인'
                 }
             },
-            showSignupModal() {
+            showSignupModal(event) {
                 let signupModal = document.getElementsByClassName('signup-modal')[0]
                 signupModal.style.display = 'flex';
+                event.stopPropagation()
             },
             closeSignUpModal() {
                 let signupModal = document.getElementsByClassName('signup-modal')[0]
