@@ -58,7 +58,7 @@
                     <v-menu offset-y>
                         <v-btn icon slot="activator">
                             <v-avatar class="white" size="32">
-                                <h2 style="color:#796ef6;font-size:15px">{{loginname}}</h2>
+                                <h2 style="color:#796ef6;font-size:15px">{{this.$store.state.username}}</h2>
                             </v-avatar>
                         </v-btn>
                         <v-list class="pa-0" light>
@@ -69,8 +69,8 @@
                                     </v-avatar>
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
-                                    <v-list-tile-title>{{userstate}}</v-list-tile-title>
-                                    <v-list-tile-sub-title>{{useruni}}</v-list-tile-sub-title>
+                                    <v-list-tile-title>{{this.$store.state.username}}</v-list-tile-title>
+                                    <v-list-tile-sub-title>{{this.$store.state.useruni}}</v-list-tile-sub-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                             <v-divider></v-divider>
@@ -124,9 +124,7 @@
                 appName: process.env.VUE_APP_APP_NAME,
                 drawer: true,
                 fixed: false,
-                useruni: '',
-                userstate: '계정',
-                loginname: '로그인',
+                username: '',
                 password: '',
                 loginState: '로그인',
                 analyticsItems: [
@@ -223,9 +221,6 @@
                 else {
                     this.$store.commit('removeToken')
                     this.loginState = '로그인'
-                    this.loginname = '로그인'
-                    this.userstate = '계정'
-                    this.useruni = ''
                 }
             },
             closeAuthModal(event) {
@@ -248,14 +243,32 @@
                 })
             },
             login() {
-                this.$store.dispatch('obtainToken', {username:this.username, password:this.password}).then(() => {
-                    this.password=''
-                    this.loginState = '로그아웃'
+                const promise = new Promise((resolve, reject) => {
+                    if (this.$store.dispatch('obtainToken', {username:this.username, password:this.password})) {
+                        resolve();
+                    }
+                });
+
+                promise.then(result => {
+                    this.headerusername = this.$store.state.username
+                    this.loginState = '로그아웃',
                     this.closeAuthModal()
-                    this.loginname = this.$store.state.username
-                    this.userstate = this.$store.state.username
-                    this.$store.dispatch('findUserUni').then(() => {this.useruni = this.$store.state.useruni})
-                })
+                    this.password = ''
+                    this.username = ''
+                }, err => {
+                    console.log(err);
+                });
+
+                // this.$store.dispatch('obtainToken', {username:this.username, password:this.password}).then(() => {
+                //     this.password=''
+                //     this.loginState = '로그아웃'
+                //     this.closeAuthModal()
+                //     this.$store.dispatch('findUserUni').then(() => {
+                //         this.useruni = this.$store.state.useruni
+                //         this.loginname = this.$store.state.username
+                //         this.userstate = this.$store.state.username
+                //     })
+                // })
             },
         }
     }

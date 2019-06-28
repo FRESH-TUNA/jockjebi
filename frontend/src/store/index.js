@@ -16,8 +16,13 @@ export default new Vuex.Store({
             refreshJWT: 'http://127.0.0.1:8000/refresh'
         },
 
+<<<<<<< HEAD
         username: '로그인',
         useruni: ''
+=======
+            username: '로그인',
+            useruni: ''
+>>>>>>> 9e849b73634bb9328f21e55a48b486ac15928879
     },
     mutations: { function() {
             let authModal = document.getElementsByClassName("auth-modal")[0];
@@ -39,6 +44,8 @@ export default new Vuex.Store({
         removeToken(state){
             localStorage.removeItem('t');
             state.jwt = null;
+            this.state.username = '로그인',
+            this.state.useruni= ''
         }
     },
     actions: {
@@ -52,7 +59,18 @@ export default new Vuex.Store({
                 console.log(response.data.token)
                 this.commit('updateToken', response.data.token);
                 this.state.username = payload.username
+            }).then(() => {
+                axios({
+                    method: 'get',
+                    url: 'http://127.0.0.1:8000/api/getuseruni',
+                    headers: {
+                        authorization: this.state.jwt,
+                    },
+                }).then((response) => {
+                    this.state.useruni = response.data.title
+                    console.log(this.state.useruni)
                 })
+            })
             .catch((error)=>{
                 console.log(error);
                 })
@@ -72,15 +90,6 @@ export default new Vuex.Store({
         inspectToken(){
             // WE WILL ADD THIS LATER
         },
-        findUserUni() {
-            axios({
-                method: 'get',
-                url: 'http://127.0.0.1:8000/api/getuseruni',
-                headers: {
-                    authorization: this.state.jwt,
-                },
-            }).then((response) => {this.state.useruni = response.data.title})
-        }
     }
 })
 
