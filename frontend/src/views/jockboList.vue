@@ -276,12 +276,16 @@
 
     .jockbo {
         width: 550px;
+
+
+        /*height: 80px;*/
         margin-top: 20px;
         background-color: white;
-        /* display: flex; */
-        /* align-items: center; */
-        /* justify-content: space-around; */
-        border: 1px solid rgb(200, 200, 200);
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*justify-content: space-around;*/
+        border: 2px solid rgb(200, 200, 200);
+
         border-radius: 10px;
     }
 

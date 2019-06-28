@@ -61,11 +61,8 @@
                                 <h2 style="color:#796ef6;font-size:15px">{{this.$store.state.username}}</h2>
                             </v-avatar>
                         </v-btn>
-                        <v-btn icon slot="activator">
-                            <v-avatar class="white" size="32">
-                                <h2 style="color:#796ef6;font-size:15px" @click="showSignupModal">회원가입</h2>
-                            </v-avatar>
-                        </v-btn>
+
+
                         <v-list class="pa-0" light>
                             <v-list-tile avatar>
                                 <v-list-tile-avatar>
@@ -79,12 +76,12 @@
                                 </v-list-tile-content>
                             </v-list-tile>
                             <v-divider></v-divider>
-                            <v-list-tile key="profile" @click="">
+                            <v-list-tile key="profile" @click="changeAuthModalState">
                                 <v-list-tile-action>
                                     <v-icon>person</v-icon>
                                 </v-list-tile-action>
                                 <v-list-tile-content>
-                                    <v-list-tile-title>My Profile</v-list-tile-title>
+                                    <v-list-tile-title >SignUp</v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                             <v-divider></v-divider>
@@ -243,9 +240,10 @@
             },
             showSignupModal(event) {
                 let signupModal = document.getElementsByClassName('signup-modal')[0]
-                signupModal.style.display = 'block';
+                signupModal.style.display = 'flex';
+                event.stopPropagation()
             },
-            closeSignUpModal(event) {
+            closeSignUpModal() {
                 let signupModal = document.getElementsByClassName('signup-modal')[0]
                 signupModal.style.display = 'none';
             },
@@ -260,7 +258,7 @@
                         university: this.university
                     },
                 }).then((response) => {
-                    console.log(response.data)
+                    this.closeSignUpModal()
                 })
             },
             closeAuthModal(event) {
@@ -395,6 +393,9 @@
         height: 400px;
         padding-top: 50px;
         background-color: #6A4CEF;
+        opacity: 0.8;
+
+        border-radius: 30px;
     }
     ::placeholder {
         color:white;
