@@ -243,7 +243,7 @@
             },
             showSignupModal(event) {
                 let signupModal = document.getElementsByClassName('signup-modal')[0]
-                signupModal.style.display = 'block';
+                signupModal.style.display = 'flex';
             },
             closeSignUpModal(event) {
                 let signupModal = document.getElementsByClassName('signup-modal')[0]
