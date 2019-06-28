@@ -78,11 +78,19 @@
                 <h2>
                     관련된 족보가 <b style="color:#6256f5;">{{jockboList.length}}</b>개있네요!
                 </h2>
-                <div class="jockbo" v-for="item in jockboList" key="item.id">
-                    <div class="headline mb-0">{{item.subject}}</div>
-                    <span class="headline mb-0">{{item.year}}-{{item.semester}}학기</span>
-                    <span class="headline mb-0">{{item.professor}} 교수님</span>
-                    <div>2018.7.14등록   다운로드 139건, 스크랩 81</div>
+
+                <div style="padding: 20px 20px 20px 20px" class="jockbo" v-for="item in jockboList" key="item.id">
+                    <div style="font-size:16px;"><b>{{item.subject}} </b><b style="color:#f5c353;">★</b> <span
+                            style="font-size:13px;">3.5</span></div>
+                    <span style="padding-right:20px;">{{item.year}}년 {{item.semester}}학기</span>
+                    <span>전공필수 | {{item.professor}}</span>
+                    <div style="display: flex;">
+                        <div style="font-size:13px; padding-top:10px;">2018.7.14등록 - 다운로드 139건, 스크랩 81</div>
+                        <div class="hidden" style="font-size:20px;color:#212121;padding: 0px 0px 0px 160px">
+                            <img style="height:20px;"src="http://ww1.sinaimg.cn/large/006tNc79gy1g4go4qtywqj30e80e8aaj.jpg">
+                            25 크레딧
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -122,7 +130,13 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@font-face { font-family: 'BBTreeGB'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff'); font-weight: normal; font-style: normal; }
+    @font-face {
+        font-family: 'BBTreeGB';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
     .form-radio {
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -262,17 +276,20 @@
 
     .jockbo {
         width: 550px;
-        height: 80px;
+        /*height: 80px;*/
         margin-top: 20px;
         background-color: white;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*justify-content: space-around;*/
         border: 2px solid rgb(200, 200, 200);
         border-radius: 10px;
     }
 
     @media screen and (max-width: 1000px) {
+        .hidden{
+            display: none;
+        }
         .jockboList {
             border: 1px solid black;
             display: flex;

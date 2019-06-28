@@ -16,13 +16,9 @@ export default new Vuex.Store({
             refreshJWT: 'http://127.0.0.1:8000/refresh'
         },
 
-<<<<<<< HEAD
         username: '로그인',
         useruni: ''
-=======
-            username: '로그인',
-            useruni: ''
->>>>>>> 9e849b73634bb9328f21e55a48b486ac15928879
+
     },
     mutations: { function() {
             let authModal = document.getElementsByClassName("auth-modal")[0];
