@@ -1,6 +1,9 @@
-# 2019 Openhack 28조
+# 2019 Openhack 28조 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 > 대학생들을 위한 족보 공유 플랫폼
+
 ## 멘토님들에게 도움 받은 것
+
 - okky 허광남 멘토님 : 웹개발 지식, git 문제 해결
 - Zepl 진유림 멘토님 : Axios 디버깅
 - 국민대학교 이민석교수님 : 족보공유 플랫폼 아이템 첨삭
@@ -9,9 +12,10 @@
 - 당근마켓 정창훈 멘토님 : npm 디버깅
 
 ## Opensource를 사용한 것
+
 - vuebase : UI 구성 참고 | fully opensource
   - openhack 기간 내에 아래와 같이 issue로 답변 받음
-  
+
 ![img](http://ww4.sinaimg.cn/large/006tNc79gy1g4gfgbhks3j30xu0u01kx.jpg)
 
 - Vue.js : frontend 구성 | MIT Lisence
