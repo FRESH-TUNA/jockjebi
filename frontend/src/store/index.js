@@ -20,9 +20,9 @@ export default new Vuex.Store({
         useruni: ''
 
     },
-    mutations: { function() {
+    mutations: {
+        changeAuthModalState() {
             let authModal = document.getElementsByClassName("auth-modal")[0];
-        changeAuthModalState:
 
             if(this.state.authModalState === false) {
                 authModal.style.display = 'flex'

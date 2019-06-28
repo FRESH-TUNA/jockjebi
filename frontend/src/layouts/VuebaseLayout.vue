@@ -61,6 +61,11 @@
                                 <h2 style="color:#796ef6;font-size:15px">{{this.$store.state.username}}</h2>
                             </v-avatar>
                         </v-btn>
+                        <v-btn icon slot="activator">
+                            <v-avatar class="white" size="32">
+                                <h2 style="color:#796ef6;font-size:15px" @click="showSignupModal">회원가입</h2>
+                            </v-avatar>
+                        </v-btn>
                         <v-list class="pa-0" light>
                             <v-list-tile avatar>
                                 <v-list-tile-avatar>
@@ -104,12 +109,23 @@
 
         <div class="auth-modal" @click="closeAuthModal">
             <div class="auth-modal-body" @click="blockPropagate">
-                <label for="male">아이디</label>
-                <input type="text" v-model="username">
+                <input placeholder="User ID"type="text" v-model="username">
                 <label for="male"></label>
-                <label for="male">비밀번호</label>
-                <input type="password" v-model="password">
-                <button class="login-button" @click="login">로그인</button>
+                <input placeholder="Password" type="password" v-model="password">
+                <button style="backgroud-color:black" class="login-button" @click="login"><b>로그인</b></button>
+                <div style="padding:50px 0px 0px 100px;color:white">비밀번호를 잊으셨나요? | <b style="color:#FDC335;">회원가입</b></div>
+            </div>
+        </div>
+
+        <div class="signup-modal" @click="closeSignUpModal">
+            <div class="auth-modal-body" @click="blockPropagate">
+                <input placeholder="User ID"type="text" v-model="username">
+                <label for="male"></label>
+                <input placeholder="Password" type="password" v-model="password1">
+                <input placeholder="repeat Password" type="password" v-model="password2">
+                <label for="male"></label>
+                <input placeholder="university" type="text" v-model="university">
+                <button style="backgroud-color:black" class="login-button" @click="signup"><b>회원가입</b></button>
             </div>
         </div>
     </v-app>
@@ -126,6 +142,8 @@
                 fixed: false,
                 username: '',
                 password: '',
+                password1: '',
+                password2: '',
                 loginState: '로그인',
                 analyticsItems: [
                     {
@@ -222,6 +240,28 @@
                     this.$store.commit('removeToken')
                     this.loginState = '로그인'
                 }
+            },
+            showSignupModal(event) {
+                let signupModal = document.getElementsByClassName('signup-modal')[0]
+                signupModal.style.display = 'block';
+            },
+            closeSignUpModal(event) {
+                let signupModal = document.getElementsByClassName('signup-modal')[0]
+                signupModal.style.display = 'none';
+            },
+            signup() {
+                axios({
+                    method: 'post',
+                    url: 'http://127.0.0.1:8000/api/signup',
+                    data: {
+                        username: this.username,
+                        password1: this.password1,
+                        password2: this.password2,
+                        university: this.university
+                    },
+                }).then((response) => {
+                    console.log(response.data)
+                })
             },
             closeAuthModal(event) {
                 if (this.$store.state.authModalState === true)
@@ -331,7 +371,7 @@
         padding-left: 10px; /* 3 */
     }
 
-    .auth-modal {
+    .auth-modal, .signup-modal {
         display: none;
 
         position: fixed;
@@ -349,10 +389,15 @@
     }
 
     .auth-modal-body {
-        width: 600px;
+        align-items: center;
+        justify-content: center;
+        width: 400px;
         height: 400px;
-        padding-top: 100px;
-        background-color: rgb(230, 230, 230)
+        padding-top: 50px;
+        background-color: #6A4CEF;
+    }
+    ::placeholder {
+        color:white;
     }
 
     form {
@@ -368,21 +413,32 @@
 
     label, input {
         display: block;
-        width: 90%;
+        width: 60%;
         height: 40px;
         margin: auto;
     }
 
     input {
-        background-color: white;
+        background-color: #6A4CEF;
+        color:white;
+        border: 0;
+        outline: 0;
+        border-bottom: 2px solid #FDC335;
     }
 
     .login-button {
-        margin-top: 20px;
-        margin-left: 470px;
-        width: 100px;
+        margin-top: 50px;
+        margin-left: 100px;
+        width: 200px;
         height: 50px;
-        background-color: white;
+        border-radius: 10px;
+        background-color: #FDC335;
+        color:white;
+        font-size:17px;
+    }
+
+    input[type="text"], input[type="password"], textarea, select {
+        outline: none;
     }
 </style>
 
