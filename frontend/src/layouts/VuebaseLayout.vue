@@ -397,6 +397,9 @@
         height: 400px;
         padding-top: 50px;
         background-color: #6A4CEF;
+        opacity: 0.8;
+
+        border-radius: 30px;
     }
     ::placeholder {
         color:white;
