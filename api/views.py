@@ -27,6 +27,13 @@ def signup(request):
                 username=body["username"],
                 password=body["password1"]
             )
+            universityObject, created = University.objects.get_or_create(title=body["university"]) 
+            
+            Enrollment.objects.create(
+                user=user,
+                university=universityObject
+            )
+
             return JsonResponse({"signup":"success"})
 
 
