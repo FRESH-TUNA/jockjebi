@@ -14,6 +14,21 @@ import json
 from django.contrib import auth
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def signup(request):
+    if request.method == "POST":
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        if body['password1'] == body["password2"]:
+            user = User.objects.create_user(
+                username=body["username"],
+                password=body["password1"]
+            )
+            return JsonResponse({"signup":"success"})
+
 
 class UniViewSet(viewsets.ModelViewSet):
     queryset = University.objects.all()

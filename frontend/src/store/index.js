@@ -16,11 +16,11 @@ export default new Vuex.Store({
             refreshJWT: 'http://127.0.0.1:8000/refresh'
         },
 
-            username: '로그인', 
-            useruni: ''
+        username: '로그인',
+        useruni: ''
     },
-    mutations: {
-        changeAuthModalState: function() {
+    mutations: { 
+        changeAuthModalState() {
             let authModal = document.getElementsByClassName("auth-modal")[0];
 
             if(this.state.authModalState === false) {
@@ -57,7 +57,7 @@ export default new Vuex.Store({
             }).then(() => {
                 axios({
                     method: 'get',
-                    url: 'http://127.0.0.1:8000/api/getuseruni', 
+                    url: 'http://127.0.0.1:8000/api/getuseruni',
                     headers: {
                         authorization: this.state.jwt,
                     },
@@ -85,15 +85,6 @@ export default new Vuex.Store({
         inspectToken(){
             // WE WILL ADD THIS LATER
         },
-        // findUserUni() {
-        //     axios({
-        //         method: 'get',
-        //         url: 'http://127.0.0.1:8000/api/getuseruni', 
-        //         headers: {
-        //             authorization: this.state.jwt,
-        //         },
-        //     }).then((response) => {this.state.useruni = response.data.title})
-        // }
     }
 })
 

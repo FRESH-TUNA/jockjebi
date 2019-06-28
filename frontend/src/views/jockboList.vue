@@ -78,8 +78,8 @@
                 <h2>
                     관련된 족보가 <b style="color:#6256f5;">{{jockboList.length}}</b>개있네요!
                 </h2>
+
                 <div style="padding: 20px 20px 20px 20px"class="jockbo" v-for="item in jockboList" key="item.id">
-                
                     <p style="font-size:5px;" >{{item.subject}}</p>
                     <p style="font-size:5px;" >{{item.year}}-{{item.semester}}학기</p>
                     <p style="font-size:5px;" >{{item.professor}} 교수님</p>
