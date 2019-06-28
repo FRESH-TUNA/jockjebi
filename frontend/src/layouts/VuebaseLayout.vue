@@ -241,11 +241,11 @@
                     this.loginState = '로그인'
                 }
             },
-            showSignupModal(event) {
+            showSignupModal() {
                 let signupModal = document.getElementsByClassName('signup-modal')[0]
                 signupModal.style.display = 'flex';
             },
-            closeSignUpModal(event) {
+            closeSignUpModal() {
                 let signupModal = document.getElementsByClassName('signup-modal')[0]
                 signupModal.style.display = 'none';
             },
@@ -260,7 +260,7 @@
                         university: this.university
                     },
                 }).then((response) => {
-                    console.log(response.data)
+                    this.closeSignUpModal()
                 })
             },
             closeAuthModal(event) {
