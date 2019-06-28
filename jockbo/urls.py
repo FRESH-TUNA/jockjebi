@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     path('token', obtain_jwt_token),
-    path('token/refresh/', refresh_jwt_token),  
+    path('token/refresh/', refresh_jwt_token),
 ]

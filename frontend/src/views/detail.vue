@@ -49,6 +49,20 @@
                     <div style="padding-top:30px;">
                         <div style="font-size:18px; color:#6c60f5"><b>댓글(18)</b></div>
                         <br/>
+                        <div v-for="comment in comments" style="padding: 10px 10px 10px 10px;border-style:solid;width:690px;border-radius:10px;border-width:1px;border-color:#e4e4e4">
+                            <div style="display: flex;">
+                                <div style="padding-right:10px;"><b>우울한 아르마딜로</b></div>
+                                <star-rating :max="5"
+                                             :star-size="13"
+                                             :rounded-corners="true"
+                                             :fixed-points="3"
+                                             :show-rating="false"
+                                ></star-rating>
+                            </div>
+                            <div style="font-size:13px;">{{comment.content}}</div>
+                            <!-- <div style="font-size:13px;">교양 재밌는거 들으세여 중간은 괜찮지만 기말ㅇ진짜 안그래도시험이랑 과제존많던데 이거범위전범위존나ㅏ빡쳐여시벌 다 교양도 비슷하다는앤걍바보스<br/>
+                            아근데운건공부하다보면그거하난좋아여 건강하게살아야겠구나 술을 멀리하게된계기 ㄱㅅㄱㅅ 화이팅하세여</div> -->
+                        </div>
                         <div style="padding: 10px 10px 10px 10px;border-style:solid;width:690px;border-radius:10px;border-width:1px;border-color:#e4e4e4">
                             <div style="display: flex;">
                                 <div style="padding-right:10px;"><b>우울한 아르마딜로</b></div>
@@ -60,7 +74,7 @@
                                 ></star-rating>
                             </div>
                             <div style="font-size:13px;">교양 재밌는거 들으세여 중간은 괜찮지만 기말ㅇ진짜 안그래도시험이랑 과제존많던데 이거범위전범위존나ㅏ빡쳐여시벌 다 교양도 비슷하다는앤걍바보스<br/>
-                            아근데운건공부하다보면그거하난좋아여 건강하게살아야겠구나 술을 멀리하게된계기 ㄱㅅㄱㅅ 화이팅하세여</div>
+                                아근데운건공부하다보면그거하난좋아여 건강하게살아야겠구나 술을 멀리하게된계기 ㄱㅅㄱㅅ 화이팅하세여</div>
                         </div>
                         <div style="font-size:18px; padding-top:20px;color:#6c60f5"><b>의견 남기기</b></div>
                         <div style="display: flex;padding-top:10px;">
@@ -75,13 +89,13 @@
                                 </div>
                                 <div>
                             <textarea placeholder="비방성 댓글은 관리자에 의해 삭제될 수 있습니다." class="input-field" rows="4" cols="50"
-                                      style="width:440px;">
+                                      style="width:440px;" v-model="content">
 
                             </textarea>
                                 </div>
                             </div>
                             <div style="padding-left:20px;">
-                                <button style="font-size:15px;color:white;background-color:#5f52ed;width:100px;height:40px;border-style:solid;border-radius: 10px;">
+                                <button style="font-size:15px;color:white;background-color:#5f52ed;width:100px;height:40px;border-style:solid;border-radius: 10px;" @click="postComment">
                                     <b>등록하기</b>
                                 </button>
                             </div>
@@ -98,15 +112,45 @@
 
 <script>
     import StarRating from 'vue-star-rating'
-    new Vue({
-        data: {
-            test: 3
-        },
-    });
+
     export default {
+        data() {
+            return {
+                test: 3,
+                content: '',
+                comments: []
+            }
+        },
         components: {
             StarRating
         },
+        methods: {
+            readComments() {
+                axios({
+                    method: 'get',
+                    url: 'http://127.0.0.1:8000/api/comment',
+                }).then((response) => {
+                    this.comments = response.data
+                })
+            },
+            postComment() {
+                axios({
+                    method: 'post',
+                    url: 'http://127.0.0.1:8000/api/comment',
+                    data: {
+                        content: this.content
+                    },
+                    headers: {
+                        authorization: this.$store.state.jwt,
+                    },
+                }).then((response) => {
+                    this.readComments()
+                })
+            }
+        },
+        mounted() {
+            this.readComments()
+        }
     }
 
 </script>
