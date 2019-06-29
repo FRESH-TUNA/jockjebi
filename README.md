@@ -25,7 +25,6 @@
   - `$ pip install dj-database-url gunicorn whitenoise`
   - `$ pip freeze > requirements.txt`
   - requirements.txt마지막줄에 psycopg2==2.8.3 추가
-  - ...
 
 ## Jockjebi's function
 
