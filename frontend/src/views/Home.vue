@@ -11,12 +11,12 @@
                         <div style="float:left;font-size:24px;"><b>{{this.$store.state.useruni}}</b></div>
                         <input placeholder="🔍 과목명, 교수명으로 검색" style="width:400px;border-bottom: 2px solid #8a7afa;"
                                type="text" v-model="subject">
-                    </div >
-                    <div style="padding-top:20px;">
-                    <v-btn class="searchBeginButton"
-                           style="border-radius:10px;width:200px;height:50px;font-size:18px;color:white;background-color:#d0c9fd" @click="searchBegin">
-                        <b>족보 검색하기</b>
-                    </v-btn>
+                    </div>
+                    <div class="needpad" style="padding-top:20px;">
+                        <v-btn class="searchBeginButton"
+                               style="border-radius:10px;width:200px;height:50px;font-size:18px;color:white;background-color:#d0c9fd" @click="searchBegin">
+                            <b>족보 검색하기</b>
+                        </v-btn>
                     </div>
                     <!-- <div :class="{'searching--closed': !searching}" class="searching"> -->
                     <!-- </div> -->
@@ -69,6 +69,13 @@
                 });
             }
         },
+        computed: {
+            sendToCondition () {
+                console.log(this.$store.state.username);
+                return this.$store.state.username
+            }
+        },
+
         watch: {
             subject: function () {
                 let searchBeginButton = document.getElementsByClassName('searchBeginButton')[0]
@@ -76,6 +83,13 @@
                     searchBeginButton.style.backgroundColor = '#d0c9fd'
                 else
                     searchBeginButton.style.backgroundColor = '#6A4CFF'
+            },
+            sendToCondition (newCount, oldCount) {
+                console.log(newCount);
+                if (newCount == "로그인")
+                    document.getElementsByClassName("needpad")[0].style.padding = "20px";
+                else
+                    document.getElementsByClassName("needpad")[0].style.padding = "5px";
             }
         }
     }
@@ -102,10 +116,11 @@
         outline: none;
         font-size: 18px;
     }
+
     #image {
         background-image: url("../assets/3.jpg");
         background-color: #ebebeb;
-        background-size:100% 42.7%;
+        background-size: 100% 42.7%;
 
     }
 
