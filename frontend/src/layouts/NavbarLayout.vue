@@ -81,15 +81,15 @@
                                     <v-icon>person</v-icon>
                                 </v-list-tile-action>
                                 <v-list-tile-content>
-                                    <v-list-tile-title >SignUp</v-list-tile-title>
+                                    <v-list-tile-title >회원가입</v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                             <v-divider></v-divider>
-                            <v-list-tile key="lock_open" @click="">
+                            <v-list-tile key="lock_open" @click="changeAuthModalState">
                                 <v-list-tile-action>
                                     <v-icon>lock_open</v-icon>
                                 </v-list-tile-action>
-                                <v-list-tile-content @click="changeAuthModalState">
+                                <v-list-tile-content>
                                     <v-list-tile-title>{{loginState}}</v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
@@ -130,7 +130,7 @@
 
 <script>
     export default {
-        name: 'VuebaseLayout',
+        name: 'NavbarLayout',
 
         data() {
             return {

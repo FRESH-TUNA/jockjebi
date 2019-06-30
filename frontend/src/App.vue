@@ -1,24 +1,19 @@
 <template>
-    <vue-base-layout></vue-base-layout>
+    <NavbarLayout></NavbarLayout>
     <!-- <component :is="component">
         <slot/>
     </component> -->
     <!-- <router-view></router-view> -->
 </template>
 <script>
-    import vueBaseLayout from './layouts/VuebaseLayout'
+    import NavbarLayout from './layouts/NavbarLayout'
 
     export default {
         name: 'App',
 
         components: {
-            vueBaseLayout
+            NavbarLayout
         },
-
-        // computed: {
-        //     component() {
-        //         return VuebaseLayout
-        //     }
-        // }
     }
+
 </script>

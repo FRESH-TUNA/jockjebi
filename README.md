@@ -2,7 +2,7 @@
 
 > 대학생들을 위한 족보 공유 플랫폼 "`족제비`"
 
-![main](http://ww1.sinaimg.cn/large/006tNc79gy1g4i2574o0zj31bf0u07ir.jpg)
+![gif](frontend/src/assets/2.gif)
 
 ## Dependency & Configuration
 

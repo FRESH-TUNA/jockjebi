@@ -24,28 +24,6 @@ const routes = [
         name: 'detail',
         component: () => import('../views/detail')
     },
-    {
-        path: '/dashboard',
-        name: 'dashboard',
-        component: () => import('../views/Dashboard/Layout'),
-        children: [
-            {
-                path: 'indicators',
-                name: 'dashboard.indicators',
-                component: () => import('../views/Dashboard/Indicators')
-            },
-            {
-                path: 'backup',
-                name: 'dashboard.backup',
-                component: () => import('../views/Dashboard/Backup')
-            },
-            {
-                path: 'logs',
-                name: 'dashboard.logs',
-                component: () => import('../views/Dashboard/Logs')
-            }
-        ]
-    }
 ];
 
 export default new VueRouter({
