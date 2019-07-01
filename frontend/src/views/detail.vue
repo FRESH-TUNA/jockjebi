@@ -128,7 +128,7 @@
             readComments() {
                 axios({
                     method: 'get',
-                    url: 'http://127.0.0.1:8000/api/comment',
+                    url: '/api/comment',
                 }).then((response) => {
                     this.comments = response.data
                 })
@@ -136,7 +136,7 @@
             postComment() {
                 axios({
                     method: 'post',
-                    url: 'http://127.0.0.1:8000/api/comment',
+                    url: '/api/comment',
                     data: {
                         content: this.content
                     },

@@ -49,7 +49,7 @@
             }
         },
         mounted() {
-            axios({method: "GET", "url": "http://127.0.0.1:8000/api/post"}).then(result => {
+            axios({method: "GET", "url": "/api/post"}).then(result => {
                 this.dummy = result.data;
             }, error => {
                 console.error(error);
@@ -60,7 +60,7 @@
             searchBegin() {
                 axios({
                     method: "GET",
-                    "url": "http://127.0.0.1:8000/api/post?university=1&subject=" + this.subject
+                    "url": "/api/post?university=1&subject=" + this.subject
                 }).then(result => {
                     this.$store.state.jockboList = result.data;
                     this.$router.push({path: '/jockbolist'});

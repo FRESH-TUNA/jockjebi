@@ -257,7 +257,7 @@
             signup() {
                 axios({
                     method: 'post',
-                    url: 'http://127.0.0.1:8000/api/signup',
+                    url: '/api/signup',
                     data: {
                         username: this.username,
                         password1: this.password1,
@@ -278,7 +278,7 @@
             getUserScrapedData() {
                 axios({
                     method: 'post',
-                    url: 'http://127.0.0.1:8000/api/post/scrap',
+                    url: '/api/post/scrap',
                     headers: {
                         authorization: this.$store.state.jwt,
                     },

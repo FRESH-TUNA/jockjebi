@@ -86,7 +86,7 @@ export default {
             console.log(this.$store.state.jwt)
             axios({
                 method: 'post',
-                url: 'http://127.0.0.1:8000/api/post',
+                url: '/api/post',
                 data: bodyFormData,
                 headers: {
                     authorization: this.$store.state.jwt,
