@@ -214,10 +214,10 @@
         },
 
         methods: {
-            onBlur() {
-                this.searching = false
-                this.search = ''
-            },
+            // onBlur() {
+            //     this.searching = false
+            //     this.search = ''
+            // },
 
             searchBegin() {
                 this.searching = true
