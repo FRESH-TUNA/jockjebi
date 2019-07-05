@@ -7,85 +7,73 @@ export default new Vuex.Store({
     state: {
         jockboList: [],
         searchSubject: '',
-        authModalState: false,
 
         jwt: localStorage.getItem('t'),
+        username: localStorage.getItem('username'),
+        useruni: localStorage.getItem('useruni'),
 
         endpoints: {
             obtainJWT: '/token',
             refreshJWT: '/refresh'
         },
-
-        username: '로그인',
-        useruni: ''
-
     },
     mutations: {
-        changeAuthModalState() {
-            let authModal = document.getElementsByClassName("auth-modal")[0];
-
-            if(this.state.authModalState === false) {
-                authModal.style.display = 'flex'
-                this.state.authModalState = true
-            }
-            else {
-                authModal.style.display = 'none'
-                this.state.authModalState = false
-            }
-        },
         updateToken(state, newToken){
             localStorage.setItem('t', 'jwt ' + newToken);
-            state.jwt = 'jwt ' + newToken;
+            this.state.jwt = 'jwt ' + newToken;
         },
         removeToken(state){
             localStorage.removeItem('t');
+            localStorage.removeItem('username');
+            localStorage.removeItem('useruni');
             state.jwt = null;
-            this.state.username = '로그인',
-            this.state.useruni= ''
+            state.username = null,
+            state.useruni= null
+        },
+        setUsername(state, username){
+            state.username = username
+            localStorage.setItem('username', username);
+        },
+        setUni(state, uni){
+            state.useruni = uni
+            localStorage.setItem('useruni', uni);
         }
     },
     actions: {
-        obtainToken(username, password){
-            const payload = {
-            username: password.username,
-            password: password.password
-            }
+        obtainToken(context, payload){
             axios.post(this.state.endpoints.obtainJWT, payload)
-            .then((response)=>{
-                console.log(response.data.token)
-                this.commit('updateToken', response.data.token);
-                this.state.username = payload.username
-            }).then(() => {
-                axios({
-                    method: 'get',
-                    url: '/api/getuseruni',
-                    headers: {
-                        authorization: this.state.jwt,
-                    },
-                }).then((response) => {
-                    this.state.useruni = response.data.title
-                    console.log(this.state.useruni)
+                .then(response =>{
+                    this.commit('updateToken', response.data.token);
+                    this.commit('setUsername', payload.username);
+                    return context.dispatch('getuseruni')
+                }).then(response => {
+                    this.commit('setUni', response.data.title);
                 })
-            })
-            .catch((error)=>{
-                console.log(error);
+                .catch((error)=>{
+                    console.log(error);
                 })
         },
         refreshToken(){
-            const payload = {
-            token: this.state.jwt
-            }
-            axios.post(this.state.endpoints.refreshJWT, payload)
-            .then((response)=>{
-                this.commit('updateToken', response.data.token)
+            axios.post(this.state.endpoints.refreshJWT, {token: this.state.jwt})
+                .then((response)=>{
+                    this.commit('updateToken', response.data.token)
                 })
-            .catch((error)=>{
-                console.log(error)
+                .catch((error)=>{
+                    console.log(error)
                 })
         },
         inspectToken(){
             // WE WILL ADD THIS LATER
         },
+        getuseruni() {
+            return axios({
+                method: 'get',
+                url: '/api/getuseruni',
+                headers: {
+                    authorization: this.state.jwt,
+                },
+            })
+        }
     }
 })
 

@@ -20,7 +20,7 @@
                     <div class="hideit" style="padding-right:40px">
                         <!-- <router-link to="/jockbolist"><h2 style="color:#7d7d7d;font-size:15px"><b>스크랩한 족보</b></h2>
                         </router-link> -->
-                        <a @click="getUserScrapedData"><h2 style="color:#7d7d7d;font-size:15px"><b>스크랩한 족보</b></h2>
+                        <a @click="onClickGetUserScrapedData"><h2 style="color:#7d7d7d;font-size:15px"><b>스크랩한 족보</b></h2>
                         </a>
                     </div>
 
@@ -58,7 +58,7 @@
                     <v-menu offset-y>
                         <v-btn icon slot="activator">
                             <v-avatar class="white" size="32">
-                                <h2 style="color:#796ef6;font-size:15px">{{this.$store.state.username}}</h2>
+                                <h2 style="color:#796ef6;font-size:15px">{{loginUser}}</h2>
                             </v-avatar>
                         </v-btn>
 
@@ -85,7 +85,7 @@
                                 </v-list-tile-content>
                             </v-list-tile>
                             <v-divider></v-divider>
-                            <v-list-tile key="lock_open" @click="changeAuthModalState">
+                            <v-list-tile key="lock_open" @click="onClickloginLogoutButton">
                                 <v-list-tile-action>
                                     <v-icon>lock_open</v-icon>
                                 </v-list-tile-action>
@@ -104,7 +104,7 @@
             <router-view/>
         </v-content>
 
-        <div class="auth-modal" @click="closeAuthModal">
+        <div class="signin-modal" @click="closeSigninModal">
             <div class="auth-modal-body" @click="blockPropagate">
                 <input placeholder="User ID"type="text" v-model="username">
                 <label for="male"></label>
@@ -130,121 +130,40 @@
 
 <script>
     export default {
-        name: 'NavbarLayout',
-
         data() {
             return {
-                appName: process.env.VUE_APP_APP_NAME,
-                drawer: true,
-                fixed: false,
                 username: '',
                 password: '',
                 password1: '',
                 password2: '',
-                loginState: '로그인',
-                analyticsItems: [
-                    {
-                        icon: 'dashboard',
-                        title: 'Dashboard',
-                        link: '/dashboard/indicators'
-                    },
-                    {
-                        icon: 'event',
-                        title: 'Events',
-                        link: ''
-                    },
-                    {
-                        icon: 'comment',
-                        title: 'Notifications',
-                        link: ''
-                    }
-                ],
-                developItems: [
-                    {
-                        icon: 'supervisor_account',
-                        title: 'Authentification',
-                        link: ''
-                    },
-                    {
-                        icon: 'storage',
-                        title: 'Database',
-                        link: ''
-                    },
-                    {
-                        icon: 'perm_media',
-                        title: 'Storage',
-                        link: ''
-                    },
-                    {
-                        icon: 'public',
-                        title: 'Hosting',
-                        link: ''
-                    },
-                    {
-                        icon: 'functions',
-                        title: 'Functions',
-                        link: ''
-                    }
-                ],
-                miniVariant: false,
-                right: true,
-                rightDrawer: false,
-                tabs: null,
-                tabsItems: [
-                    {
-                        id: 1,
-                        title: 'Indicators',
-                        link: 'indicators'
-                    },
-                    {
-                        id: 2,
-                        title: 'Backup',
-                        link: 'backup'
-                    },
-                    {
-                        id: 3,
-                        title: 'Logs',
-                        link: 'logs'
-                    }
-                ],
-                menuItems: ['Vue', 'NodeJS', 'Laravel'],
-                searching: false,
-                search: ''
             }
         },
-
+        computed: {
+            loginState() {
+                if(this.$store.state.jwt) 
+                    return '로그아웃'
+                else 
+                    return '로그인'
+            },
+            loginUser() {
+                if(this.$store.state.username) 
+                    return this.$store.state.username
+                else 
+                    return '로그인'
+            }
+        },
         methods: {
-            // onBlur() {
-            //     this.searching = false
-            //     this.search = ''
-            // },
-
-            searchBegin() {
-                this.searching = true
-                setTimeout(() => document.querySelector('#search').focus(), 50)
-            },
-
-            searchEnd() {
-                this.searching = false
-                this.search = ''
-                document.querySelector('#search').blur()
-            },
-
-            changeAuthModalState() {
-                if(this.loginState !== '로그아웃') {
-                    this.$store.commit('changeAuthModalState');
-                    this.username = '';
-                    this.password = '';
+            onClickloginLogoutButton() {
+                if(this.$store.state.jwt) {
+                    this.$store.commit('removeToken')
                 }
                 else {
-                    this.$store.commit('removeToken')
-                    this.loginState = '로그인'
+                    this.showSigninModal()
                 }
             },
             showSignupModal(event) {
                 let signupModal = document.getElementsByClassName('signup-modal')[0]
                 signupModal.style.display = 'flex';
-                event.stopPropagation()
             },
             closeSignUpModal() {
                 let signupModal = document.getElementsByClassName('signup-modal')[0]
@@ -253,6 +172,20 @@
                 this.password2 = '';
                 this.username = '';
                 this.university = '';
+            },
+            showSigninModal(event) {
+                let signinModal = document.getElementsByClassName('signin-modal')[0]
+                console.log(signinModal)
+                signinModal.style.display = 'flex';
+            },
+            closeSigninModal(event) {
+                let signinModal = document.getElementsByClassName("signin-modal")[0];
+                signinModal.style.display = 'none'
+                this.username = '';
+                this.password = '';
+            },
+            blockPropagate(event) {
+                event.stopPropagation();
             },
             signup() {
                 axios({
@@ -266,55 +199,39 @@
                     },
                 }).then((response) => {
                     this.closeSignUpModal()
-                })
-            },
-            closeAuthModal(event) {
-                if (this.$store.state.authModalState === true)
-                    this.$store.commit('changeAuthModalState')
-            },
-            blockPropagate(event) {
-                event.stopPropagation();
+                }).catch(err => alert(err)) 
             },
             getUserScrapedData() {
-                axios({
+                return axios({
                     method: 'post',
                     url: '/api/post/scrap',
                     headers: {
                         authorization: this.$store.state.jwt,
                     },
-                }).then((response) => {
+                })
+            },
+            onClickGetUserScrapedData() {
+                this.getUserScrapedData()
+                .then((response) => {
                     this.$store.state.jockboList=response.data;
                     this.$router.push('/jockbolist');
                 })
+                .catch((error) => {
+                    this.showSigninModal()
+                })
             },
             login() {
-                const promise = new Promise((resolve, reject) => {
-                    if (this.$store.dispatch('obtainToken', {username:this.username, password:this.password})) {
-                        resolve();
-                    }
-                });
-
-                promise.then(result => {
-                    this.headerusername = this.$store.state.username
-                    this.loginState = '로그아웃',
-                    this.closeAuthModal()
-                    this.password = ''
-                    this.username = ''
-                }, err => {
-                    console.log(err);
-                });
-
-                // this.$store.dispatch('obtainToken', {username:this.username, password:this.password}).then(() => {
-                //     this.password=''
-                //     this.loginState = '로그아웃'
-                //     this.closeAuthModal()
-                //     this.$store.dispatch('findUserUni').then(() => {
-                //         this.useruni = this.$store.state.useruni
-                //         this.loginname = this.$store.state.username
-                //         this.userstate = this.$store.state.username
-                //     })
-                // })
+                this.$store.dispatch('obtainToken', {username:this.username, password:this.password})
+                .then(() => this.afterLoginSuccess())
+                .catch(error => alert(error))
             },
+            afterLoginSuccess() {
+                this.headerusername = this.$store.state.username
+                this.loginState = '로그아웃',
+                this.closeSigninModal()
+                this.password = ''
+                this.username = ''
+            }
         }
     }
 </script>
@@ -376,7 +293,7 @@
         padding-left: 10px; /* 3 */
     }
 
-    .auth-modal, .signup-modal {
+    .signin-modal, .signup-modal {
         display: none;
 
         position: fixed;
