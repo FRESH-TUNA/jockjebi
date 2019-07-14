@@ -16,11 +16,13 @@ class Post(models.Model):
     professor = models.CharField(max_length=50)
     year = models.IntegerField()
     semester = models.IntegerField(default = 0)
+
+    haveAnswer = models.BooleanField(default=False)
     category = models.CharField(max_length=50)
     file = models.ImageField(blank=True)
     explain = models.TextField(blank=True)
     bookmark_user_list = models.ManyToManyField(User, blank=True, related_name='bookmark_user_set', through='BookMark')
-    
+    pub_date = models.DateTimeField(auto_now_add=True)
     
 
 class Comment(models.Model):

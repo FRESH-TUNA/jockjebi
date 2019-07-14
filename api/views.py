@@ -62,18 +62,20 @@ class PostViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def list(self, request):
+        queryset = Post.objects.all()
         university = request.GET.get('university', False)
         subject = request.GET.get('subject', False)
         bookmark = request.GET.get('bookmark', False)
 
-        if university is False:
-            serializer = PostListSerializer(Post.objects.all(), many=True)
-        elif subject is False:
-            serializer = PostListSerializer(Post.objects.all().filter(university=university), many=True)
-        else:
-            serializer = PostListSerializer(Post.objects.all().filter(university=university).filter(subject__contains=subject), many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        if university is not False:
+            queryset = queryset.filter(university=university)
+        if subject is not False:
+            queryset = queryset.filter(subject__contains=subject)
+        if bookmark is not False:
+            queryset = queryset.filter(user=request.user)
 
+        serializer = PostListSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request):
         serializer = PostSerializer(data=request.data)
