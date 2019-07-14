@@ -10,9 +10,11 @@ urlpatterns = [
     path('signup', signup),
 ]
 
+
 router.register(r'post', PostViewSet, basename='post')
 
 router.register(r'comment', CommentViewSet, basename='comment')
+router.register(r'post/(?P<postPk>[^/.]+)/comment', CommentViewSet)
 
 router.register(r'university', UniViewSet, basename='university')
 

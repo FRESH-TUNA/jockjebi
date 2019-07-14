@@ -108,10 +108,19 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
-    def create(self, request):
+    def list(self, request, postPk=None):
+        queryset = Comment.objects.all()
+
+        if postPk is not None:
+            queryset = queryset.filter(post=Post.objects.get(id=postPk))
+
+        serializer = CommentSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def create(self, request, postPk=None):
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=request.user, post=Post.objects.get(pk=2))
+            serializer.save(user=request.user, post=Post.objects.get(id=postPk))
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
