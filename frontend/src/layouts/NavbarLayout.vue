@@ -203,8 +203,8 @@
             },
             getUserScrapedData() {
                 return axios({
-                    method: 'post',
-                    url: '/api/post/scrap',
+                    method: 'get',
+                    url: '/api/post?bookmark=true',
                     headers: {
                         authorization: this.$store.state.jwt,
                     },

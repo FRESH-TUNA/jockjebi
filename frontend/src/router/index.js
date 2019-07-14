@@ -20,9 +20,10 @@ const routes = [
         component: () => import('../views/createJockbo')
     },
     {
-        path: '/detail',
+        path: '/detail/:id',
         name: 'detail',
-        component: () => import('../views/detail')
+        component: () => import('../views/newDetail'),
+        props: true
     },
 ];
 

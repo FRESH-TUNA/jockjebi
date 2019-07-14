@@ -20,7 +20,7 @@ export default new Vuex.Store({
     mutations: {
         updateToken(state, newToken){
             localStorage.setItem('t', 'jwt ' + newToken);
-            this.state.jwt = 'jwt ' + newToken;
+            state.jwt = 'jwt ' + newToken;
         },
         removeToken(state){
             localStorage.removeItem('t');

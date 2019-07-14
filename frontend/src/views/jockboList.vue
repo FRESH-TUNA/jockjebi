@@ -80,7 +80,7 @@
                 </h2>
 
                 <div style="padding: 20px 20px 20px 20px" class="jockbo" v-for="item in jockboList" key="item.id">
-                    <div @click="detail" style="font-size:16px;"><b>{{item.subject}} </b><b style="color:#f5c353;">★</b> <span
+                    <div @click="detail(item.id)" style="font-size:16px;"><b>{{item.subject}} </b><b style="color:#f5c353;">★</b> <span
                             style="font-size:13px;">3.5</span></div>
                     <span style="padding-right:20px;">{{item.year}}년 {{item.semester}}학기</span>
                     <span>전공필수 | {{item.professor}}</span>
@@ -126,8 +126,8 @@
             this.jockboList = this.$store.state.jockboList;
         },
         methods: {
-            detail() {
-                this.$router.push('/detail')
+            detail(id) {
+                this.$router.push({ name: 'detail', params: {id}})
             }
         }
     }
@@ -135,7 +135,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
     .form-radio {
         -webkit-appearance: none;
         -moz-appearance: none;
