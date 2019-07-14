@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from api.serializers.PostSerializer import PostSerializer, PostListSerializer
+from api.serializers.PostSerializer import PostSerializer, PostCreateSerializer, PostListSerializer
 from api.serializers.UniSerializer import UniSerializer
 from api.serializers.CommentSerializer import CommentSerializer
 from api.models import *
@@ -78,29 +78,18 @@ class PostViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request):
-        serializer = PostSerializer(data=request.data)
+        serializer = PostCreateSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=request.user)
+            university, newUniversity = University.objects.get_or_create(title=request.data['university'])
+            if university == None:
+                serializer.save(user=request.user, university=newUniversity)
+            else:
+                serializer.save(user=request.user, university=university)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(detail=False, methods=['post'])
-    def scrap(self, request):
-        posts = Post.objects.all().filter(bookmark__user=request.user)
-        serializer = PostSerializer(posts, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    #def retrieve(self, request, pk, format=None):
-
-    # def update(self, request, pk=None):
-    #     pass
-
-    # def partial_update(self, request, pk=None):
-    #     pass
-
-    # def destroy(self, request, pk=None):
-    #     pass
 
 
 class CommentViewSet(viewsets.ModelViewSet):

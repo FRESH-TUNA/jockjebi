@@ -23,7 +23,7 @@
                     <input style="width:100px;height:25px;"type="text" v-model="semester">
                </span>
                 <span>
-                     <label style="padding-right:20px;font-size:1.3em"for="male"><b>분류</b></label>
+                     <label style="padding-right:20px;font-size:1.3em"for="male"><b>시험종류</b></label>
                      <input style="width:100px;height:25px;"type="text" v-model="category">
                 </span>
             </div>
@@ -33,7 +33,7 @@
             </span>
             <span class="text">
                      <label style="padding-right:20px;padding-left:20px;font-size:1.3em"for="male"><b>대학</b></label>
-                     <input style="width:275px;padding-left:10px;height:25px;"type="text" v-model="category">
+                     <input style="width:275px;padding-left:10px;height:25px;"type="text" v-model="university">
             </span>
         </div>
         <br/>
@@ -63,7 +63,8 @@ export default {
             semester: '',
             category: '',
             file: '',
-            explain: ''
+            explain: '',
+            university: this.$store.state.useruni
         }
     },
     methods: {
@@ -78,7 +79,7 @@ export default {
             bodyFormData.append('year', this.year);
             bodyFormData.append('semester', this.semester);
             bodyFormData.append('category', this.category);
-            bodyFormData.append('university', 1);
+            bodyFormData.append('university', this.university);
             bodyFormData.append('explain', this.explain);
             bodyFormData.append('file', this.file);
 
@@ -92,7 +93,12 @@ export default {
                     authorization: this.$store.state.jwt,
                     'Content-Type': 'multipart/form-data'
                 },
-            }).then((response) => {console.log(response.data)})
+            }).then(
+                (response) => {
+                    console.log(response.data)
+                    this.$router.push('/detail/' + response.data.id)
+                }
+            )
 
 
             // axios({

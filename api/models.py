@@ -24,6 +24,14 @@ class Post(models.Model):
     bookmark_user_list = models.ManyToManyField(User, blank=True, related_name='bookmark_user_set', through='BookMark')
     pub_date = models.DateTimeField(auto_now_add=True)
     
+    @property
+    def publishedDate(self):
+        return self.pub_date.strftime('%B %d %Y')
+    
+    @property
+    def username(self):
+        return self.user.username
+    
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

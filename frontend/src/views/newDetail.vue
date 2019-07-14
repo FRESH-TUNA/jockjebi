@@ -21,7 +21,7 @@
                 <div>조회수 {{post.views}} | 다운로드 {{post.downloads}}건</div>
                 <div>정답 및 해설 {{haveAnswer}}</div>
                 <br/>
-                <div>{{post.pub_date}}에 <b style="color:#6c60f5">{{post.nickname}}</b>가 업로드함</div>
+                <div>{{post.publishedDate}}에 <b style="color:#6c60f5">{{post.username}}</b>가 업로드함</div>
                 <br/>
                 <div style="display: flex">
                     <div style="padding-right:10px;">
