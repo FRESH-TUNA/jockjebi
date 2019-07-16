@@ -3,7 +3,7 @@
         <div style="background-color:#fefefe;height:100vh;">
             <div style="padding-left:110px;padding-right:140px">
                 <div style="display: flex;">
-                    <img src="https://skkujokbo.com/download/5d10e796e9e85546035e7d45/preview/0"
+                    <img v-bind:src="post.file"
                          style="padding: 40px 20px 20px 20px;width:240px; height:320px;border-radius: 30px; ">
                     <span style="padding: 40px 20px 20px 20px">
                 <div style="font-size:17px;">{{post.year}}년도 {{post.semester}}학기</div>
