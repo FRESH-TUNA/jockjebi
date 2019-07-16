@@ -15,6 +15,8 @@ from django.contrib import auth
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.views import APIView
+from api.permissions import IsOwnerOrReadOnly
 
 @csrf_exempt
 def signup(request):
@@ -48,6 +50,7 @@ class UniViewSet(viewsets.ModelViewSet):
         serializer = UniSerializer()
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 @api_view(http_method_names=['GET'])
 @permission_classes([IsAuthenticated])
 def getuseruni(request):
@@ -59,7 +62,7 @@ def getuseruni(request):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    # permission_classes = (IsOwnerOrReadOnly,)
 
     def list(self, request):
         queryset = Post.objects.all()
@@ -90,26 +93,38 @@ class PostViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
-
-class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
+class CommentList(APIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
-    def list(self, request, postPk=None):
+    def get(self, request, postPk=None):
         queryset = Comment.objects.all()
-
         if postPk is not None:
             queryset = queryset.filter(post=Post.objects.get(id=postPk))
-
         serializer = CommentSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def create(self, request, postPk=None):
+    def post(self, request, postPk=None):
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user, post=Post.objects.get(id=postPk))
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class CommentDetail(APIView):
+    def get_object(self, commentPk):
+        return Comment.objects.get(id=commentPk)
+
+    def put(self, request, commentPk, format=None):
+        comment = self.get_object(commentPk)
+        serializer = CommentSerializer(comment, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, commentPk, format=None):
+        snippet = self.get_object(commentPk)
+        snippet.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

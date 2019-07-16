@@ -8,13 +8,13 @@ router = DefaultRouter(trailing_slash=False)
 urlpatterns = [
     path('getuseruni', getuseruni),
     path('signup', signup),
+
+    path('post/<int:postPk>/comment', CommentList.as_view()),
+    path('comment/<int:commentPk>', CommentDetail.as_view())
 ]
 
 
 router.register(r'post', PostViewSet, basename='post')
-
-router.register(r'comment', CommentViewSet, basename='comment')
-router.register(r'post/(?P<postPk>[^/.]+)/comment', CommentViewSet)
 
 router.register(r'university', UniViewSet, basename='university')
 
