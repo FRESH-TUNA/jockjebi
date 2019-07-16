@@ -9,8 +9,13 @@ ALLOWED_HOSTS = ['.herokuapp.com']
 
 CORS_ORIGIN_ALLOW_ALL = True
 DATABASES = {
-    'default' : {
-        
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'openhack',
+        'USER': 'openhackuser',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
