@@ -8,6 +8,11 @@ DEBUG = False
 ALLOWED_HOSTS = ['.herokuapp.com']
 
 CORS_ORIGIN_ALLOW_ALL = True
+DATABASES = {
+    'default' : {
+        
+    }
+}
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
