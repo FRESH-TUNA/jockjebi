@@ -6,7 +6,6 @@
                     <img v-bind:src="post.file"
                          style="padding: 40px 20px 20px 20px;width:240px; height:320px;border-radius: 30px; ">
                     <span style="padding: 40px 20px 20px 20px">
-                <div style="font-size:17px;">{{post.year}}년도 {{post.semester}}학기</div>
                 <div style="display: flex;">
                     <span style="padding-right:5px;font-size:25px;"><b>{{post.subject}}</b></span>
                     <star-rating :max="5"
@@ -16,7 +15,9 @@
                                  :show-rating="false"
                     ></star-rating>
                 </div>
-                <div style="font-size:17px">{{post.category}} | {{post.professor}}</div>
+                <div style="font-size:15px; margin-top: 15px;">{{post.universityTitle}}</div>
+                <div style="font-size:15px;">{{post.year}}년도 {{post.semester}}학기</div>
+                <div style="font-size:15px">{{post.category}} | {{post.professor}}</div>
                 <br/>
                 <div>조회수 {{post.views}} | 다운로드 {{post.downloads}}건</div>
                 <div>정답 및 해설 {{haveAnswer}}</div>
@@ -27,8 +28,11 @@
                     <div style="padding-right:10px;">
                         <button style="font-size:15px;color:white;background-color:#5f52ed;width:100px;height:40px;border-style:solid;border-radius: 10px;"><b>다운로드</b></button>
                     </div>
-                    <div>
+                    <div style="padding-right:10px;">
                         <button style="font-size:15px;color:#0729d4;background-color:#ffffff;width:100px;height:40px;border-style:solid;border-radius: 10px;"><b>추천하기</b></button>
+                    </div>
+                    <div>
+                        <button style="font-size:15px;color:#0729d4;background-color:#ffffff;width:100px;height:40px;border-style:solid;border-radius: 10px;" @click="deterScrap"><b>{{isScraped}}</b></button>
                     </div>
                 </div>
             </span>
@@ -110,6 +114,12 @@
         computed: {
             haveAnswer() {
                 return this.post.haveAnswer === true ? '있음' : '없음'
+            },
+            isScraped() {
+                return this.post.isBookmarked === true ? '스크랩 취소하기' : '스크랩 하기'
+            },
+            deterScrap() {
+                return this.post.isBookmarked === true ? this.unscrap : this.unscrap
             }
         },
         components: {
@@ -129,6 +139,9 @@
                 return axios({
                     method: 'get',
                     url: '/api/post/' + this.id,
+                    headers: {
+                        authorization: this.$store.state.jwt,
+                    },
                 })
             },
             readComments() {
@@ -151,6 +164,28 @@
                     },
                 }).then((response) => {
                     this.readComments()
+                })
+            },
+            scrap() {
+                axios({
+                    method: 'post',
+                    url: '/api/post/' + this.id + '/bookmark',
+                    headers: {
+                        authorization: this.$store.state.jwt,
+                    },
+                }).then((response) => {
+                    alert('스크랩 되었습니다!')
+                })
+            },
+            unscrap() {
+                axios({
+                    method: 'delete',
+                    url: '/api/post/' + this.id + '/bookmark',
+                    headers: {
+                        authorization: this.$store.state.jwt,
+                    },
+                }).then((response) => {
+                    alert('스크랩을 취소 했습니다!')
                 })
             }
         },

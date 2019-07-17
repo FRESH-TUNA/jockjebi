@@ -32,6 +32,10 @@ class Post(models.Model):
     def username(self):
         return self.user.username
     
+    @property
+    def universityTitle(self):
+        return self.university.title
+    
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

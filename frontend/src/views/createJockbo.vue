@@ -93,7 +93,6 @@ export default {
                 },
             }).then(
                 (response) => {
-                    console.log(response.data)
                     this.$router.push('/detail/' + response.data.id)
                 }
             )

@@ -11,6 +11,7 @@ urlpatterns = [
     path('api/', include('jockbo.apps.post.urls')),
     path('api/', include('jockbo.apps.comment.urls')),
     path('api/', include('jockbo.apps.jockboAuth.urls')),
+    path('api/', include('jockbo.apps.bookmark.urls')),
 
     path('', TemplateView.as_view(template_name='index.html')),
 ]

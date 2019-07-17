@@ -60,7 +60,7 @@
             searchBegin() {
                 axios({
                     method: "GET",
-                    "url": "/api/post?university=1&subject=" + this.subject
+                    "url": "/api/post?subject=" + this.subject
                 }).then(result => {
                     this.$store.state.jockboList = result.data;
                     this.$router.push({path: '/jockbolist'});
