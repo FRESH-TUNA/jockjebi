@@ -13,8 +13,8 @@ export default new Vuex.Store({
         useruni: localStorage.getItem('useruni'),
 
         endpoints: {
-            obtainJWT: '/token',
-            refreshJWT: '/refresh'
+            obtainJWT: '/api/token',
+            refreshJWT: '/api/refresh'
         },
     },
     mutations: {

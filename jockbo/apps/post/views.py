@@ -1,11 +1,13 @@
 from rest_framework import status, viewsets
-from jockbo.apps.common.models import Post
+from rest_framework.response import Response
+from jockbo.apps.common.models import Post, University
+from jockbo.apps.common.permissions import IsOwnerOrReadOnly
 from .serializers import *
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    # permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (IsOwnerOrReadOnly,)
 
     def list(self, request):
         queryset = Post.objects.all()

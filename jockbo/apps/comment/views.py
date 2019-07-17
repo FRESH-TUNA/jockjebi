@@ -1,6 +1,9 @@
+from rest_framework import status
 from rest_framework.views import APIView
 from .serializers import *
+from jockbo.apps.common.models import Post, Comment
 from jockbo.apps.common.permissions import IsOwnerOrReadOnly
+from rest_framework.response import Response
 
 class CommentList(APIView):
     permission_classes = (IsOwnerOrReadOnly,)
