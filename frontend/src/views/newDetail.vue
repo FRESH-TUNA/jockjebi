@@ -119,7 +119,7 @@
                 return this.post.isBookmarked === true ? '스크랩 취소하기' : '스크랩 하기'
             },
             deterScrap() {
-                return this.post.isBookmarked === true ? this.unscrap : this.unscrap
+                return this.post.isBookmarked === true ? this.unscrap : this.scrap
             }
         },
         components: {
@@ -175,6 +175,7 @@
                     },
                 }).then((response) => {
                     alert('스크랩 되었습니다!')
+                    this.post.isBookmarked = true;
                 })
             },
             unscrap() {
@@ -186,6 +187,7 @@
                     },
                 }).then((response) => {
                     alert('스크랩을 취소 했습니다!')
+                    this.post.isBookmarked = false;
                 })
             }
         },
