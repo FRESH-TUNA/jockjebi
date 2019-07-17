@@ -16,7 +16,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 from django.views.generic import TemplateView
 
 from django.conf import settings
@@ -24,10 +23,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
 
-    path('token', obtain_jwt_token),
-    path('token/refresh/', refresh_jwt_token),
+    path('api/', include('jockbo.apps.post.urls')),
+    path('api/', include('jockbo.apps.comment.urls')),
+    path('api/', include('jockbo.apps.jockboAuth.urls')),
+
     path('', TemplateView.as_view(template_name='index.html')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

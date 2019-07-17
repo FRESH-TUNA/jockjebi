@@ -1,5 +1,5 @@
 from django.contrib import admin
-from api.models import *
+from jockbo.apps.common.models import *
 
 admin.site.register(Comment)
 admin.site.register(Post)

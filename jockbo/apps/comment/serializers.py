@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Comment
+from jockbo.apps.common.models import Comment
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:

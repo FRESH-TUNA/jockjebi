@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Post
+from jockbo.apps.common.models import Post
 
 class PostSerializer(serializers.ModelSerializer):
     publishedDate = serializers.ReadOnlyField()
