@@ -120,7 +120,7 @@
             },
             deterScrap() {
                 return this.post.isBookmarked === true ? this.unscrap : this.scrap
-            }
+            },
         },
         components: {
             StarRating
@@ -167,6 +167,7 @@
                 })
             },
             scrap() {
+                const post = this.post
                 axios({
                     method: 'post',
                     url: '/api/post/' + this.id + '/bookmark',
@@ -175,10 +176,11 @@
                     },
                 }).then((response) => {
                     alert('스크랩 되었습니다!')
-                    this.post.isBookmarked = true;
+                    this.post = {...post, isBookmarked: true};
                 })
             },
             unscrap() {
+                const post = this.post
                 axios({
                     method: 'delete',
                     url: '/api/post/' + this.id + '/bookmark',
@@ -186,8 +188,8 @@
                         authorization: this.$store.state.jwt,
                     },
                 }).then((response) => {
-                    alert('스크랩을 취소 했습니다!')
-                    this.post.isBookmarked = false;
+                    alert('스크랩이 취소 되었습니다!')
+                    this.post = {...post, isBookmarked: false};
                 })
             }
         },
