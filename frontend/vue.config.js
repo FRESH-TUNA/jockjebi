@@ -1,6 +1,6 @@
 module.exports = {
     publicPath: '/',
-    outputDir: '../dist',
+    outputDir: '../',
     assetsDir: 'static',
     indexPath: 'templates/index.html'
 
