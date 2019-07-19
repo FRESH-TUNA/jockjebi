@@ -34,8 +34,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_jwt',
-    'jockbo.apps.common.apps.CommonConfig',
     'corsheaders',
+
+    'jockbo.apps.common.apps.CommonConfig',
+    'jockbo.apps.jockboAuth.apps.JockboAuthConfig',
 ]
 
 MIDDLEWARE = [
