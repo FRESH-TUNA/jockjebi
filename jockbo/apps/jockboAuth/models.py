@@ -19,7 +19,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password, nickname):
+    def create_superuser(self, email, password, nickname, university=None):
         user = self.create_user(
             email,
             password=password,
@@ -38,7 +38,8 @@ class User(AbstractBaseUser):
         unique=True,                                #username으로 쓰고싶은것에 반드시 unique 지정
     )
     nickname = models.CharField(max_length=30)
-    university = models.ForeignKey(University, on_delete=models.SET_NULL, null=True)
+    university = models.CharField(max_length=100)
+    # university = models.ForeignKey(University, on_delete=models.SET_NULL, null=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 

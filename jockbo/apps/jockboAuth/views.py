@@ -5,6 +5,7 @@ from jockbo.apps.common.models import University
 from .models import User
 import logging
 import json
+
 from django.contrib import auth
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
@@ -13,6 +14,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import JSONParser
+from django.shortcuts import redirect
+
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 @api_view(['POST'])
 @parser_classes([JSONParser])
@@ -29,7 +33,7 @@ def signup(request):
                 user = User.objects.create_user(
                     email=request.data['email'],
                     password=request.data['password1'],
-                    university=universityObject,
+                    university=request.data["university"],
                     nickname=request.data['nickname'],
                 )
             else:
@@ -38,8 +42,12 @@ def signup(request):
                     password=request.data['password1'],
                     nickname=request.data['nickname'],
                 )
+            
+            serializer = TokenObtainPairSerializer(data={'email': request.data['email'], 'password': request.data['password1']})
 
-            return Response({"signup": "success"})
+            if serializer.is_valid():
+                return Response(serializer.validated_data)
+            
 
 
 @api_view(http_method_names=['GET'])

@@ -30,7 +30,7 @@ class CustomUserModelTest(TestCase):
                 }),
                 content_type="application/json")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content,  b'{"signup":"success"}')
+        self.assertContains(response.content.access,  b'{"signup":"success"}')
         
 
         user = User.objects.get(email='testResponse@gmail.com')
