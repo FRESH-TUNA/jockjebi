@@ -8,7 +8,7 @@
                  style="border-radius: 0.5em;box-shadow: 0 10px 5px #292f64;background-color:white;height:200px; width:500px;display: inline-block;">
                 <div class="input-field">
                     <div style="padding-bottom: 10px; padding-top:10px;">
-                        <div style="float:left;font-size:24px;"><b>{{this.$store.state.useruni}}</b></div>
+                        <div style="float:left;font-size:24px;"><b>{{searchBarTitle()}}</b></div>
                         <input placeholder="🔍 과목명, 교수명으로 검색" style="width:400px;border-bottom: 2px solid #8a7afa;"
                                type="text" v-model="subject">
                     </div>
@@ -55,18 +55,28 @@
                 console.error(error);
             });
         },
-
         methods: {
+            searchBarTitle: function() {
+                if(this.$store.state.useruni)
+                    return this.$store.state.useruni
+                else
+                    return '족보 검색하기'
+            }   ,  
             searchBegin() {
-                axios({
-                    method: "GET",
-                    "url": "/api/post?subject=" + this.subject
-                }).then(result => {
-                    this.$store.state.jockboList = result.data;
-                    this.$router.push({path: '/jockbolist'});
-                }, error => {
-                    console.error(error);
-                });
+                let query = '?subject=' + this.subject
+
+                if(this.$store.state.useruni)
+                    query += '&university=' + this.$store.state.useruni
+
+                // axios({
+                //     method: "GET",
+                //     "url": "/api/post?subject=" + this.subject + universityQuery
+                // }).then(result => {
+                    // this.$store.state.jockboList = result.data;
+                this.$router.push('/jockbolist' + query)
+                // }, error => {
+                //     console.error(error);
+                // });
             }
         },
         computed: {

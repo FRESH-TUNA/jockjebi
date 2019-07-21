@@ -18,6 +18,7 @@ class PostViewSet(viewsets.ModelViewSet):
         bookmark = request.GET.get('bookmark', False)
 
         if university is not False:
+            university = University.objects.get(title=university)
             queryset = queryset.filter(university=university)
         if subject is not False:
             queryset = queryset.filter(subject__contains=subject)

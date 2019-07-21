@@ -12,7 +12,8 @@ const routes = [
     {
         path: '/jockbolist',
         name: 'jockbolist',
-        component: () => import('../views/jockboList')
+        component: () => import('../views/jockboList'),
+        props: true
     },
     {
         path: '/createjockbo',

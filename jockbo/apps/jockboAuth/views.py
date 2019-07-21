@@ -17,6 +17,8 @@ from rest_framework.parsers import JSONParser
 from django.shortcuts import redirect
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import CustomTokenObtainPairSerializer
 
 @api_view(['POST'])
 @parser_classes([JSONParser])
@@ -46,13 +48,10 @@ def signup(request):
             serializer = TokenObtainPairSerializer(data={'email': request.data['email'], 'password': request.data['password1']})
 
             if serializer.is_valid():
+                serializer.validated_data['university'] = request.data['university']
+                serializer.validated_data['nickname'] = request.data['nickname']
                 return Response(serializer.validated_data)
             
 
-
-@api_view(http_method_names=['GET'])
-@permission_classes([IsAuthenticated])
-def getuseruni(request):
-    university = University.objects.get(enrollment__user=request.user)
-    serializer = UniSerializer(university)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+class signinView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer

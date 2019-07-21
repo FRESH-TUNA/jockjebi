@@ -71,7 +71,7 @@
                                     </v-avatar>
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
-                                    <v-list-tile-title>{{this.$store.state.username}}</v-list-tile-title>
+                                    <v-list-tile-title>{{this.$store.state.nickname}}</v-list-tile-title>
                                     <v-list-tile-sub-title>{{this.$store.state.useruni}}</v-list-tile-sub-title>
                                 </v-list-tile-content>
                             </v-list-tile>
@@ -100,9 +100,6 @@
             </v-toolbar>
         </div>
 
-        <v-content>
-            <router-view/>
-        </v-content>
 
         <div class="signin-modal" @click="closeSigninModal">
             <div class="auth-modal-body" @click="blockPropagate">
@@ -136,25 +133,26 @@
                 password: '',
                 password1: '',
                 password2: '',
+                university: '',
             }
         },
         computed: {
             loginState() {
-                if(this.$store.state.jwt) 
+                if(this.$store.state.access) 
                     return '로그아웃'
                 else 
                     return '로그인'
             },
             loginUser() {
-                if(this.$store.state.username) 
-                    return this.$store.state.username
+                if(this.$store.state.nickname) 
+                    return this.$store.state.nickname
                 else 
                     return '로그인'
-            }
+            },   
         },
         methods: {
             onClickloginLogoutButton() {
-                if(this.$store.state.jwt) {
+                if(this.$store.state.access) {
                     this.$store.commit('removeToken')
                 }
                 else {
@@ -175,7 +173,6 @@
             },
             showSigninModal(event) {
                 let signinModal = document.getElementsByClassName('signin-modal')[0]
-                console.log(signinModal)
                 signinModal.style.display = 'flex';
             },
             closeSigninModal(event) {
@@ -206,7 +203,7 @@
                     method: 'get',
                     url: '/api/post?bookmark=true',
                     headers: {
-                        authorization: this.$store.state.jwt,
+                        authorization: this.$store.state.access,
                     },
                 })
             },
@@ -221,13 +218,11 @@
                 })
             },
             login() {
-                this.$store.dispatch('obtainToken', {username:this.username, password:this.password})
+                this.$store.dispatch('obtainToken', {email:this.username, password:this.password})
                 .then(() => this.afterLoginSuccess())
                 .catch(error => alert(error))
             },
             afterLoginSuccess() {
-                this.headerusername = this.$store.state.username
-                this.loginState = '로그아웃',
                 this.closeSigninModal()
                 this.password = ''
                 this.username = ''
@@ -241,6 +236,7 @@
     a {
         text-decoration: none;
     }
+  
 
     @media screen and (max-width: 960px) {
         .hideit {

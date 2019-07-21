@@ -72,7 +72,6 @@ export default {
             this.file = this.$refs.file.files[0];
         },
         createJockbo() {
-            console.log(this.file)
             let bodyFormData = new FormData();
             bodyFormData.append('subject', this.subject);
             bodyFormData.append('professor', this.professor);
@@ -88,7 +87,7 @@ export default {
                 url: '/api/post',
                 data: bodyFormData,
                 headers: {
-                    authorization: this.$store.state.jwt,
+                    authorization: this.$store.state.access,
                     'Content-Type': 'multipart/form-data'
                 },
             }).then(

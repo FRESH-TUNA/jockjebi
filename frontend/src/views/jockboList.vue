@@ -118,12 +118,15 @@
             }
         },
         mounted() {
-            // axios({ method: "GET", "url": "http://127.0.0.1:8000/api/post" }).then(result => {
-            //     this.jockboList = result.data;
-            // }, error => {
-            //     console.error(error);
-            // });
-            this.jockboList = this.$store.state.jockboList;
+            const index = this.$route.fullPath.indexOf('?')
+            axios({
+                    method: "GET",
+                    "url": "/api/post" + this.$route.fullPath.substring(index)
+                }).then(result => {
+                    this.jockboList = result.data;
+                }, error => {
+                    console.error(error);
+                });
         },
         methods: {
             detail(id) {

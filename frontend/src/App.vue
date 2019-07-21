@@ -1,9 +1,12 @@
 <template>
-    <NavbarLayout></NavbarLayout>
+    <div>
+        <NavbarLayout></NavbarLayout>
+        <router-view/>
+    </div>
 </template>
 <script>
     import NavbarLayout from './layouts/NavbarLayout'
-
+            
     export default {
         name: 'App',
 
@@ -13,3 +16,6 @@
     }
 
 </script>
+<style>
+.application--wrap { min-height: 70px; }
+</style>

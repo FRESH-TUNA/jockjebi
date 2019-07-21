@@ -8,55 +8,56 @@ export default new Vuex.Store({
         jockboList: [],
         searchSubject: '',
 
-        jwt: localStorage.getItem('t'),
-        username: localStorage.getItem('username'),
+        access: localStorage.getItem('access'),
+        refresh: localStorage.getItem('refresh'),
+        nickname: localStorage.getItem('nickname'),
         useruni: localStorage.getItem('useruni'),
 
         endpoints: {
             obtainJWT: '/api/token',
-            refreshJWT: '/api/refresh'
+            refreshJWT: '/api/token/refresh'
         },
     },
     mutations: {
-        updateToken(state, newToken){
-            localStorage.setItem('t', 'jwt ' + newToken);
-            state.jwt = 'jwt ' + newToken;
+        updateTokenAndUserData(state, data){
+            localStorage.setItem('access', 'Bearer ' + data.access);
+            localStorage.setItem('refresh', 'Bearer ' + data.refresh);
+            localStorage.setItem('nickname', data.nickname);
+            localStorage.setItem('useruni', data.university);
+
+            state.access= 'Bearer ' + data.access
+            state.refresh= 'Bearer ' + data.refresh
+            state.nickname= data.nickname
+            state.useruni= data.university
+        },
+        updateToken(state, access){
+            state.access = access
         },
         removeToken(state){
-            localStorage.removeItem('t');
-            localStorage.removeItem('username');
             localStorage.removeItem('useruni');
-            state.jwt = null;
-            state.username = null,
-            state.useruni= null
+            localStorage.removeItem('nickname');
+            localStorage.removeItem('access');
+            localStorage.removeItem('refresh');
+
+            state.access = ''
+            state.refresh = ''
+            state.nickname = ''
+            state.useruni = ''
         },
-        setUsername(state, username){
-            state.username = username
-            localStorage.setItem('username', username);
-        },
-        setUni(state, uni){
-            state.useruni = uni
-            localStorage.setItem('useruni', uni);
-        }
     },
     actions: {
         obtainToken(context, payload){
             axios.post(this.state.endpoints.obtainJWT, payload)
                 .then(response =>{
-                    this.commit('updateToken', response.data.token);
-                    this.commit('setUsername', payload.username);
-                    return context.dispatch('getuseruni')
-                }).then(response => {
-                    this.commit('setUni', response.data.title);
-                })
-                .catch((error)=>{
+                    this.commit('updateTokenAndUserData', response.data);
+                }).catch((error)=>{
                     console.log(error);
                 })
         },
         refreshToken(){
-            axios.post(this.state.endpoints.refreshJWT, {token: this.state.jwt})
+            axios.post(this.state.endpoints.refreshJWT, {token: this.state.refresh})
                 .then((response)=>{
-                    this.commit('updateToken', response.data.token)
+                    this.commit('updateToken', response.data.access)
                 })
                 .catch((error)=>{
                     console.log(error)
@@ -65,15 +66,6 @@ export default new Vuex.Store({
         inspectToken(){
             // WE WILL ADD THIS LATER
         },
-        getuseruni() {
-            return axios({
-                method: 'get',
-                url: '/api/getuseruni',
-                headers: {
-                    authorization: this.state.jwt,
-                },
-            })
-        }
     }
 })
 

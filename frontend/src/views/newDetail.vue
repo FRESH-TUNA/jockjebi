@@ -140,7 +140,7 @@
                     method: 'get',
                     url: '/api/post/' + this.id,
                     headers: {
-                        authorization: this.$store.state.jwt,
+                        authorization: this.$store.state.access,
                     },
                 })
             },
@@ -160,7 +160,7 @@
                         content: this.content
                     },
                     headers: {
-                        authorization: this.$store.state.jwt,
+                        authorization: this.$store.state.access,
                     },
                 }).then((response) => {
                     this.readComments()
@@ -172,7 +172,7 @@
                     method: 'post',
                     url: '/api/post/' + this.id + '/bookmark',
                     headers: {
-                        authorization: this.$store.state.jwt,
+                        authorization: this.$store.state.access,
                     },
                 }).then((response) => {
                     alert('스크랩 되었습니다!')
@@ -185,7 +185,7 @@
                     method: 'delete',
                     url: '/api/post/' + this.id + '/bookmark',
                     headers: {
-                        authorization: this.$store.state.jwt,
+                        authorization: this.$store.state.access,
                     },
                 }).then((response) => {
                     alert('스크랩이 취소 되었습니다!')
