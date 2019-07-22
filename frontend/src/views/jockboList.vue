@@ -119,14 +119,18 @@
         },
         mounted() {
             const index = this.$route.fullPath.indexOf('?')
+
             axios({
-                    method: "GET",
-                    "url": "/api/post" + this.$route.fullPath.substring(index)
-                }).then(result => {
-                    this.jockboList = result.data;
-                }, error => {
-                    console.error(error);
-                });
+                method: "GET",
+                url: "/api/post" + this.$route.fullPath.substring(index),
+                headers: {
+                    authorization: this.$store.state.access,
+                },
+            }).then(result => {
+                this.jockboList = result.data;
+            }, error => {
+                console.error(error);
+            });
         },
         methods: {
             detail(id) {

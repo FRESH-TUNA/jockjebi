@@ -1,21 +1,10 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt import exceptions
 from django.contrib.auth import authenticate
-# class UniSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = 'Username'
 
-# from rest_framework import serializers
-# from api.models import University
-
-# class UniSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = University
-#         fields = ('title',)
-
-
+# data가 부족하면 400 data가 유효하지 않으면 401
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         authenticate_kwargs = {
@@ -28,8 +17,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             pass
 
         self.user = authenticate(**authenticate_kwargs)
-
-        if self.user is None or not self.user.is_active:
+        #or not self.user.is_active:
+        if self.user is None:
             raise exceptions.AuthenticationFailed(
                 self.error_messages['no_active_account'],
                 'no_active_account',

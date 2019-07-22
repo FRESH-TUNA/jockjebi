@@ -4,9 +4,10 @@ from .serializers import *
 from jockbo.apps.common.models import Post, Comment
 from jockbo.apps.common.permissions import IsOwnerOrReadOnly
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 class CommentList(APIView):
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get(self, request, postPk=None):
         queryset = Comment.objects.all()
@@ -17,10 +18,11 @@ class CommentList(APIView):
 
     def post(self, request, postPk=None):
         serializer = CommentSerializer(data=request.data)
-        if serializer.is_valid():
+        try:
+            serializer.is_valid()
             serializer.save(user=request.user, post=Post.objects.get(id=postPk))
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
+        except:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
@@ -29,14 +31,21 @@ class CommentDetail(APIView):
         return Comment.objects.get(id=commentPk)
 
     def put(self, request, commentPk, format=None):
-        comment = self.get_object(commentPk)
-        serializer = CommentSerializer(comment, data=request.data)
-        if serializer.is_valid():
+        try:
+            comment = self.get_object(commentPk)
+            serializer = CommentSerializer(comment, data=request.data)
+            serializer.is_valid()
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Comment.DoesNotExist:  
+            return Response({'error':'comment is not existed'}, status=status.HTTP_400_BAD_REQUEST)
+        except:  
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, commentPk, format=None):
-        snippet = self.get_object(commentPk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        try:
+            snippet = self.get_object(commentPk)
+            snippet.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except:
+            return Response({'error':'comment is not existed'}, status=status.HTTP_400_BAD_REQUEST)

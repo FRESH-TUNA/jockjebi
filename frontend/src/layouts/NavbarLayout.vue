@@ -198,25 +198,7 @@
                     this.closeSignUpModal()
                 }).catch(err => alert(err)) 
             },
-            getUserScrapedData() {
-                return axios({
-                    method: 'get',
-                    url: '/api/post?bookmark=true',
-                    headers: {
-                        authorization: this.$store.state.access,
-                    },
-                })
-            },
-            onClickGetUserScrapedData() {
-                this.getUserScrapedData()
-                .then((response) => {
-                    this.$store.state.jockboList=response.data;
-                    this.$router.push('/jockbolist');
-                })
-                .catch((error) => {
-                    this.showSigninModal()
-                })
-            },
+            onClickGetUserScrapedData() { this.$router.push('/jockbolist?bookmark=true') },
             login() {
                 this.$store.dispatch('obtainToken', {email:this.username, password:this.password})
                 .then(() => this.afterLoginSuccess())

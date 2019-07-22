@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="height:600px;text-align:center;background-image: URL(http://ww1.sinaimg.cn/large/006tNc79gy1g4fxoimyeij30p00e6jrl.jpg);background-size: cover">
+        <div class="first-section" style="height:600px;text-align:center;  background-size: cover">
             <div style="font-size:3em;padding-top:80px;color:white"><b style="font-size:1em;color:#fce054">클릭 한 번</b>으로!
             </div>
             <div style="font-size:3em;padding-bottom:20px;color:white">쉽고 빠르게 시험 대비하기</div>
@@ -106,6 +106,9 @@
 </script>
 
 <style scoped>
+    .first-section {
+        background-image: url('../assets/homebackground.jpg');
+    }
     .outine-2 {
         border: 2px solid white;
     }
