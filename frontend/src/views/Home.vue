@@ -62,21 +62,27 @@
                 else
                     return '족보 검색하기'
             }   ,  
-            searchBegin() {
+            async searchBegin() {
                 let query = '?subject=' + this.subject
 
+                if(this.$store.state.access) {
+                    try {
+                        const response = await this.$store.dispatch('inspectToken')
+                    }
+                    catch(error) {
+                        try {
+                            await this.$store.dispatch('refreshToken')
+                        }
+                        catch(error) {
+                            this.$store.commit('removeToken')
+                            alert('다시 로그인해주세요 호호')
+                        } 
+                    }
+                }
                 if(this.$store.state.useruni)
                     query += '&university=' + this.$store.state.useruni
 
-                // axios({
-                //     method: "GET",
-                //     "url": "/api/post?subject=" + this.subject + universityQuery
-                // }).then(result => {
-                    // this.$store.state.jockboList = result.data;
                 this.$router.push('/jockbolist' + query)
-                // }, error => {
-                //     console.error(error);
-                // });
             }
         },
         computed: {

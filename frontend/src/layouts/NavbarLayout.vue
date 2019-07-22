@@ -18,10 +18,7 @@
                 </div>
                 <v-spacer></v-spacer>
                     <div class="hideit" style="padding-right:40px">
-                        <!-- <router-link to="/jockbolist"><h2 style="color:#7d7d7d;font-size:15px"><b>스크랩한 족보</b></h2>
-                        </router-link> -->
-                        <a @click="onClickGetUserScrapedData"><h2 style="color:#7d7d7d;font-size:15px"><b>스크랩한 족보</b></h2>
-                        </a>
+                        <a @click="onClickGetUserScrapedData"><h2 style="color:#7d7d7d;font-size:15px"><b>스크랩한 족보</b></h2></a>
                     </div>
 
                     <div class="hideit" style="padding-right:70px">
@@ -217,7 +214,15 @@
                         this.$router.push('/jockbolist?bookmark=true') 
                     }
                     catch(error) {
-                        this.showSigninModal()
+                        try {
+                            await this.$store.dispatch('refreshToken')
+                            this.$router.push('/jockbolist?bookmark=true') 
+                        }
+                        catch(error) {
+                            this.$store.commit('removeToken')
+                            alert('다시 로그인해주세요 호호')       //alert은 동기적 실행구조를 따른다. (동기알고리즘들은 일시중지)
+                            this.showSigninModal()
+                        } 
                     }
                 }
                 else 
