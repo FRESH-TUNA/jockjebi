@@ -15,7 +15,8 @@ export default new Vuex.Store({
 
         endpoints: {
             obtainJWT: '/api/token',
-            refreshJWT: '/api/token/refresh'
+            refreshJWT: '/api/token/refresh',
+            inspectJWT: '/api/token/verify'
         },
     },
     mutations: {
@@ -47,11 +48,12 @@ export default new Vuex.Store({
     },
     actions: {
         obtainToken(context, payload){
-            axios.post(this.state.endpoints.obtainJWT, payload)
+            //return을 해야 받은쪽에서 에러 처리를 할수 있다.
+            return axios.post(this.state.endpoints.obtainJWT, payload)
                 .then(response =>{
                     this.commit('updateTokenAndUserData', response.data);
                 }).catch((error)=>{
-                    console.log(error);
+                    throw error
                 })
         },
         refreshToken(){
@@ -63,8 +65,8 @@ export default new Vuex.Store({
                     console.log(error)
                 })
         },
-        inspectToken(){
-            // WE WILL ADD THIS LATER
+        inspectToken(context){
+            return axios.post(this.state.endpoints.inspectJWT, {token: this.state.access.substring(7)})
         },
     }
 })

@@ -25,9 +25,8 @@
                     </div>
 
                     <div class="hideit" style="padding-right:70px">
-                        <router-link to="/createjockbo"><h2 style="color:#7d7d7d;font-size:15px"><b>족보 업로드</b></h2>
-                        </router-link>
-                </div>
+                        <a @click="onClickUploadJockbo"><h2 style="color:#7d7d7d;font-size:15px"><b>족보 업로드</b></h2></a>   
+                    </div>
                 <div style="border-left: 1px solid #e5e5e5; height: 70px;"></div>
                 <div style="padding-left:20px;padding-right:40px">
 
@@ -151,6 +150,19 @@
             },   
         },
         methods: {
+            async onClickUploadJockbo() {
+                if(this.$store.state.access) {
+                    try {
+                        const response = await this.$store.dispatch('inspectToken')
+                        this.$router.push('/createjockbo') 
+                    }
+                    catch(error) {
+                        this.showSigninModal()
+                    }
+                }
+                else 
+                    this.showSigninModal()
+            },
             onClickloginLogoutButton() {
                 if(this.$store.state.access) {
                     this.$store.commit('removeToken')
@@ -198,11 +210,33 @@
                     this.closeSignUpModal()
                 }).catch(err => alert(err)) 
             },
-            onClickGetUserScrapedData() { this.$router.push('/jockbolist?bookmark=true') },
+            async onClickGetUserScrapedData() {
+                if(this.$store.state.access) {
+                    try {
+                        const response = await this.$store.dispatch('inspectToken')
+                        this.$router.push('/jockbolist?bookmark=true') 
+                    }
+                    catch(error) {
+                        this.showSigninModal()
+                    }
+                }
+                else 
+                    this.showSigninModal()
+            },
             login() {
-                this.$store.dispatch('obtainToken', {email:this.username, password:this.password})
-                .then(() => this.afterLoginSuccess())
-                .catch(error => alert(error))
+                if(this.username === '' && this.password === '')
+                    alert('이메일과 페스워드를 입력해주세요')
+                else if(this.username === '')
+                    alert('이메일을 입력해주세요')
+                else if(this.password === '')
+                    alert('페스워드를 입력해주세요')
+                else {
+                    this.$store.dispatch('obtainToken', {email:this.username, password:this.password})
+                    .then(() => this.afterLoginSuccess())
+                    .catch(error => {
+                        alert('이메일이나 페스워드가 잘못되었습니다.')
+                    })
+                }
             },
             afterLoginSuccess() {
                 this.closeSigninModal()
