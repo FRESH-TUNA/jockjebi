@@ -29,8 +29,13 @@ class CustomUserModelTest(TestCase):
                 }),
                 content_type="application/json")
         self.assertEqual(response.status_code, 200)
-        
-        user = User.objects.get(email='testResponse@gmail.com')
+        self.assertEqual(response.data['nickname'], 'testResponse')     
+        self.assertEqual(response.data['university'], '한양대학교')
+        self.assertEqual(response.data['access'], '한양대학교')     #token의 유무만 판단하는 용도로 사용
+        self.assertEqual(response.data['refresh'], '한양대학교')    #token의 유무만 판단하는 용도로 사용
+
+        ##실제로 유저가 생성되었는지 테스트한다.
+        user = User.objects.get(email='testResponse@gmail.com') 
         self.assertEqual(user.nickname, 'testResponse')
         self.assertEqual(user.university, '한양대학교')
 

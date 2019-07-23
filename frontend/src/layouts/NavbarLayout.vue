@@ -99,7 +99,7 @@
 
         <div class="signin-modal" @click="closeSigninModal">
             <div class="auth-modal-body" @click="blockPropagate">
-                <input placeholder="User ID"type="text" v-model="username">
+                <input placeholder="email" type="text" v-model="email">
                 <label for="male"></label>
                 <input placeholder="Password" type="password" v-model="password">
                 <button style="backgroud-color:black" class="login-button" @click="login"><b>로그인</b></button>
@@ -109,12 +109,13 @@
 
         <div class="signup-modal" @click="closeSignUpModal">
             <div class="auth-modal-body" @click="blockPropagate">
-                <input placeholder="User ID"type="text" v-model="username">
+                <input placeholder="User email" type="text" v-model="email">
+                <input placeholder="nickname" type="text" v-model="nickname">
                 <div style="padding-top:20px;"></div>
                 <input placeholder="Password" type="password" v-model="password1">
                 <input placeholder="Repeat Password" type="password" v-model="password2">
                 <div style="padding-top:20px;"></div>
-                <input placeholder="university" type="text" v-model="university">
+                <input placeholder="대학교 이름을 입력해주세요" type="text" v-model="university">
                 <button style="backgroud-color:black" class="login-button" @click="signup"><b>회원가입</b></button>
             </div>
         </div>
@@ -125,11 +126,12 @@
     export default {
         data() {
             return {
-                username: '',
+                email: '',
                 password: '',
                 password1: '',
                 password2: '',
                 university: '',
+                nickname: ''
             }
         },
         computed: {
@@ -177,7 +179,8 @@
                 signupModal.style.display = 'none';
                 this.password1 = '';
                 this.password2 = '';
-                this.username = '';
+                this.email = '';
+                this.nickname = '';
                 this.university = '';
             },
             showSigninModal(event) {
@@ -187,7 +190,7 @@
             closeSigninModal(event) {
                 let signinModal = document.getElementsByClassName("signin-modal")[0];
                 signinModal.style.display = 'none'
-                this.username = '';
+                this.email = '';
                 this.password = '';
             },
             blockPropagate(event) {
@@ -198,14 +201,16 @@
                     method: 'post',
                     url: '/api/signup',
                     data: {
-                        username: this.username,
+                        email: this.email,
                         password1: this.password1,
                         password2: this.password2,
-                        university: this.university
+                        university: this.university,
+                        nickname: this.nickname,
                     },
                 }).then((response) => {
+                    this.$store.commit('updateTokenAndUserData', response.data)
                     this.closeSignUpModal()
-                }).catch(err => alert(err)) 
+                }).catch(err => alert('입력하지 않은 필드가 있거나 패스워드가 일치하지 않습니다.')) 
             },
             async onClickGetUserScrapedData() {
                 if(this.$store.state.access) {
@@ -229,14 +234,14 @@
                     this.showSigninModal()
             },
             login() {
-                if(this.username === '' && this.password === '')
+                if(this.email === '' && this.password === '')
                     alert('이메일과 페스워드를 입력해주세요')
-                else if(this.username === '')
+                else if(this.email === '')
                     alert('이메일을 입력해주세요')
                 else if(this.password === '')
                     alert('페스워드를 입력해주세요')
                 else {
-                    this.$store.dispatch('obtainToken', {email:this.username, password:this.password})
+                    this.$store.dispatch('obtainToken', {email:this.email, password:this.password})
                     .then(() => this.afterLoginSuccess())
                     .catch(error => {
                         alert('이메일이나 페스워드가 잘못되었습니다.')
@@ -246,7 +251,7 @@
             afterLoginSuccess() {
                 this.closeSigninModal()
                 this.password = ''
-                this.username = ''
+                this.email = ''
             }
         }
     }
