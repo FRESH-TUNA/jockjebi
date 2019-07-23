@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="height:600px;text-align:center;background-image: URL(http://ww1.sinaimg.cn/large/006tNc79gy1g4fxoimyeij30p00e6jrl.jpg);background-size: cover">
+        <div class="first-section" style="height:600px;text-align:center;  background-size: cover">
             <div style="font-size:3em;padding-top:80px;color:white"><b style="font-size:1em;color:#fce054">클릭 한 번</b>으로!
             </div>
             <div style="font-size:3em;padding-bottom:20px;color:white">쉽고 빠르게 시험 대비하기</div>
@@ -8,7 +8,7 @@
                  style="border-radius: 0.5em;box-shadow: 0 10px 5px #292f64;background-color:white;height:200px; width:500px;display: inline-block;">
                 <div class="input-field">
                     <div style="padding-bottom: 10px; padding-top:10px;">
-                        <div style="float:left;font-size:24px;"><b>{{this.$store.state.useruni}}</b></div>
+                        <div style="float:left;font-size:24px;"><b>{{searchBarTitle}}</b></div>
                         <input placeholder="🔍 과목명, 교수명으로 검색" style="width:400px;border-bottom: 2px solid #8a7afa;"
                                type="text" v-model="subject">
                     </div>
@@ -48,34 +48,14 @@
                 dummy: [],
             }
         },
-        mounted() {
-            axios({method: "GET", "url": "/api/post"}).then(result => {
-                this.dummy = result.data;
-            }, error => {
-                console.error(error);
-            });
-        },
-
-        methods: {
-            searchBegin() {
-                axios({
-                    method: "GET",
-                    "url": "/api/post?subject=" + this.subject
-                }).then(result => {
-                    this.$store.state.jockboList = result.data;
-                    this.$router.push({path: '/jockbolist'});
-                }, error => {
-                    console.error(error);
-                });
-            }
-        },
         computed: {
-            sendToCondition () {
-                console.log(this.$store.state.username);
-                return this.$store.state.username
-            }
+            searchBarTitle: function() {
+                if(this.$store.state.useruni)
+                    return this.$store.state.useruni
+                else
+                    return '족보 검색하기'
+            } 
         },
-
         watch: {
             subject: function () {
                 let searchBeginButton = document.getElementsByClassName('searchBeginButton')[0]
@@ -91,11 +71,44 @@
                 else
                     document.getElementsByClassName("needpad")[0].style.padding = "5px";
             }
+        },
+        methods: {
+            // searchBarTitle: function() {
+            //     if(this.$store.state.useruni)
+            //         return this.$store.state.useruni
+            //     else
+            //         return '족보 검색하기'
+            // }  
+            async searchBegin() {
+                let query = '?subject=' + this.subject
+
+                if(this.$store.state.access) {
+                    try {
+                        const response = await this.$store.dispatch('inspectToken')
+                    }
+                    catch(error) {
+                        try {
+                            await this.$store.dispatch('refreshToken')
+                        }
+                        catch(error) {
+                            this.$store.commit('removeToken')
+                            alert('다시 로그인해주세요 호호')
+                        } 
+                    }
+                }
+                if(this.$store.state.useruni)
+                    query += '&university=' + this.$store.state.useruni
+
+                this.$router.push('/jockbolist' + query)
+            }
         }
     }
 </script>
 
 <style scoped>
+    .first-section {
+        background-image: url('../assets/homebackground.jpg');
+    }
     .outine-2 {
         border: 2px solid white;
     }

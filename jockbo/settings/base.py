@@ -33,9 +33,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_jwt',
-    'jockbo.apps.common.apps.CommonConfig',
+    'rest_framework_simplejwt',
     'corsheaders',
+
+    'jockbo.apps.common.apps.CommonConfig',
+    'jockbo.apps.jockboAuth.apps.JockboAuthConfig',
 ]
 
 MIDDLEWARE = [
@@ -57,11 +59,12 @@ REST_FRAMEWORK = {
     #     'rest_framework.permissions.IsAuthenticated',
     # ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
+AUTH_USER_MODEL = 'jockboAuth.User'
 
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,

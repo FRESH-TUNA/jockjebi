@@ -140,7 +140,7 @@
                     method: 'get',
                     url: '/api/post/' + this.id,
                     headers: {
-                        authorization: this.$store.state.jwt,
+                        authorization: this.$store.state.access,
                     },
                 })
             },
@@ -160,7 +160,7 @@
                         content: this.content
                     },
                     headers: {
-                        authorization: this.$store.state.jwt,
+                        authorization: this.$store.state.access,
                     },
                 }).then((response) => {
                     this.readComments()
@@ -172,11 +172,18 @@
                     method: 'post',
                     url: '/api/post/' + this.id + '/bookmark',
                     headers: {
-                        authorization: this.$store.state.jwt,
+                        authorization: this.$store.state.access,
                     },
                 }).then((response) => {
                     alert('스크랩 되었습니다!')
                     this.post = {...post, isBookmarked: true};
+                }).catch((error) => {
+                    if(this.$store.state.access) {
+                        this.$store.commit('removeToken')
+                        alert('다시 로그인 해주세요')
+                    }
+                    else
+                        alert('로그인후에 다시 이용해주세요')
                 })
             },
             unscrap() {
@@ -185,7 +192,7 @@
                     method: 'delete',
                     url: '/api/post/' + this.id + '/bookmark',
                     headers: {
-                        authorization: this.$store.state.jwt,
+                        authorization: this.$store.state.access,
                     },
                 }).then((response) => {
                     alert('스크랩이 취소 되었습니다!')

@@ -18,16 +18,12 @@
                 </div>
                 <v-spacer></v-spacer>
                     <div class="hideit" style="padding-right:40px">
-                        <!-- <router-link to="/jockbolist"><h2 style="color:#7d7d7d;font-size:15px"><b>스크랩한 족보</b></h2>
-                        </router-link> -->
-                        <a @click="onClickGetUserScrapedData"><h2 style="color:#7d7d7d;font-size:15px"><b>스크랩한 족보</b></h2>
-                        </a>
+                        <a @click="onClickGetUserScrapedData"><h2 style="color:#7d7d7d;font-size:15px"><b>스크랩한 족보</b></h2></a>
                     </div>
 
                     <div class="hideit" style="padding-right:70px">
-                        <router-link to="/createjockbo"><h2 style="color:#7d7d7d;font-size:15px"><b>족보 업로드</b></h2>
-                        </router-link>
-                </div>
+                        <a @click="onClickUploadJockbo"><h2 style="color:#7d7d7d;font-size:15px"><b>족보 업로드</b></h2></a>   
+                    </div>
                 <div style="border-left: 1px solid #e5e5e5; height: 70px;"></div>
                 <div style="padding-left:20px;padding-right:40px">
 
@@ -71,7 +67,7 @@
                                     </v-avatar>
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
-                                    <v-list-tile-title>{{this.$store.state.username}}</v-list-tile-title>
+                                    <v-list-tile-title>{{this.$store.state.nickname}}</v-list-tile-title>
                                     <v-list-tile-sub-title>{{this.$store.state.useruni}}</v-list-tile-sub-title>
                                 </v-list-tile-content>
                             </v-list-tile>
@@ -100,9 +96,6 @@
             </v-toolbar>
         </div>
 
-        <v-content>
-            <router-view/>
-        </v-content>
 
         <div class="signin-modal" @click="closeSigninModal">
             <div class="auth-modal-body" @click="blockPropagate">
@@ -136,25 +129,39 @@
                 password: '',
                 password1: '',
                 password2: '',
+                university: '',
             }
         },
         computed: {
             loginState() {
-                if(this.$store.state.jwt) 
+                if(this.$store.state.access) 
                     return '로그아웃'
                 else 
                     return '로그인'
             },
             loginUser() {
-                if(this.$store.state.username) 
-                    return this.$store.state.username
+                if(this.$store.state.nickname) 
+                    return this.$store.state.nickname
                 else 
                     return '로그인'
-            }
+            },   
         },
         methods: {
+            async onClickUploadJockbo() {
+                if(this.$store.state.access) {
+                    try {
+                        const response = await this.$store.dispatch('inspectToken')
+                        this.$router.push('/createjockbo') 
+                    }
+                    catch(error) {
+                        this.showSigninModal()
+                    }
+                }
+                else 
+                    this.showSigninModal()
+            },
             onClickloginLogoutButton() {
-                if(this.$store.state.jwt) {
+                if(this.$store.state.access) {
                     this.$store.commit('removeToken')
                 }
                 else {
@@ -175,7 +182,6 @@
             },
             showSigninModal(event) {
                 let signinModal = document.getElementsByClassName('signin-modal')[0]
-                console.log(signinModal)
                 signinModal.style.display = 'flex';
             },
             closeSigninModal(event) {
@@ -201,33 +207,43 @@
                     this.closeSignUpModal()
                 }).catch(err => alert(err)) 
             },
-            getUserScrapedData() {
-                return axios({
-                    method: 'get',
-                    url: '/api/post?bookmark=true',
-                    headers: {
-                        authorization: this.$store.state.jwt,
-                    },
-                })
-            },
-            onClickGetUserScrapedData() {
-                this.getUserScrapedData()
-                .then((response) => {
-                    this.$store.state.jockboList=response.data;
-                    this.$router.push('/jockbolist');
-                })
-                .catch((error) => {
+            async onClickGetUserScrapedData() {
+                if(this.$store.state.access) {
+                    try {
+                        const response = await this.$store.dispatch('inspectToken')
+                        this.$router.push('/jockbolist?bookmark=true') 
+                    }
+                    catch(error) {
+                        try {
+                            await this.$store.dispatch('refreshToken')
+                            this.$router.push('/jockbolist?bookmark=true') 
+                        }
+                        catch(error) {
+                            this.$store.commit('removeToken')
+                            alert('다시 로그인해주세요 호호')       //alert은 동기적 실행구조를 따른다. (동기알고리즘들은 일시중지)
+                            this.showSigninModal()
+                        } 
+                    }
+                }
+                else 
                     this.showSigninModal()
-                })
             },
             login() {
-                this.$store.dispatch('obtainToken', {username:this.username, password:this.password})
-                .then(() => this.afterLoginSuccess())
-                .catch(error => alert(error))
+                if(this.username === '' && this.password === '')
+                    alert('이메일과 페스워드를 입력해주세요')
+                else if(this.username === '')
+                    alert('이메일을 입력해주세요')
+                else if(this.password === '')
+                    alert('페스워드를 입력해주세요')
+                else {
+                    this.$store.dispatch('obtainToken', {email:this.username, password:this.password})
+                    .then(() => this.afterLoginSuccess())
+                    .catch(error => {
+                        alert('이메일이나 페스워드가 잘못되었습니다.')
+                    })
+                }
             },
             afterLoginSuccess() {
-                this.headerusername = this.$store.state.username
-                this.loginState = '로그아웃',
                 this.closeSigninModal()
                 this.password = ''
                 this.username = ''
@@ -241,6 +257,7 @@
     a {
         text-decoration: none;
     }
+  
 
     @media screen and (max-width: 960px) {
         .hideit {
