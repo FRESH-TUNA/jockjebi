@@ -1,4 +1,4 @@
-import axios from 'axios'
+
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = 'http://localhost:8000'
 

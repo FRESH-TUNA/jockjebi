@@ -20,7 +20,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: api_bookmark; Type: TABLE; Schema: public; Owner: openhackuser
+-- Name: api_bookmark; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.api_bookmark (
@@ -30,10 +30,8 @@ CREATE TABLE public.api_bookmark (
 );
 
 
-ALTER TABLE public.api_bookmark OWNER TO openhackuser;
-
 --
--- Name: api_bookmark_id_seq; Type: SEQUENCE; Schema: public; Owner: openhackuser
+-- Name: api_bookmark_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.api_bookmark_id_seq
@@ -45,17 +43,15 @@ CREATE SEQUENCE public.api_bookmark_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.api_bookmark_id_seq OWNER TO openhackuser;
-
 --
--- Name: api_bookmark_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: openhackuser
+-- Name: api_bookmark_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.api_bookmark_id_seq OWNED BY public.api_bookmark.id;
 
 
 --
--- Name: api_comment; Type: TABLE; Schema: public; Owner: openhackuser
+-- Name: api_comment; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.api_comment (
@@ -66,10 +62,8 @@ CREATE TABLE public.api_comment (
 );
 
 
-ALTER TABLE public.api_comment OWNER TO openhackuser;
-
 --
--- Name: api_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: openhackuser
+-- Name: api_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.api_comment_id_seq
@@ -81,52 +75,15 @@ CREATE SEQUENCE public.api_comment_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.api_comment_id_seq OWNER TO openhackuser;
-
 --
--- Name: api_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: openhackuser
+-- Name: api_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.api_comment_id_seq OWNED BY public.api_comment.id;
 
 
 --
--- Name: api_enrollment; Type: TABLE; Schema: public; Owner: openhackuser
---
-
-CREATE TABLE public.api_enrollment (
-    id integer NOT NULL,
-    university_id integer NOT NULL,
-    user_id integer NOT NULL
-);
-
-
-ALTER TABLE public.api_enrollment OWNER TO openhackuser;
-
---
--- Name: api_enrollment_id_seq; Type: SEQUENCE; Schema: public; Owner: openhackuser
---
-
-CREATE SEQUENCE public.api_enrollment_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.api_enrollment_id_seq OWNER TO openhackuser;
-
---
--- Name: api_enrollment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: openhackuser
---
-
-ALTER SEQUENCE public.api_enrollment_id_seq OWNED BY public.api_enrollment.id;
-
-
---
--- Name: api_post; Type: TABLE; Schema: public; Owner: openhackuser
+-- Name: api_post; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.api_post (
@@ -139,14 +96,14 @@ CREATE TABLE public.api_post (
     file character varying(100) NOT NULL,
     university_id integer NOT NULL,
     explain text NOT NULL,
-    user_id integer NOT NULL
+    user_id integer NOT NULL,
+    "haveAnswer" boolean NOT NULL,
+    pub_date timestamp with time zone NOT NULL
 );
 
 
-ALTER TABLE public.api_post OWNER TO openhackuser;
-
 --
--- Name: api_post_id_seq; Type: SEQUENCE; Schema: public; Owner: openhackuser
+-- Name: api_post_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.api_post_id_seq
@@ -158,17 +115,15 @@ CREATE SEQUENCE public.api_post_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.api_post_id_seq OWNER TO openhackuser;
-
 --
--- Name: api_post_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: openhackuser
+-- Name: api_post_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.api_post_id_seq OWNED BY public.api_post.id;
 
 
 --
--- Name: api_university; Type: TABLE; Schema: public; Owner: openhackuser
+-- Name: api_university; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.api_university (
@@ -177,10 +132,8 @@ CREATE TABLE public.api_university (
 );
 
 
-ALTER TABLE public.api_university OWNER TO openhackuser;
-
 --
--- Name: api_university_id_seq; Type: SEQUENCE; Schema: public; Owner: openhackuser
+-- Name: api_university_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.api_university_id_seq
@@ -192,17 +145,15 @@ CREATE SEQUENCE public.api_university_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.api_university_id_seq OWNER TO openhackuser;
-
 --
--- Name: api_university_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: openhackuser
+-- Name: api_university_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.api_university_id_seq OWNED BY public.api_university.id;
 
 
 --
--- Name: auth_group; Type: TABLE; Schema: public; Owner: openhackuser
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.auth_group (
@@ -211,10 +162,8 @@ CREATE TABLE public.auth_group (
 );
 
 
-ALTER TABLE public.auth_group OWNER TO openhackuser;
-
 --
--- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: openhackuser
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.auth_group_id_seq
@@ -226,17 +175,15 @@ CREATE SEQUENCE public.auth_group_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_group_id_seq OWNER TO openhackuser;
-
 --
--- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: openhackuser
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
 
 
 --
--- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: openhackuser
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.auth_group_permissions (
@@ -246,10 +193,8 @@ CREATE TABLE public.auth_group_permissions (
 );
 
 
-ALTER TABLE public.auth_group_permissions OWNER TO openhackuser;
-
 --
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: openhackuser
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.auth_group_permissions_id_seq
@@ -261,17 +206,15 @@ CREATE SEQUENCE public.auth_group_permissions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_group_permissions_id_seq OWNER TO openhackuser;
-
 --
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: openhackuser
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
 
 
 --
--- Name: auth_permission; Type: TABLE; Schema: public; Owner: openhackuser
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.auth_permission (
@@ -282,10 +225,8 @@ CREATE TABLE public.auth_permission (
 );
 
 
-ALTER TABLE public.auth_permission OWNER TO openhackuser;
-
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: openhackuser
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.auth_permission_id_seq
@@ -297,17 +238,15 @@ CREATE SEQUENCE public.auth_permission_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_permission_id_seq OWNER TO openhackuser;
-
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: openhackuser
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
 
 
 --
--- Name: auth_user; Type: TABLE; Schema: public; Owner: openhackuser
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.auth_user (
@@ -325,10 +264,8 @@ CREATE TABLE public.auth_user (
 );
 
 
-ALTER TABLE public.auth_user OWNER TO openhackuser;
-
 --
--- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: openhackuser
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.auth_user_groups (
@@ -338,10 +275,8 @@ CREATE TABLE public.auth_user_groups (
 );
 
 
-ALTER TABLE public.auth_user_groups OWNER TO openhackuser;
-
 --
--- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: openhackuser
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.auth_user_groups_id_seq
@@ -353,17 +288,15 @@ CREATE SEQUENCE public.auth_user_groups_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_user_groups_id_seq OWNER TO openhackuser;
-
 --
--- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: openhackuser
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.auth_user_groups_id_seq OWNED BY public.auth_user_groups.id;
 
 
 --
--- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: openhackuser
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.auth_user_id_seq
@@ -375,17 +308,15 @@ CREATE SEQUENCE public.auth_user_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_user_id_seq OWNER TO openhackuser;
-
 --
--- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: openhackuser
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.auth_user_id_seq OWNED BY public.auth_user.id;
 
 
 --
--- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: openhackuser
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.auth_user_user_permissions (
@@ -395,10 +326,8 @@ CREATE TABLE public.auth_user_user_permissions (
 );
 
 
-ALTER TABLE public.auth_user_user_permissions OWNER TO openhackuser;
-
 --
--- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: openhackuser
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.auth_user_user_permissions_id_seq
@@ -410,17 +339,15 @@ CREATE SEQUENCE public.auth_user_user_permissions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO openhackuser;
-
 --
--- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: openhackuser
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_user_user_permissions.id;
 
 
 --
--- Name: django_admin_log; Type: TABLE; Schema: public; Owner: openhackuser
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.django_admin_log (
@@ -436,10 +363,8 @@ CREATE TABLE public.django_admin_log (
 );
 
 
-ALTER TABLE public.django_admin_log OWNER TO openhackuser;
-
 --
--- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: openhackuser
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.django_admin_log_id_seq
@@ -451,17 +376,15 @@ CREATE SEQUENCE public.django_admin_log_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.django_admin_log_id_seq OWNER TO openhackuser;
-
 --
--- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: openhackuser
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
 
 
 --
--- Name: django_content_type; Type: TABLE; Schema: public; Owner: openhackuser
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.django_content_type (
@@ -471,10 +394,8 @@ CREATE TABLE public.django_content_type (
 );
 
 
-ALTER TABLE public.django_content_type OWNER TO openhackuser;
-
 --
--- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: openhackuser
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.django_content_type_id_seq
@@ -486,17 +407,15 @@ CREATE SEQUENCE public.django_content_type_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.django_content_type_id_seq OWNER TO openhackuser;
-
 --
--- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: openhackuser
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
 
 
 --
--- Name: django_migrations; Type: TABLE; Schema: public; Owner: openhackuser
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.django_migrations (
@@ -507,10 +426,8 @@ CREATE TABLE public.django_migrations (
 );
 
 
-ALTER TABLE public.django_migrations OWNER TO openhackuser;
-
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: openhackuser
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.django_migrations_id_seq
@@ -522,17 +439,15 @@ CREATE SEQUENCE public.django_migrations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.django_migrations_id_seq OWNER TO openhackuser;
-
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: openhackuser
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
 
 
 --
--- Name: django_session; Type: TABLE; Schema: public; Owner: openhackuser
+-- Name: django_session; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.django_session (
@@ -542,169 +457,243 @@ CREATE TABLE public.django_session (
 );
 
 
-ALTER TABLE public.django_session OWNER TO openhackuser;
+--
+-- Name: jockboAuth_user; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public."jockboAuth_user" (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    email character varying(255) NOT NULL,
+    nickname character varying(30) NOT NULL,
+    university character varying(100) NOT NULL,
+    is_active boolean NOT NULL,
+    is_admin boolean NOT NULL
+);
+
 
 --
--- Name: api_bookmark id; Type: DEFAULT; Schema: public; Owner: openhackuser
+-- Name: jockboAuth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public."jockboAuth_user_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: jockboAuth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public."jockboAuth_user_id_seq" OWNED BY public."jockboAuth_user".id;
+
+
+--
+-- Name: api_bookmark id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_bookmark ALTER COLUMN id SET DEFAULT nextval('public.api_bookmark_id_seq'::regclass);
 
 
 --
--- Name: api_comment id; Type: DEFAULT; Schema: public; Owner: openhackuser
+-- Name: api_comment id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_comment ALTER COLUMN id SET DEFAULT nextval('public.api_comment_id_seq'::regclass);
 
 
 --
--- Name: api_enrollment id; Type: DEFAULT; Schema: public; Owner: openhackuser
---
-
-ALTER TABLE ONLY public.api_enrollment ALTER COLUMN id SET DEFAULT nextval('public.api_enrollment_id_seq'::regclass);
-
-
---
--- Name: api_post id; Type: DEFAULT; Schema: public; Owner: openhackuser
+-- Name: api_post id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_post ALTER COLUMN id SET DEFAULT nextval('public.api_post_id_seq'::regclass);
 
 
 --
--- Name: api_university id; Type: DEFAULT; Schema: public; Owner: openhackuser
+-- Name: api_university id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_university ALTER COLUMN id SET DEFAULT nextval('public.api_university_id_seq'::regclass);
 
 
 --
--- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: openhackuser
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
 
 
 --
--- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: openhackuser
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
 
 
 --
--- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: openhackuser
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
 
 
 --
--- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: openhackuser
+-- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_user ALTER COLUMN id SET DEFAULT nextval('public.auth_user_id_seq'::regclass);
 
 
 --
--- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: openhackuser
+-- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_user_groups ALTER COLUMN id SET DEFAULT nextval('public.auth_user_groups_id_seq'::regclass);
 
 
 --
--- Name: auth_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: openhackuser
+-- Name: auth_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_user_user_permissions_id_seq'::regclass);
 
 
 --
--- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: openhackuser
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
 
 
 --
--- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: openhackuser
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
 
 
 --
--- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: openhackuser
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
 
 
 --
--- Data for Name: api_bookmark; Type: TABLE DATA; Schema: public; Owner: openhackuser
+-- Name: jockboAuth_user id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."jockboAuth_user" ALTER COLUMN id SET DEFAULT nextval('public."jockboAuth_user_id_seq"'::regclass);
+
+
+--
+-- Data for Name: api_bookmark; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.api_bookmark (id, post_id, user_id) FROM stdin;
-2	5	3
-1	2	3
-4	9	3
+18	3	3
+30	7	2
+31	11	2
+32	12	2
+33	13	2
+34	19	2
+35	21	2
 \.
 
 
 --
--- Data for Name: api_comment; Type: TABLE DATA; Schema: public; Owner: openhackuser
+-- Data for Name: api_comment; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.api_comment (id, content, post_id, user_id) FROM stdin;
-1	hahaha	2	1
-2	hahaha	2	1
+5	모든것은 제로가 된다.	2	3
+4	너무 어려운 강의인것 같아요	2	3
+3	우리의 삶에 매우 유익한 강의입니다	2	3
+1	숨가쁜 강의 였습니다	2	1
+6	살려주세요 너무 어려워요	2	3
+10	너무 좋은 수업인거 같아요!	2	18
+11	정말 좋은 것 같슴니다!	2	19
+12	너무 좋은 수업입니다!	2	20
+13	너무 힘들었어요 ㅠㅠ	2	22
+14	ㅁㄴㅇㄹㄴㅁㅇㄹ	2	22
+15	ㅁㄴㅇㄹㄴㄹ	2	22
+16	ㅁㄴㄹㅇㄴㄹㅁ	2	22
+17	ㄴㅁㄹㅁㄴㄹㄴㅁㄹㄴㅁㅇㄹㄴㅁㄹ	2	22
+18	왔다감	2	22
+19	ㅁㄴㅇㄹㄴㅁㄹㅇㄴㅁㄹㄴㅁㄹ	2	22
+20	ㅁㄴㅇㄹㄴㅁㄹ	2	3
+21	댓글을 달수 잇어요	2	24
+22	호호 신난다.	2	3
+23	댓글 달기	2	3
+24	야호 신난다	4	3
+25	데이터 통신 재밋어요 호호	16	3
+26	호호 재미있어요	16	3
+27	댓글 쓰기	17	3
+28	데이터 통신 재밋어요	16	3
+29	데이터 통신 하하하하	16	3
+30	데이터 통신 하하하하	16	3
+31	쓰기 테스트	20	3
+32	댓글 테스트	21	3
+33	ㅎㅓ허	5	2
+34	ㅁㅇㄴㄹ	11	2
+35	히히히	5	2
+36	댓글 테스트	7	2
 \.
 
 
 --
--- Data for Name: api_enrollment; Type: TABLE DATA; Schema: public; Owner: openhackuser
+-- Data for Name: api_post; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.api_enrollment (id, university_id, user_id) FROM stdin;
-1	1	2
-2	2	3
+COPY public.api_post (id, subject, professor, year, semester, category, file, university_id, explain, user_id, "haveAnswer", pub_date) FROM stdin;
+5	의사소통영어	제임스	2019	2	기말		1		1	f	2019-07-14 23:54:38.301714+09
+7	공업수학	문양세	2018	1	중간		1		1	f	2019-07-14 23:54:38.301714+09
+11	초급일본어	아베	2017	2	중간	o-12-570_aC1VnEv.jpg	1		1	f	2019-07-14 23:54:38.301714+09
+12	자바프로그래밍	감스트	2019	2	기말	o-12-570_rr5cQ0Z.jpg	1	ㅁㄴㅇㄹ	1	f	2019-07-14 23:54:38.301714+09
+13	시각영상디자인원론	이미진	2018	1	중간	o-12-570.jpg	1	호호 어려워요	2	f	2019-07-14 23:54:38.301714+09
+15	운영체제	정인범	2019	2	기말	o-12-570.jpg	1	너무 어려워요	2	f	2019-07-14 23:54:38.301714+09
+18	수학	성균관	2019	2	전공필수		8	대학교 새로 생성 테스트	3	f	2019-07-15 02:22:43.988105+09
+19	업로드테스트	업로드	2018	2	기말고사	1920px-HTML5_logo_and_wordmark.svg.png	2	업로드가 잘되는지 보겠다.!	3	f	2019-07-15 22:56:13.047577+09
+20	나나	뚜비	2018	2	전공	sky-1441936_1280.jpg	2	테스트 해보기	3	f	2019-07-15 23:09:26.192721+09
+21	업로드테스트	김동원	2000	2	교양필수	bread-1281053_640.jpg	1	흐음	3	f	2019-07-17 19:19:26.869485+09
+22	안되나	으음	2	2019	수학	phbAr.png	9	조선대학교	3	f	2019-07-17 22:11:44.674705+09
+23	안되나2	되나	2	2	전공필수		1	안되나	3	f	2019-07-17 22:21:57.113232+09
+2	선형대수학	문양세	2019	1	2		1	어려워요 호호	2	f	2019-07-14 23:54:38.301714+09
+3	C프로그래밍	하진영	2019	2	중간		1		2	f	2019-07-14 23:54:38.301714+09
+4	컴퓨터구조	최창열	2019	1	기말	o-12-570.jpg	1		4	f	2019-07-14 23:54:38.301714+09
+6	이산수학	김윤	2018	2	기말		1		4	f	2019-07-14 23:54:38.301714+09
+8	최황규	자료구조	2019	2	1		1		4	f	2019-07-14 23:54:38.301714+09
+10	초급중국어	시진핑	2019	2	중간	o-12-570_TsbUlKu.jpg	1		4	f	2019-07-14 23:54:38.301714+09
+16	데이터통신	최창열	1995	2	중간	061539734.jpg	1	호호허허	3	f	2019-07-14 23:54:38.301714+09
+17	수학	수학	2019	2	대학별교양		2	으이구	2	f	2019-07-15 02:21:50.883341+09
 \.
 
 
 --
--- Data for Name: api_post; Type: TABLE DATA; Schema: public; Owner: openhackuser
---
-
-COPY public.api_post (id, subject, professor, year, semester, category, file, university_id, explain, user_id) FROM stdin;
-9	ads	adsf	2019	1	adsf		1		1
-2	선형대수학	문양세	2019	1	2		1	어려워요 호호	1
-3	C프로그래밍	하진영	2019	2	중간		1		1
-4	컴퓨터구조	최창열	2019	1	기말	o-12-570.jpg	1		1
-5	의사소통영어	제임스	2019	2	기말		1		1
-6	이산수학	김윤	2018	2	기말		1		1
-7	공업수학	문양세	2018	1	중간		1		1
-8	최황규	자료구조	2019	2	1		1		1
-10	초급중국어	시진핑	2019	2	중간	o-12-570_TsbUlKu.jpg	1		1
-11	초급일본어	아베	2017	2	중간	o-12-570_aC1VnEv.jpg	1		1
-12	자바프로그래밍	감스트	2019	2	기말	o-12-570_rr5cQ0Z.jpg	1	ㅁㄴㅇㄹ	1
-13	시각영상디자인원론	이미진	2018	1	중간	o-12-570.jpg	1	호호 어려워요	2
-\.
-
-
---
--- Data for Name: api_university; Type: TABLE DATA; Schema: public; Owner: openhackuser
+-- Data for Name: api_university; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.api_university (id, title) FROM stdin;
 1	강원대학교
 2	서울대학교
+3	성공회대학교
+4	전남대학교
+5	충남대학교
+6	충남대
+7	서강대학교
+8	성균관대학교
+9	조선대학교
+10	한양대학교
 \.
 
 
 --
--- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: openhackuser
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.auth_group (id, name) FROM stdin;
@@ -712,7 +701,7 @@ COPY public.auth_group (id, name) FROM stdin;
 
 
 --
--- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: openhackuser
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
@@ -720,7 +709,7 @@ COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
 
 
 --
--- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: openhackuser
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
@@ -768,22 +757,45 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 42	Can change enrollment	11	change_enrollment
 43	Can delete enrollment	11	delete_enrollment
 44	Can view enrollment	11	view_enrollment
+45	Can add user	12	add_user
+46	Can change user	12	change_user
+47	Can delete user	12	delete_user
+48	Can view user	12	view_user
 \.
 
 
 --
--- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: openhackuser
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+1	pbkdf2_sha256$150000$VUd0JVQxeC57$YXQw8krCq3rmLLup2yuQ+C+2j1vY7lendiTFy1CN7uA=	2019-07-20 01:46:16.821742+09	t	root				t	t	2019-06-27 20:17:32.343076+09
 2	pbkdf2_sha256$150000$MQv1crR3eesc$KclxRnaN+xf/Y6+vXu7PWwu9aXdw/egFhZAC5T3w280=	2019-06-27 23:42:08.072627+09	f	rose				f	t	2019-06-27 20:18:04.463528+09
-1	pbkdf2_sha256$150000$VUd0JVQxeC57$YXQw8krCq3rmLLup2yuQ+C+2j1vY7lendiTFy1CN7uA=	2019-06-28 06:46:21.18732+09	t	root				t	t	2019-06-27 20:17:32.343076+09
 3	pbkdf2_sha256$150000$seBcmkO9tNK7$/hZo3YGs/982EAp2l8M4G2QEzuVyEMcZ/PPRSEu8jxg=	\N	f	rove				f	t	2019-06-28 06:47:19.087079+09
+4	pbkdf2_sha256$150000$M86ynjafpY7x$vmvNcWkJMM16vcyjONNuqCtMLsmuqXwJ1Ff95wnIQn0=	\N	f	tuna				f	t	2019-06-28 11:44:47.943339+09
+5	pbkdf2_sha256$150000$BS8UicHMD3EZ$39/02Lh6cZWTJrl2vGXlggqq5nN+r32LC2m+WaJYShs=	\N	f	Tuna				f	t	2019-06-28 11:54:16.021851+09
+8	pbkdf2_sha256$150000$CcVPLu0sbrRt$o7Nf4V0HdE6m5Rc+N9Xg/e09HmUJ6n78/LV3nxY4cBk=	\N	f	horololo				f	t	2019-06-28 11:57:10.002142+09
+9	pbkdf2_sha256$150000$Gk6O1U84lHwu$Kw0Zf2AWc3l5h/9gs7PfNJW1BWTCKwZuGGDpywj4t90=	\N	f	눈누난나				f	t	2019-06-28 12:08:50.738783+09
+11	pbkdf2_sha256$150000$pffNZ2WKdc0Z$M3cZp7gxlnyg35kGISW55dboNs3ljw3hvfKSvw4cjYg=	\N	f	강냉이				f	t	2019-06-28 12:24:43.753808+09
+12	pbkdf2_sha256$150000$Rr6aooHFdwG7$qLbG1JyZmjl3J15Wq5RGJjdI6eaXagxgETaJenpHwbg=	\N	f	양세형				f	t	2019-06-28 12:34:48.398867+09
+13	pbkdf2_sha256$150000$2iFD59kZCQSq$H+T2hwnQg73I5UzAcDqsualjurpUPZ5/b1aFhJ26lM8=	\N	f	dididy				f	t	2019-06-28 12:44:49.836691+09
+14	pbkdf2_sha256$150000$rcTe3leQYEwL$2e5F8YJ6v5aGjW0oGgbvted3u6G2wV4+sa66TrhMn8M=	\N	f	hello				f	t	2019-06-28 13:26:29.575257+09
+15	pbkdf2_sha256$150000$Q8Zh95TO3DBS$mWQW2bY/WgL+vqcc59XV5LQh8rZ3+lfdgWP2OqsQ6/4=	\N	f	족보				f	t	2019-06-28 13:27:38.969322+09
+16	pbkdf2_sha256$150000$QK2QJ21cMgBv$OdyrJZmIo2bovofyJpmzmjl/guag5+F/YzP/zcYv7VI=	\N	f	족제비				f	t	2019-06-28 13:31:54.12583+09
+17	pbkdf2_sha256$150000$MRTcCWLtSzd4$vkUMtlCMFB0I5WGIfangJpS/NlAnKzhA4OiXDDQD+So=	\N	f	이용재				f	t	2019-06-28 13:42:16.08966+09
+18	pbkdf2_sha256$150000$EovkLS7kHVwa$dLW2O87fTu1nSk+TCQU3OjOD4CWE9lItX7GVVksF/ak=	\N	f	유재석				f	t	2019-06-28 13:43:11.128799+09
+19	pbkdf2_sha256$150000$aIsgjcUvv7dp$4nt3eEzwY/saWsB6zKlN8IKKIPP8M65QdWcFNgbKamg=	\N	f	이영석				f	t	2019-06-28 13:47:16.187688+09
+20	pbkdf2_sha256$150000$WC3qtqfUgWFW$ke2hCAQd19mqarjad4JPmF/8x8KssLL7kbAVGGWn7tA=	\N	f	이재용				f	t	2019-06-28 13:51:17.984796+09
+21	pbkdf2_sha256$150000$2xVm7a8w5hDg$DFcmIsbxzaUghPvrTsU3rnSAyPs2XM9gzKNV0GpeHkU=	\N	f	이건희				f	t	2019-06-28 13:52:47.604953+09
+22	pbkdf2_sha256$150000$8ifsdSx7XLs5$ubE2M3gX+16tANhysx1eBbIq6FXt45wXlaCX4skoiRY=	\N	f	이덕재				f	t	2019-06-28 13:53:45.88588+09
+23	pbkdf2_sha256$150000$Ztwd8NVNfXTR$UzwL3fXJZKZgq2mkJFwdmgLAb/R6fQdg5YjilOnZUwQ=	\N	f	top				f	t	2019-06-30 12:13:17.875466+09
+24	pbkdf2_sha256$150000$Y1l93wRKAedq$9VofaDOSPQk243r7i7MY/UQEKe7yamubmVk+Qq2X5gQ=	\N	f	user				f	t	2019-06-30 12:21:24.645277+09
+25	pbkdf2_sha256$150000$R3bEoUn8OaiH$yTt+oWgxVyRLgogG29g+VCdz0N+Q8NTrhRGbD4f3jAc=	\N	f	asdf				f	t	2019-07-04 23:01:24.182894+09
 \.
 
 
 --
--- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: openhackuser
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
@@ -791,7 +803,7 @@ COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
 
 
 --
--- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: openhackuser
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
@@ -799,7 +811,7 @@ COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 
 
 --
--- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: openhackuser
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
@@ -832,11 +844,35 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 27	2019-06-28 06:48:00.301471+09	2	BookMark object (2)	2	[{"changed": {"fields": ["user"]}}]	10	1
 28	2019-06-28 06:48:06.854437+09	1	BookMark object (1)	2	[{"changed": {"fields": ["user"]}}]	10	1
 29	2019-06-28 06:48:17.120085+09	4	BookMark object (4)	1	[{"added": {}}]	10	1
+30	2019-06-28 13:38:19.16138+09	9	Comment object (9)	3		9	1
+31	2019-06-28 13:38:22.645197+09	8	Comment object (8)	3		9	1
+32	2019-06-28 13:38:25.595258+09	7	Comment object (7)	3		9	1
+33	2019-06-28 13:38:29.637932+09	2	Comment object (2)	3		9	1
+34	2019-06-28 13:38:42.953308+09	3	Comment object (3)	2	[{"changed": {"fields": ["content"]}}]	9	1
+35	2019-06-28 13:38:54.1089+09	4	Comment object (4)	2	[{"changed": {"fields": ["content"]}}]	9	1
+36	2019-06-28 13:39:09.570598+09	3	Comment object (3)	2	[{"changed": {"fields": ["content"]}}]	9	1
+37	2019-06-28 13:39:35.950266+09	1	Comment object (1)	2	[{"changed": {"fields": ["content"]}}]	9	1
+38	2019-06-28 13:39:43.358196+09	6	Comment object (6)	2	[{"changed": {"fields": ["content"]}}]	9	1
+39	2019-07-20 01:56:26.292505+09	1	tuna@gmail.com	1	[{"added": {}}]	12	1
+40	2019-07-20 01:59:40.165004+09	1	tuna@gmail.com	2	[{"changed": {"fields": ["university"]}}]	12	1
+41	2019-07-20 23:30:58.108476+09	2	rove@gmail.com	1	[{"added": {}}]	12	1
+42	2019-07-20 23:31:42.3309+09	3	rose@gmail.com	1	[{"added": {}}]	12	1
+43	2019-07-20 23:32:24.423408+09	4	bingle@gmail.com	1	[{"added": {}}]	12	1
+44	2019-07-20 23:34:08.2291+09	2	Post object (2)	2	[{"changed": {"fields": ["user"]}}]	7	1
+45	2019-07-20 23:34:14.83462+09	3	Post object (3)	2	[{"changed": {"fields": ["user"]}}]	7	1
+46	2019-07-20 23:34:21.844424+09	4	Post object (4)	2	[{"changed": {"fields": ["user"]}}]	7	1
+47	2019-07-20 23:34:28.050867+09	6	Post object (6)	2	[{"changed": {"fields": ["user"]}}]	7	1
+48	2019-07-20 23:34:34.954346+09	8	Post object (8)	2	[{"changed": {"fields": ["user"]}}]	7	1
+49	2019-07-20 23:34:41.231952+09	9	Post object (9)	2	[{"changed": {"fields": ["user"]}}]	7	1
+50	2019-07-20 23:34:47.082951+09	9	Post object (9)	2	[]	7	1
+51	2019-07-20 23:34:52.499414+09	10	Post object (10)	2	[{"changed": {"fields": ["user"]}}]	7	1
+52	2019-07-20 23:34:58.007817+09	16	Post object (16)	2	[]	7	1
+53	2019-07-20 23:35:03.209146+09	17	Post object (17)	2	[{"changed": {"fields": ["user"]}}]	7	1
 \.
 
 
 --
--- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: openhackuser
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.django_content_type (id, app_label, model) FROM stdin;
@@ -851,11 +887,12 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 9	api	comment
 10	api	bookmark
 11	api	enrollment
+12	jockboAuth	user
 \.
 
 
 --
--- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: openhackuser
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
@@ -883,11 +920,15 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 22	api	0005_auto_20190627_0656	2019-06-27 15:56:23.606169+09
 23	api	0006_post_explain	2019-06-27 16:32:30.801561+09
 24	api	0007_auto_20190627_1119	2019-06-27 20:19:58.49722+09
+25	api	0008_post_haveanswer	2019-07-14 23:54:38.287073+09
+26	api	0009_post_pub_date	2019-07-14 23:54:38.305494+09
+27	jockboAuth	0001_initial	2019-07-20 01:45:24.575357+09
+28	api	0002_delete_enrollment	2019-07-20 15:27:38.398496+09
 \.
 
 
 --
--- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: openhackuser
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
@@ -913,109 +954,124 @@ v53b3wmsm75wt9mclmulsceo9tgab2j5	NGM1ZjI3YTEyMWQzODA2YWZlZDAzN2U1Y2NmMDdkZTc4Njk
 ftced29lkg2i7mw9u1jv5pm9ygm8epbb	NGM1ZjI3YTEyMWQzODA2YWZlZDAzN2U1Y2NmMDdkZTc4NjkzMDYzMTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5MjEzZDBlZWJhYzJlYTgwZmNiNzA3MzgzODc2MjY4ZTg1NTQ2MWZmIn0=	2019-07-11 23:41:11.805373+09
 z865ozf972tcnldw9a0z9l5iqmgbd2k5	NGM1ZjI3YTEyMWQzODA2YWZlZDAzN2U1Y2NmMDdkZTc4NjkzMDYzMTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5MjEzZDBlZWJhYzJlYTgwZmNiNzA3MzgzODc2MjY4ZTg1NTQ2MWZmIn0=	2019-07-11 23:42:01.938252+09
 5zk35pztgi3f3vtqyyjra58a1wj1sgmv	NGM1ZjI3YTEyMWQzODA2YWZlZDAzN2U1Y2NmMDdkZTc4NjkzMDYzMTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5MjEzZDBlZWJhYzJlYTgwZmNiNzA3MzgzODc2MjY4ZTg1NTQ2MWZmIn0=	2019-07-11 23:42:08.073895+09
+s318xaehznknbqsnz3zegysnszi9th6k	YmZmMTFmYWQxOTJmYTcxNzhhYTE2Mjk4NGJlMTQ2MWE4MGQ3OWFjOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIzZDcwZmQ3ZTk0NWQ1ZjQ3YmY4ZmY2ODgzN2RiNmJkYTcxOWYxODM0In0=	2019-07-12 13:38:13.262198+09
+ywh2untjhxblrmgdeik0yijnlc8e602r	ZjdhZTdhMjczMTRkYjQzYzM4MDE4MTVhYmFkMDkzYmExNWE0MTNmZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIwYzA1YzFlNjkyYTY1OTgyYmU1ZTI5MDhhZDU5YjNiMjg1OGVkZWZhIn0=	2019-08-03 23:28:26.016318+09
+u5t4x6h2kfabhe0zaemvtgmzvs0mpbtg	ZjdhZTdhMjczMTRkYjQzYzM4MDE4MTVhYmFkMDkzYmExNWE0MTNmZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIwYzA1YzFlNjkyYTY1OTgyYmU1ZTI5MDhhZDU5YjNiMjg1OGVkZWZhIn0=	2019-08-05 01:13:19.495477+09
 \.
 
 
 --
--- Name: api_bookmark_id_seq; Type: SEQUENCE SET; Schema: public; Owner: openhackuser
+-- Data for Name: jockboAuth_user; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.api_bookmark_id_seq', 4, true);
-
-
---
--- Name: api_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: openhackuser
---
-
-SELECT pg_catalog.setval('public.api_comment_id_seq', 2, true);
+COPY public."jockboAuth_user" (id, password, last_login, email, nickname, university, is_active, is_admin) FROM stdin;
+2	pbkdf2_sha256$150000$1UavpPJN2MvD$4O4PE1Op2bOyDhN5QoJ9blPC91NcZkDLTcWhCoFC5B8=	\N	rove@gmail.com	rove	강원대학교	t	f
+3	pbkdf2_sha256$150000$VVH0hDZFYLU7$w6VYpGvPr0gyDn79qfx3yx3+9xIqamj294/sq2jHXRY=	\N	rose@gmail.com	충청도의아들	충남대학교	t	f
+4	pbkdf2_sha256$150000$OsBzt0xh0tXt$YDQ7a2HG/dtrZr3c/hmRCnMiqzsMZZ0UADpHuMhqsSQ=	\N	bingle@gmail.com	빙글	성균관대학교	t	f
+1	pbkdf2_sha256$150000$WeUIKyLV0srn$OIfvUabkkQIHjfw5rON9gwBt4CB4ylEQNLQz0aN7S+k=	2019-07-22 01:13:19.477618+09	root@gmail.com	root	한양대학교	t	t
+\.
 
 
 --
--- Name: api_enrollment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: openhackuser
+-- Name: api_bookmark_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.api_enrollment_id_seq', 2, true);
-
-
---
--- Name: api_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: openhackuser
---
-
-SELECT pg_catalog.setval('public.api_post_id_seq', 14, true);
+SELECT pg_catalog.setval('public.api_bookmark_id_seq', 35, true);
 
 
 --
--- Name: api_university_id_seq; Type: SEQUENCE SET; Schema: public; Owner: openhackuser
+-- Name: api_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.api_university_id_seq', 2, true);
+SELECT pg_catalog.setval('public.api_comment_id_seq', 36, true);
 
 
 --
--- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: openhackuser
+-- Name: api_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.api_post_id_seq', 23, true);
+
+
+--
+-- Name: api_university_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.api_university_id_seq', 10, true);
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
 
 
 --
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: openhackuser
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 
 
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: openhackuser
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 44, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 48, true);
 
 
 --
--- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: openhackuser
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
 
 
 --
--- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: openhackuser
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.auth_user_id_seq', 3, true);
+SELECT pg_catalog.setval('public.auth_user_id_seq', 25, true);
 
 
 --
--- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: openhackuser
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 
 
 --
--- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: openhackuser
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 29, true);
-
-
---
--- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: openhackuser
---
-
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 11, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 53, true);
 
 
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: openhackuser
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 24, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 12, true);
 
 
 --
--- Name: api_bookmark api_bookmark_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 28, true);
+
+
+--
+-- Name: jockboAuth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."jockboAuth_user_id_seq"', 4, true);
+
+
+--
+-- Name: api_bookmark api_bookmark_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_bookmark
@@ -1023,7 +1079,7 @@ ALTER TABLE ONLY public.api_bookmark
 
 
 --
--- Name: api_bookmark api_bookmark_user_id_post_id_eb5b570b_uniq; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: api_bookmark api_bookmark_user_id_post_id_eb5b570b_uniq; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_bookmark
@@ -1031,7 +1087,7 @@ ALTER TABLE ONLY public.api_bookmark
 
 
 --
--- Name: api_comment api_comment_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: api_comment api_comment_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_comment
@@ -1039,23 +1095,7 @@ ALTER TABLE ONLY public.api_comment
 
 
 --
--- Name: api_enrollment api_enrollment_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
---
-
-ALTER TABLE ONLY public.api_enrollment
-    ADD CONSTRAINT api_enrollment_pkey PRIMARY KEY (id);
-
-
---
--- Name: api_enrollment api_enrollment_user_id_key; Type: CONSTRAINT; Schema: public; Owner: openhackuser
---
-
-ALTER TABLE ONLY public.api_enrollment
-    ADD CONSTRAINT api_enrollment_user_id_key UNIQUE (user_id);
-
-
---
--- Name: api_post api_post_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: api_post api_post_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_post
@@ -1063,7 +1103,7 @@ ALTER TABLE ONLY public.api_post
 
 
 --
--- Name: api_university api_university_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: api_university api_university_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_university
@@ -1071,7 +1111,7 @@ ALTER TABLE ONLY public.api_university
 
 
 --
--- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_group
@@ -1079,7 +1119,7 @@ ALTER TABLE ONLY public.auth_group
 
 
 --
--- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_group_permissions
@@ -1087,7 +1127,7 @@ ALTER TABLE ONLY public.auth_group_permissions
 
 
 --
--- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_group_permissions
@@ -1095,7 +1135,7 @@ ALTER TABLE ONLY public.auth_group_permissions
 
 
 --
--- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_group
@@ -1103,7 +1143,7 @@ ALTER TABLE ONLY public.auth_group
 
 
 --
--- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_permission
@@ -1111,7 +1151,7 @@ ALTER TABLE ONLY public.auth_permission
 
 
 --
--- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_permission
@@ -1119,7 +1159,7 @@ ALTER TABLE ONLY public.auth_permission
 
 
 --
--- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_user_groups
@@ -1127,7 +1167,7 @@ ALTER TABLE ONLY public.auth_user_groups
 
 
 --
--- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_user_groups
@@ -1135,7 +1175,7 @@ ALTER TABLE ONLY public.auth_user_groups
 
 
 --
--- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_user
@@ -1143,7 +1183,7 @@ ALTER TABLE ONLY public.auth_user
 
 
 --
--- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_user_user_permissions
@@ -1151,7 +1191,7 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 
 --
--- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_user_user_permissions
@@ -1159,7 +1199,7 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 
 --
--- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_user
@@ -1167,7 +1207,7 @@ ALTER TABLE ONLY public.auth_user
 
 
 --
--- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.django_admin_log
@@ -1175,7 +1215,7 @@ ALTER TABLE ONLY public.django_admin_log
 
 
 --
--- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.django_content_type
@@ -1183,7 +1223,7 @@ ALTER TABLE ONLY public.django_content_type
 
 
 --
--- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.django_content_type
@@ -1191,7 +1231,7 @@ ALTER TABLE ONLY public.django_content_type
 
 
 --
--- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.django_migrations
@@ -1199,7 +1239,7 @@ ALTER TABLE ONLY public.django_migrations
 
 
 --
--- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.django_session
@@ -1207,147 +1247,163 @@ ALTER TABLE ONLY public.django_session
 
 
 --
--- Name: api_bookmark_post_id_a66f33a7; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: jockboAuth_user jockboAuth_user_email_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."jockboAuth_user"
+    ADD CONSTRAINT "jockboAuth_user_email_key" UNIQUE (email);
+
+
+--
+-- Name: jockboAuth_user jockboAuth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."jockboAuth_user"
+    ADD CONSTRAINT "jockboAuth_user_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: api_bookmark_post_id_a66f33a7; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX api_bookmark_post_id_a66f33a7 ON public.api_bookmark USING btree (post_id);
 
 
 --
--- Name: api_bookmark_user_id_bf19af15; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: api_bookmark_user_id_bf19af15; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX api_bookmark_user_id_bf19af15 ON public.api_bookmark USING btree (user_id);
 
 
 --
--- Name: api_comment_post_id_251fc0c3; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: api_comment_post_id_251fc0c3; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX api_comment_post_id_251fc0c3 ON public.api_comment USING btree (post_id);
 
 
 --
--- Name: api_comment_user_id_14315666; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: api_comment_user_id_14315666; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX api_comment_user_id_14315666 ON public.api_comment USING btree (user_id);
 
 
 --
--- Name: api_enrollment_university_id_67bc8a7c; Type: INDEX; Schema: public; Owner: openhackuser
---
-
-CREATE INDEX api_enrollment_university_id_67bc8a7c ON public.api_enrollment USING btree (university_id);
-
-
---
--- Name: api_post_university_id_99f6696d; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: api_post_university_id_99f6696d; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX api_post_university_id_99f6696d ON public.api_post USING btree (university_id);
 
 
 --
--- Name: api_post_user_id_580bae2a; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: api_post_user_id_580bae2a; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX api_post_user_id_580bae2a ON public.api_post USING btree (user_id);
 
 
 --
--- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
 
 
 --
--- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
 
 
 --
--- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
 
 
 --
--- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
 
 
 --
--- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX auth_user_groups_group_id_97559544 ON public.auth_user_groups USING btree (group_id);
 
 
 --
--- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX auth_user_groups_user_id_6a12ed8b ON public.auth_user_groups USING btree (user_id);
 
 
 --
--- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON public.auth_user_user_permissions USING btree (permission_id);
 
 
 --
--- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_user_permissions USING btree (user_id);
 
 
 --
--- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (username varchar_pattern_ops);
 
 
 --
--- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
 
 
 --
--- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
 
 
 --
--- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
 
 
 --
--- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: openhackuser
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
 
 
 --
--- Name: api_bookmark api_bookmark_post_id_a66f33a7_fk_api_post_id; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: jockboAuth_user_email_00162392_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "jockboAuth_user_email_00162392_like" ON public."jockboAuth_user" USING btree (email varchar_pattern_ops);
+
+
+--
+-- Name: api_bookmark api_bookmark_post_id_a66f33a7_fk_api_post_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_bookmark
@@ -1355,7 +1411,7 @@ ALTER TABLE ONLY public.api_bookmark
 
 
 --
--- Name: api_bookmark api_bookmark_user_id_bf19af15_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: api_bookmark api_bookmark_user_id_bf19af15_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_bookmark
@@ -1363,7 +1419,7 @@ ALTER TABLE ONLY public.api_bookmark
 
 
 --
--- Name: api_comment api_comment_post_id_251fc0c3_fk_api_post_id; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: api_comment api_comment_post_id_251fc0c3_fk_api_post_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_comment
@@ -1371,7 +1427,7 @@ ALTER TABLE ONLY public.api_comment
 
 
 --
--- Name: api_comment api_comment_user_id_14315666_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: api_comment api_comment_user_id_14315666_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_comment
@@ -1379,23 +1435,7 @@ ALTER TABLE ONLY public.api_comment
 
 
 --
--- Name: api_enrollment api_enrollment_university_id_67bc8a7c_fk_api_university_id; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
---
-
-ALTER TABLE ONLY public.api_enrollment
-    ADD CONSTRAINT api_enrollment_university_id_67bc8a7c_fk_api_university_id FOREIGN KEY (university_id) REFERENCES public.api_university(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: api_enrollment api_enrollment_user_id_03502546_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
---
-
-ALTER TABLE ONLY public.api_enrollment
-    ADD CONSTRAINT api_enrollment_user_id_03502546_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: api_post api_post_university_id_99f6696d_fk_api_university_id; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: api_post api_post_university_id_99f6696d_fk_api_university_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_post
@@ -1403,7 +1443,7 @@ ALTER TABLE ONLY public.api_post
 
 
 --
--- Name: api_post api_post_user_id_580bae2a_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: api_post api_post_user_id_580bae2a_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.api_post
@@ -1411,7 +1451,7 @@ ALTER TABLE ONLY public.api_post
 
 
 --
--- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_group_permissions
@@ -1419,7 +1459,7 @@ ALTER TABLE ONLY public.auth_group_permissions
 
 
 --
--- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_group_permissions
@@ -1427,7 +1467,7 @@ ALTER TABLE ONLY public.auth_group_permissions
 
 
 --
--- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_permission
@@ -1435,7 +1475,7 @@ ALTER TABLE ONLY public.auth_permission
 
 
 --
--- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_user_groups
@@ -1443,7 +1483,7 @@ ALTER TABLE ONLY public.auth_user_groups
 
 
 --
--- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_user_groups
@@ -1451,7 +1491,7 @@ ALTER TABLE ONLY public.auth_user_groups
 
 
 --
--- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_user_user_permissions
@@ -1459,7 +1499,7 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 
 --
--- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.auth_user_user_permissions
@@ -1467,7 +1507,7 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 
 --
--- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.django_admin_log
@@ -1475,7 +1515,7 @@ ALTER TABLE ONLY public.django_admin_log
 
 
 --
--- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: openhackuser
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.django_admin_log
