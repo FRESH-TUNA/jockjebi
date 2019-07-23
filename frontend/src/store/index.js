@@ -32,7 +32,7 @@ export default new Vuex.Store({
             state.useruni= data.university
         },
         updateToken(state, access){
-            state.access = access
+            state.access = 'Bearer ' + access
         },
         removeToken(state){
             localStorage.removeItem('useruni');

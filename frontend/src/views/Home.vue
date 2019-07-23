@@ -8,7 +8,7 @@
                  style="border-radius: 0.5em;box-shadow: 0 10px 5px #292f64;background-color:white;height:200px; width:500px;display: inline-block;">
                 <div class="input-field">
                     <div style="padding-bottom: 10px; padding-top:10px;">
-                        <div style="float:left;font-size:24px;"><b>{{searchBarTitle()}}</b></div>
+                        <div style="float:left;font-size:24px;"><b>{{searchBarTitle}}</b></div>
                         <input placeholder="🔍 과목명, 교수명으로 검색" style="width:400px;border-bottom: 2px solid #8a7afa;"
                                type="text" v-model="subject">
                     </div>
@@ -48,20 +48,37 @@
                 dummy: [],
             }
         },
-        mounted() {
-            axios({method: "GET", "url": "/api/post"}).then(result => {
-                this.dummy = result.data;
-            }, error => {
-                console.error(error);
-            });
-        },
-        methods: {
+        computed: {
             searchBarTitle: function() {
                 if(this.$store.state.useruni)
                     return this.$store.state.useruni
                 else
                     return '족보 검색하기'
-            }   ,  
+            } 
+        },
+        watch: {
+            subject: function () {
+                let searchBeginButton = document.getElementsByClassName('searchBeginButton')[0]
+                if (this.subject.length == 0)
+                    searchBeginButton.style.backgroundColor = '#d0c9fd'
+                else
+                    searchBeginButton.style.backgroundColor = '#6A4CFF'
+            },
+            sendToCondition (newCount, oldCount) {
+                console.log(newCount);
+                if (newCount == "로그인")
+                    document.getElementsByClassName("needpad")[0].style.padding = "20px";
+                else
+                    document.getElementsByClassName("needpad")[0].style.padding = "5px";
+            }
+        },
+        methods: {
+            // searchBarTitle: function() {
+            //     if(this.$store.state.useruni)
+            //         return this.$store.state.useruni
+            //     else
+            //         return '족보 검색하기'
+            // }  
             async searchBegin() {
                 let query = '?subject=' + this.subject
 
@@ -83,29 +100,6 @@
                     query += '&university=' + this.$store.state.useruni
 
                 this.$router.push('/jockbolist' + query)
-            }
-        },
-        computed: {
-            sendToCondition () {
-                console.log(this.$store.state.username);
-                return this.$store.state.username
-            }
-        },
-
-        watch: {
-            subject: function () {
-                let searchBeginButton = document.getElementsByClassName('searchBeginButton')[0]
-                if (this.subject.length == 0)
-                    searchBeginButton.style.backgroundColor = '#d0c9fd'
-                else
-                    searchBeginButton.style.backgroundColor = '#6A4CFF'
-            },
-            sendToCondition (newCount, oldCount) {
-                console.log(newCount);
-                if (newCount == "로그인")
-                    document.getElementsByClassName("needpad")[0].style.padding = "20px";
-                else
-                    document.getElementsByClassName("needpad")[0].style.padding = "5px";
             }
         }
     }
