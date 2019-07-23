@@ -56,8 +56,8 @@ export default new Vuex.Store({
                     throw error
                 })
         },
-        refreshToken(){
-            return axios.post(this.state.endpoints.refreshJWT, {token: this.state.refresh.substring(7)})
+        refreshToken(context){
+            return axios.post(this.state.endpoints.refreshJWT, {refresh: this.state.refresh.substring(7)})
                 .then((response)=>{
                     this.commit('updateToken', response.data.access)
                 })

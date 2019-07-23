@@ -73,4 +73,20 @@ class CustomUserModelTest(TestCase):
                 content_type="application/json")
 
         self.assertEqual(response.status_code, 200)
+
+    def UserTokenUpdateTest(self):
+        c = Client()
+
+        response = c.post('/api/token', 
+                json.dumps({
+                    'email': 'test@gmail.com',
+                    'password': '1234',
+                }),
+                content_type="application/json")
+
+        response = c.post('/api/token/refresh',
+                json.dumps({'refresh': response.data['refresh']}),
+                content_type="application/json")
+
+        self.assertEqual(response.status_code, 200)
         
