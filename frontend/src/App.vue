@@ -1,20 +1,19 @@
 <template>
     <div>
-        <NavbarLayout></NavbarLayout>
+        <Header/>
         <router-view/>
     </div>
 </template>
 <script>
-    import NavbarLayout from './layouts/NavbarLayout'
+    import Header from './components/header'
             
     export default {
         name: 'App',
 
         components: {
-            NavbarLayout
+            Header
         },
     }
-
 </script>
 <style>
 .application--wrap { min-height: 70px; }
