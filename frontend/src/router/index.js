@@ -7,23 +7,23 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: () => import('../views/Home')
+        component: () => import('../components/Home')
     },
     {
         path: '/jockbolist',
         name: 'jockbolist',
-        component: () => import('../views/jockboList'),
+        component: () => import('../components/jockboList'),
         props: true
     },
     {
         path: '/createjockbo',
         name: 'createJockbo',
-        component: () => import('../views/createJockbo')
+        component: () => import('../components/createJockbo')
     },
     {
         path: '/detail/:id',
         name: 'detail',
-        component: () => import('../views/newDetail'),
+        component: () => import('../components/newDetail'),
         props: true
     },
 ];

@@ -32,6 +32,7 @@ export default new Vuex.Store({
             state.useruni= data.university
         },
         updateToken(state, access){
+            localStorage.setItem('access', 'Bearer ' + access);
             state.access = 'Bearer ' + access
         },
         removeToken(state){

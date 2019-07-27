@@ -73,12 +73,6 @@
             }
         },
         methods: {
-            // searchBarTitle: function() {
-            //     if(this.$store.state.useruni)
-            //         return this.$store.state.useruni
-            //     else
-            //         return '족보 검색하기'
-            // }  
             async searchBegin() {
                 let query = '?subject=' + this.subject
 
@@ -98,8 +92,7 @@
                 }
                 if(this.$store.state.useruni)
                     query += '&university=' + this.$store.state.useruni
-
-                this.$router.push('/jockbolist' + query)
+                this.$router.push({ path: '/jockbolist' + query })
             }
         }
     }

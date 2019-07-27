@@ -1,12 +1,16 @@
 <template>
     <div class="jockboList">
+        <div class="search-bar">
+            <input type="text" placeholder="족보 검색하기" v-model="subject">
+            <button type="button" @click="search"><img src="https://image.flaticon.com/icons/svg/149/149852.svg"></button>
+        </div>
         <div class="jockboList-body">
             <div class="left-nav-bar" style="padding-left:20px;background-color:#fefefe">
                 <div style="font-size:1.5em;color:#4758dd"><b>검색 필터</b></div>
                 <div style="padding-top:30px; padding-bottom:50px">
                     <div style="font-size:1.2em">연도</div>
                     <div style="padding-left:10px;width:150px;">
-                        <vue-slider v-model="value1"
+                        <vue-slider v-model="yearValue"
                                     :min="2009"
                                     :max="2019"
                                     :marks="marks1"
@@ -37,7 +41,7 @@
                 </div>
                 <div style="font-size:1.2em">평점</div>
                 <div style="padding-left:10px;width:150px;">
-                    <vue-slider v-model="value1" :min="0"
+                    <vue-slider v-model="scoreValue" :min="0"
                                 :max="5"
                                 :marks="marks2"
                                 :interval="1"
@@ -79,7 +83,7 @@
                     관련된 족보가 <b style="color:#6256f5;">{{jockboList.length}}</b>개있네요!
                 </h2>
 
-                <div style="padding: 20px 20px 20px 20px" class="jockbo" v-for="item in jockboList" key="item.id">
+                <div style="padding: 20px 20px 20px 20px" class="jockbo" v-for="item in jockboList" v-bind:key="item.id">
                     <div @click="detail(item.id)" style="font-size:16px;"><b>{{item.subject}} </b><b style="color:#f5c353;">★</b> <span
                             style="font-size:13px;">3.5</span></div>
                     <span style="padding-right:20px;">{{item.year}}년 {{item.semester}}학기</span>
@@ -107,34 +111,64 @@
         },
         data() {
             return {
-                value: '2009',
+                yearValue: '2009',
+                scoreValue: '1',
                 formatter1: '{value}',
                 marks1: {'2009': '2009', '2019': '2019'},
                 marks2: {'0': '0', '5': '5'},
                 data: ['2009', '2019'],
                 value2: '1',
                 data2: ['1', '5'],
+                subject: '',
                 jockboList: []
             }
         },
         mounted() {
-            const index = this.$route.fullPath.indexOf('?')
-
-            axios({
-                method: "GET",
-                url: "/api/post" + this.$route.fullPath.substring(index),
-                headers: {
-                    authorization: this.$store.state.access,
-                },
-            }).then(result => {
-                this.jockboList = result.data;
-            }, error => {
-                console.error(error);
-            });
+            console.log(this.$route)
+            this.subject = this.$route.query.subject
+            this.readJockbos()
+        },
+        watch: {
+            '$route.fullPath'(to) {
+                this.subject = this.$route.query.subject
+                this.readJockbos()
+            }
         },
         methods: {
-            detail(id) {
-                this.$router.push({ name: 'detail', params: {id}})
+            detail(id) { this.$router.push({ name: 'detail', params: {id}})},
+            readJockbos() {
+                const index = this.$route.fullPath.indexOf('?')
+
+                axios({
+                    method: "GET",
+                    url: "/api/post" + this.$route.fullPath.substring(index),
+                    headers: {
+                        authorization: this.$store.state.access,
+                    },
+                }).then(result => {
+                    this.jockboList = result.data;
+                }, error => {
+                    console.error(error);
+                });
+            },
+            async search() {
+                let query = '?subject=' + this.subject
+
+                if(this.$store.state.access) {
+                    try {
+                        const response = await this.$store.dispatch('inspectToken')
+                    }
+                    catch(error) {
+                        try {
+                            await this.$store.dispatch('refreshToken')
+                        }
+                        catch(error) {
+                            this.$store.commit('removeToken')
+                            alert('다시 로그인해주세요 호호')
+                        } 
+                    }
+                }
+                this.$router.push('/jockbolist' + query)
             }
         }
     }
@@ -211,10 +245,10 @@
     .jockboList {
         display: flex;
         flex-flow: column;
-        /*justify-content: center;*/
         align-items: center;
         background-color: rgb(243, 243, 243);
 
+        padding-top: 10px;
         height: 100%;
         font-family: BBTreeGB
     }
@@ -282,16 +316,32 @@
     .jockbo {
         width: 550px;
 
-
-        /*height: 80px;*/
         margin-top: 20px;
         background-color: white;
-        /*display: flex;*/
-        /*align-items: center;*/
-        /*justify-content: space-around;*/
         border: 0.5px solid rgb(200, 200, 200);
 
         border-radius: 10px;
+    }
+
+    .search-bar {
+        width: 800px;
+        height: 50px;
+        background-color: white;
+
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .search-bar input{
+        flex-grow: 1;
+        font-size: 1.5em;
+        padding: 0 1em;
+    }
+    .search-bar input:focus{ outline: none; }
+
+    .search-bar button{ 
+        width: 50px;
+        padding: 10px;
     }
 
     @media screen and (max-width: 1000px) {

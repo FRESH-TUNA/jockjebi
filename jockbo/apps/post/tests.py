@@ -1,5 +1,5 @@
 from django.test import TestCase
-from jockbo.apps.common.models import Post, BookMark
+from jockbo.apps.common.models import Post, BookMark, University
 from jockbo.apps.jockboAuth.models import User
 
 from django.db import models
@@ -9,8 +9,18 @@ from django.test import Client
 class AnimalTestCase(TestCase):
     def setUp(self):
         user = User.objects.create()
-        post = Post.objects.create(user=user, year=1, university_id=1)
+        university = University.objects.create(title="한양대학교")
+        post = Post.objects.create(
+            user=user, subject='수학', university=university,
+            professor='강아지', year='2014',
+            semester=2, haveAnswer=True, category='교양필수'
+        )
         BookMark.objects.create(user=user, post=post)
+
+    def postListTest(self):
+        c = Client()
+        response = c.get('/api/post?subject=수학&?university=한양대학교&?professor=강아지&?fromYear=2013&?toYear=2015&?semester=2&?haveAnswer=true&?category=교양필수')
+        self.assertEqual(response.data, 'testResponse')     
 
     def postRetrieveTest(self):
         request = {'user': User.objects.get(id=1)}
