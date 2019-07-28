@@ -10,39 +10,36 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     permission_classes = (IsOwnerOrReadOnly,)
     lookup_field = 'postPk'
-
-    def list(self, request):
+    
+    def makeListQueryset(self, request):
         queryset = Post.objects.all()
 
-        fromYear = request.GET.get('fromYear', False)
-        toYear = request.GET.get('toYear', False)
-        category = request.GET.get('category', False)
-        semester = request.GET.get('semester', False)
+        university = request.GET.get('university', False)
+        professorName = request.GET.get('professorName', False)
+        semester = request.GET.getlist('semester', False)
         subject = request.GET.get('subject', False)
         bookmark = request.GET.get('bookmark', False)
-        semester = request.GET.get('semester', False)
-        university = request.GET.get('university', False)
+        haveAnswer = request.GET.get('haveAnswer', False)
+        sort = request.GET.get('sort', False)
 
-        if bookmark is not False and request.user.is_authenticated:
-            postPkList = [bookmark.post.id for bookmark in BookMark.objects.all().filter(user=request.user)]
         if university is not False:
             queryset = queryset.filter(university=University.objects.get(title=university))
+        if professorName is not False:
+            queryset = queryset.filter(professor=professorName)
+        if semester is not False:
+            queryset = queryset.filter(semester__in=semester)
         if subject is not False:
             queryset = queryset.filter(subject__contains=subject)
+        if bookmark is not False and request.user.is_authenticated:
+            queryset = queryset.filter(id__in=[bookmark.post.id for bookmark in BookMark.objects.all().filter(user=request.user)])
+        if haveAnswer is not False:
+            queryset = queryset.filter(haveAnswer=True)
+        if sort is not False:
+            if sort is 'recently': queryset = queryset.order_by('-year')
+            else: queryset = queryset.order_by('-year')
 
-        if fromYear is not False and toYear is not False:
-            if fromYear == toYear:
-                queryset = queryset.filter(year=fromYear)
-            else:
-                queryset = queryset.filter(year__in=range(fromYear, toYear+1))
-
-        if category is not False:
-            queryset = queryset.filter(category__contains=category)
-        if semester is not False:
-            queryset = queryset.filter(semester=semester)
-            
-            
-            
+        return queryset
+    def list(self, request):        
             #SQL QUERY
             # queryset = Post.objects.raw(
             #     '''
@@ -51,8 +48,7 @@ class PostViewSet(viewsets.ModelViewSet):
             #     '''
             #     .format(request.user.id)
             # )
-            queryset = queryset.filter(pk__in=postPkList)
-        serializer = PostListSerializer(queryset, many=True)
+        serializer = PostListSerializer(self.makeListQueryset(request), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 

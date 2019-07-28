@@ -6,8 +6,42 @@
         </div>
         <div class="jockboList-body">
             <div class="left-nav-bar" style="padding-left:20px;background-color:#fefefe">
-                <div style="font-size:1.5em;color:#4758dd"><b>검색 필터</b></div>
-                <div style="padding-top:30px; padding-bottom:50px">
+                <div style="font-size:1.5em;color:#4758dd"><b>검색 설정</b></div>
+                <div style="padding-top:10px;">
+                    <div style="font-size:1.2em;">대학교 이름</div>
+                    <input type="text" name="1" value="1" v-model="university" class="form-text" style="margin-top:5px;">
+                </div>
+
+                <div style="padding-top:20px;">
+                    <div style="font-size:1.2em;">교수님 성함</div>
+                    <input type="text" name="1" value="1" v-model="professorName" class="form-text" style="margin-top:5px;">
+                </div>
+
+                <div style="padding-top:20px;">
+                    <div style="font-size:1.2em;">학기</div>
+                    <input type="checkbox" name="1" v-model="semester" :value="1" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 1학기</label>
+                    <br/>
+                    <input type="checkbox" name="1" v-model="semester" :value="2" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 여름학기</label>
+                    <br/>
+                    <input type="checkbox" name="1" v-model="semester" :value="3" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 2학기</label>
+                    <br/>
+                    <input type="checkbox" name="1" v-model="semester" :value="4" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 겨울학기</label>
+                </div>
+
+                <div style="padding-top:20px;">
+                    <div style="font-size:1.2em;">정렬</div>
+                    <input type="radio" name="sort" value="recently" v-model="sort" id="radio-one" class="form-radio"><label
+                        for="radio-one">최신 족보 순</label>
+                    <br/>
+                    <input type="radio" name="sort" value="like" v-model="sort" id="radio-one" class="form-radio"><label
+                        for="radio-one">좋아요 순</label>
+                </div>
+
+                <!-- <div style="padding-top:30px; padding-bottom:50px">
                     <div style="font-size:1.2em">연도</div>
                     <div style="padding-left:10px;width:150px;">
                         <vue-slider v-model="yearValue"
@@ -23,57 +57,17 @@
                             </template>
                         </vue-slider>
                     </div>
-                </div>
-                <div style="padding-bottom:30px;">
-                    <div style="font-size:1.2em;">학기</div>
-                    <input type="radio" name="1" value="one" id="radio-one" class="form-radio"><label
-                        for="radio-one"> 1학기</label>
-                    <br/>
-                    <input type="radio" name="1" value="one" id="radio-one" class="form-radio"><label
-                        for="radio-one"> 여름학기</label>
-                    <br/>
-                    <input type="radio" name="1" value="one" id="radio-one" class="form-radio"><label
-                        for="radio-one"> 2학기</label>
-                    <br/>
-                    <input type="radio" name="1" value="one" id="radio-one" class="form-radio"><label
-                        for="radio-one"> 겨울학기</label>
-                    <br/>
-                </div>
-                <div style="font-size:1.2em">평점</div>
-                <div style="padding-left:10px;width:150px;">
-                    <vue-slider v-model="scoreValue" :min="0"
-                                :max="5"
-                                :marks="marks2"
-                                :interval="1"
-                                :process-style="{ backgroundColor: '#F5C453' }"
-                                :tooltip-style="{ backgroundColor: '#F5C453', borderColor: '#F5C453' }"
-                                :tooltip-formatter="formatter1">
-                        <template v-slot:dot="{ value, focus }">
-                            <div :class="['custom-dot', { focus }]"></div>
-                        </template>
-                    </vue-slider>
-                </div>
+                </div> -->
                 <div>
-                    <div style="font-size:1.2em; padding-top:50px;">유형</div>
-                    <input type="radio" name="demo" value="one" id="radio-one" class="form-radio"><label
-                        for="radio-one"> 전공필수</label>
-                    <br/>
-                    <input type="radio" name="demo" value="one" id="radio-one" class="form-radio"><label
-                        for="radio-one"> 전공선택</label>
-                    <br/>
-                    <input type="radio" name="demo" value="one" id="radio-one" class="form-radio"><label
-                        for="radio-one"> 필수교양</label>
-                    <br/>
-                    <input type="radio" name="demo" value="one" id="radio-one" class="form-radio"><label
-                        for="radio-one"> 교선핵심</label>
-                    <br/>
-                    <input type="radio" name="demo" value="one" id="radio-one" class="form-radio"><label
-                        for="radio-one"> 공통</label>
+                    <div style="font-size:1.2em; padding-top:30px;">정답 및 해설</div>
+                    <input type="checkbox" name="demo" v-model="haveAnswer" value="true" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 해설 있는것만 검색</label>
                 </div>
+
                 <div>
-                    <div style="font-size:1.2em; padding-top:50px;">정답 및 해설</div>
-                    <input type="checkbox" name="demo" value="one" id="radio-one" class="form-radio"><label
-                        for="radio-one"> 해설있음</label>
+                    <div style="font-size:1.2em; padding-top:30px;">스크랩</div>
+                    <input type="checkbox" name="demo" v-model="bookmark" value="true" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 스크랩 한것만 검색</label>
                 </div>
             </div>
 
@@ -111,28 +105,38 @@
         },
         data() {
             return {
-                yearValue: '2009',
-                scoreValue: '1',
-                formatter1: '{value}',
-                marks1: {'2009': '2009', '2019': '2019'},
-                marks2: {'0': '0', '5': '5'},
-                data: ['2009', '2019'],
-                value2: '1',
-                data2: ['1', '5'],
+                jockboList: [],
+
                 subject: '',
-                jockboList: []
+                university: '',
+                professorName: '',
+                semester: [1, 2, 3, 4],
+
+                sort: '',
+                haveAnswer: false,
+                bookmark: false,
+                
             }
         },
-        mounted() {
-            console.log(this.$route)
+        async mounted() {
+            await this.$store.dispatch('inspectToken')
+
             this.subject = this.$route.query.subject
+            this.university = this.$route.query.university
+            this.bookmark = this.$route.query.bookmark
             this.readJockbos()
         },
         watch: {
             '$route.fullPath'(to) {
                 this.subject = this.$route.query.subject
+                this.haveAnswer = this.$route.query.haveAnswer
+                this.bookmark = this.$route.query.bookmark
+                this.sort = this.$route.query.sort
+                this.university = this.$route.query.university ? this.$route.query.university : ''
+                this.semester = this.$route.query.semester ? this.$route.query.semester : [1, 2, 3, 4]
+                this.professorName = this.$route.query.professorName ? this.$route.query.professorName : ''
                 this.readJockbos()
-            }
+            },
         },
         methods: {
             detail(id) { this.$router.push({ name: 'detail', params: {id}})},
@@ -148,26 +152,32 @@
                 }).then(result => {
                     this.jockboList = result.data;
                 }, error => {
-                    console.error(error);
+            
                 });
             },
             async search() {
-                let query = '?subject=' + this.subject
 
-                if(this.$store.state.access) {
-                    try {
-                        const response = await this.$store.dispatch('inspectToken')
-                    }
-                    catch(error) {
-                        try {
-                            await this.$store.dispatch('refreshToken')
-                        }
-                        catch(error) {
-                            this.$store.commit('removeToken')
-                            alert('다시 로그인해주세요 호호')
-                        } 
-                    }
+                let query = '?subject=' + this.subject
+                
+                if(this.university !== '')
+                    query += '&university=' + this.university
+                if(this.professorName !== '')
+                    query += '&professorName=' + this.professorName
+                if(this.haveAnswer === true)
+                    query += '&haveAnswer=' + 'true'
+                if(this.bookmark === true)
+                    query += '&bookmark=' + 'true'
+                if(this.semester.length !== 4) {
+                    this.semester.map(element => {
+                        query += '&semester=' + element
+                    })
                 }
+                if(this.sort === 'recently')
+                    query += '&sort=' + 'recently'
+                else if(this.sort === 'like')
+                    query += '&sort=' + 'like'
+
+                await this.$store.dispatch('inspectToken')
                 this.$router.push('/jockbolist' + query)
             }
         }
@@ -176,6 +186,19 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    .form-text {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-color: #fefefe;
+        color: #666;
+        height: 30px;
+        border: 1px solid #f6c548;
+        border-radius: 2em;
+        outline: none;
+        padding-left: 0.5em;
+    }
+
     .form-radio {
         -webkit-appearance: none;
         -moz-appearance: none;

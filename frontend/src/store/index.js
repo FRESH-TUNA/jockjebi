@@ -66,9 +66,24 @@ export default new Vuex.Store({
                     throw error
                 })
         },
-        inspectToken(context){
+        inspectTokenRequest(context){
             return axios.post(this.state.endpoints.inspectJWT, {token: this.state.access.substring(7)})
         },
+        async inspectToken(context) {
+            if(context.state.access) {
+                try {
+                    let response = await context.dispatch('inspectTokenRequest')
+                } catch (error) {
+                    try {
+                        response = await context.dispatch('refreshToken')
+                    }
+                    catch (error) {
+                        context.commit('removeToken')
+                        alert('다시 로그인해주세요 호호')
+                    }
+                }
+            }
+        }
     }
 })
 

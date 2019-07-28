@@ -197,10 +197,18 @@
                 }).then((response) => {
                     alert('스크랩이 취소 되었습니다!')
                     this.post = {...post, isBookmarked: false};
+                }).catch((error) => {
+                    if(this.$store.state.access) {
+                        this.$store.commit('removeToken')
+                        alert('다시 로그인 해주세요')
+                    }
+                    else
+                        alert('로그인후에 다시 이용해주세요')
                 })
             }
         },
         async mounted() {
+            await this.$store.dispatch('inspectToken')
             await this.readPost()
             this.readComments()
         }

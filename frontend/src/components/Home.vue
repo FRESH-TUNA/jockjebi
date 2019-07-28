@@ -65,7 +65,6 @@
                     searchBeginButton.style.backgroundColor = '#6A4CFF'
             },
             sendToCondition (newCount, oldCount) {
-                console.log(newCount);
                 if (newCount == "로그인")
                     document.getElementsByClassName("needpad")[0].style.padding = "20px";
                 else
