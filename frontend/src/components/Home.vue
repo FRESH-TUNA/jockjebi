@@ -48,6 +48,9 @@
                 dummy: [],
             }
         },
+        mounted() {
+            this.$store.dispatch('inspectToken')
+        },
         computed: {
             searchBarTitle: function() {
                 if(this.$store.state.useruni)

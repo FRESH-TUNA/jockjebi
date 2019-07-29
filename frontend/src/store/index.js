@@ -72,10 +72,10 @@ export default new Vuex.Store({
         async inspectToken(context) {
             if(context.state.access) {
                 try {
-                    let response = await context.dispatch('inspectTokenRequest')
+                    await context.dispatch('inspectTokenRequest')
                 } catch (error) {
                     try {
-                        response = await context.dispatch('refreshToken')
+                        await context.dispatch('refreshToken')
                     }
                     catch (error) {
                         context.commit('removeToken')

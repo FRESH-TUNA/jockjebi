@@ -23,7 +23,11 @@ class PostViewSet(viewsets.ModelViewSet):
         sort = request.GET.get('sort', False)
 
         if university is not False:
-            queryset = queryset.filter(university=University.objects.get(title=university))
+            try:
+                queryset = queryset.filter(university=University.objects.get(title__contains=university))
+            except:
+                return None
+            
         if professorName is not False:
             queryset = queryset.filter(professor=professorName)
         if semester is not False:
@@ -34,20 +38,11 @@ class PostViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(id__in=[bookmark.post.id for bookmark in BookMark.objects.all().filter(user=request.user)])
         if haveAnswer is not False:
             queryset = queryset.filter(haveAnswer=True)
-        if sort is not False:
-            if sort is 'recently': queryset = queryset.order_by('-year')
-            else: queryset = queryset.order_by('-year')
-
+        if sort is False or sort is 'recently': queryset = queryset.order_by('-year')
+        else: queryset = queryset.order_by('-year') #차후에 구현한다.
         return queryset
+
     def list(self, request):        
-            #SQL QUERY
-            # queryset = Post.objects.raw(
-            #     '''
-            #     SELECT * FROM api_post 
-            #     WHERE id IN (SELECT post_id FROM api_bookmark WHERE user_id = {})
-            #     '''
-            #     .format(request.user.id)
-            # )
         serializer = PostListSerializer(self.makeListQueryset(request), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
@@ -93,15 +88,16 @@ class PostViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, postPk):
-        post = None
-
-        # if postPk is None:
-        #     return Response({'error': 'poskPk is none'}, status=status.HTTP_400_BAD_REQUEST) 
-        try:
-            post=Post.objects.get(id=postPk)
-            self.check_object_permissions(request, post)    #model level validation을 위해서 반드시필요 비인증시 401코드 반환
-        except Post.DoesNotExist:
-            return Response({'error': 'post is none'}, status=status.HTTP_400_BAD_REQUEST)      
-
+        post = Post.objects.get(id=postPk)     
+        self.check_object_permissions(request, post)
         post.delete()
         return Response({'post': 'deleted'}, status=status.HTTP_204_NO_CONTENT) 
+
+#SQL QUERY
+            # queryset = Post.objects.raw(
+            #     '''
+            #     SELECT * FROM api_post 
+            #     WHERE id IN (SELECT post_id FROM api_bookmark WHERE user_id = {})
+            #     '''
+            #     .format(request.user.id)
+            # )

@@ -111,22 +111,20 @@
                 university: '',
                 professorName: '',
                 semester: [1, 2, 3, 4],
-
-                sort: '',
+                sort: 'recently',
                 haveAnswer: false,
                 bookmark: false,
-                
             }
         },
         async mounted() {
             await this.$store.dispatch('inspectToken')
-
             this.subject = this.$route.query.subject
-            this.university = this.$route.query.university
-            this.bookmark = this.$route.query.bookmark
+            this.university = this.$route.query.university ? this.$route.query.university : ''
+            this.bookmark = this.$route.query.bookmark ? true : false
             this.readJockbos()
         },
         watch: {
+            //뒤로가기나 앞으로갈때 갱신
             '$route.fullPath'(to) {
                 this.subject = this.$route.query.subject
                 this.haveAnswer = this.$route.query.haveAnswer
@@ -156,16 +154,16 @@
                 });
             },
             async search() {
-
                 let query = '?subject=' + this.subject
-                
-                if(this.university !== '')
+                console.log(this.bookmark)
+                console.log(this.bookmark === true)
+                if(this.university !== '') 
                     query += '&university=' + this.university
                 if(this.professorName !== '')
                     query += '&professorName=' + this.professorName
                 if(this.haveAnswer === true)
                     query += '&haveAnswer=' + 'true'
-                if(this.bookmark === true)
+                if(this.bookmark === true) 
                     query += '&bookmark=' + 'true'
                 if(this.semester.length !== 4) {
                     this.semester.map(element => {
