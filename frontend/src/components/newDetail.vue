@@ -152,59 +152,57 @@
                     this.comments = response.data
                 })
             },
-            postComment() {
-                axios({
-                    method: 'post',
-                    url: '/api/post/' + this.id + '/comment',
-                    data: {
-                        content: this.content
-                    },
-                    headers: {
-                        authorization: this.$store.state.access,
-                    },
-                }).then((response) => {
-                    this.readComments()
-                })
-            },
-            scrap() {
-                const post = this.post
-                axios({
-                    method: 'post',
-                    url: '/api/post/' + this.id + '/bookmark',
-                    headers: {
-                        authorization: this.$store.state.access,
-                    },
-                }).then((response) => {
-                    alert('스크랩 되었습니다!')
-                    this.post = {...post, isBookmarked: true};
-                }).catch((error) => {
-                    if(this.$store.state.access) {
-                        this.$store.commit('removeToken')
-                        alert('다시 로그인 해주세요')
+            async postComment() {
+                try {
+                    await this.$store.dispatch('inspectToken')
+                    axios({
+                        method: 'post',
+                        url: '/api/post/' + this.id + '/comment',
+                        data: {
+                            content: this.content
+                        },
+                        headers: {
+                            authorization: this.$store.state.access,
+                        },
+                    }).then((response) => {
+                        this.readComments()
+                    })
                     }
-                    else
-                        alert('로그인후에 다시 이용해주세요')
-                })
+                catch {}
             },
-            unscrap() {
-                const post = this.post
-                axios({
-                    method: 'delete',
-                    url: '/api/post/' + this.id + '/bookmark',
-                    headers: {
-                        authorization: this.$store.state.access,
-                    },
-                }).then((response) => {
-                    alert('스크랩이 취소 되었습니다!')
-                    this.post = {...post, isBookmarked: false};
-                }).catch((error) => {
-                    if(this.$store.state.access) {
-                        this.$store.commit('removeToken')
-                        alert('다시 로그인 해주세요')
-                    }
-                    else
-                        alert('로그인후에 다시 이용해주세요')
-                })
+            async scrap() {
+                try {
+                    await this.$store.dispatch('inspectToken')
+                    const post = this.post
+                    axios({
+                        method: 'post',
+                        url: '/api/post/' + this.id + '/bookmark',
+                        headers: {
+                            authorization: this.$store.state.access,
+                        },
+                    }).then((response) => {
+                        alert('스크랩 되었습니다!')
+                        this.post = {...post, isBookmarked: true};
+                    })
+                }
+                catch {}
+            },
+            async unscrap() {
+                try {
+                    await this.$store.dispatch('inspectToken')
+                    const post = this.post
+                    axios({
+                        method: 'delete',
+                        url: '/api/post/' + this.id + '/bookmark',
+                        headers: {
+                            authorization: this.$store.state.access,
+                        },
+                    }).then((response) => {
+                        alert('스크랩이 취소 되었습니다!')
+                        this.post = {...post, isBookmarked: false};
+                    })
+                }
+                catch {}
             }
         },
         async mounted() {

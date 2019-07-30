@@ -80,6 +80,7 @@ export default new Vuex.Store({
                     catch (error) {
                         context.commit('removeToken')
                         alert('다시 로그인해주세요 호호')
+                        throw error
                     }
                 }
             }
