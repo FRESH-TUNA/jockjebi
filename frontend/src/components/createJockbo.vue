@@ -23,8 +23,8 @@
                     <input style="width:100px;height:25px;"type="text" v-model="semester">
                </span>
                 <span>
-                     <label style="padding-right:20px;font-size:1.3em"for="male"><b>시험종류</b></label>
-                     <input style="width:100px;height:25px;"type="text" v-model="category">
+                     <label style="padding-right:20px;font-size:1.3em"for="male"><b>과목유형</b></label>
+                     <input style="width:100px;height:25px;"type="text" v-model="category" placeholder="예: 전공필수">
                 </span>
             </div>
             <span class="text"style="padding: 20px 20px 20px 20px">
@@ -71,44 +71,59 @@ export default {
         handleFileUpload() {
             this.file = this.$refs.file.files[0];
         },
-        createJockbo() {
-            let bodyFormData = new FormData();
-            bodyFormData.append('subject', this.subject);
-            bodyFormData.append('professor', this.professor);
-            bodyFormData.append('year', this.year);
-            bodyFormData.append('semester', this.semester);
-            bodyFormData.append('category', this.category);
-            bodyFormData.append('university', this.university);
-            bodyFormData.append('explain', this.explain);
-            bodyFormData.append('file', this.file);
+        validator() {
+            let error = ''
+            let status = false
+
+            if(this.subject === '')
+                error += '과목\n'
+            if(this.professor === '')
+                error += '교수\n'
+            if(this.year === '')
+                error += '연도\n'
+            if(this.semester === '')
+                error += '학기\n'
+            if(this.university === '')
+                error += '대학교이름\n'
+            if(this.category === '')
+                error += '과목유형\n'
+            if(this.file === '')
+                error += 'jpeg형태의 족보파일\n'
             
-            axios({
-                method: 'post',
-                url: '/api/post',
-                data: bodyFormData,
-                headers: {
-                    authorization: this.$store.state.access,
-                    'Content-Type': 'multipart/form-data'
-                },
-            }).then(
-                (response) => {
-                    this.$router.push('/detail/' + response.data.id)
-                }
-            )
-
-
-            // axios({
-            //     method: 'post',
-            //     url: 'http://127.0.0.1:8000/api/post',
-            //     data: bodyFormData,
-            //     config: { headers: {'Content-Type': 'multipart/form-data' }}
-            //     })
-            //     .then(function (response) {
-            //         console.log(response.data);
-            //     })
-            //     .catch(function (response) {
-            //         console.log(response);
-            //     });
+            if(error !== '')
+                throw '다음 필드들은 반드시 필요해요!\n\n' + error
+        },
+        async createJockbo() {
+            try {
+                await this.$store.dispatch('inspectToken')
+                this.validator()
+                let bodyFormData = new FormData();
+                bodyFormData.append('subject', this.subject);
+                bodyFormData.append('professor', this.professor);
+                bodyFormData.append('year', this.year);
+                bodyFormData.append('semester', this.semester);
+                bodyFormData.append('category', this.category);
+                bodyFormData.append('university', this.university);
+                bodyFormData.append('explain', this.explain);
+                bodyFormData.append('file', this.file);
+                
+                axios({
+                    method: 'post',
+                    url: '/api/post',
+                    data: bodyFormData,
+                    headers: {
+                        authorization: this.$store.state.access,
+                        'Content-Type': 'multipart/form-data'
+                    },
+                }).then(
+                    (response) => {
+                        this.$router.push('/detail/' + response.data.id)
+                    }
+                )
+            }
+            catch(error) {
+                alert(error)
+            }
         }
     }
 }

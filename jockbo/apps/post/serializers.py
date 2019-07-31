@@ -18,7 +18,7 @@ class PostSerializer(serializers.ModelSerializer):
 class PostCreateSerializer(serializers.ModelSerializer):    
     class Meta:
         model = Post
-        exclude = ('user', 'university',)
+        exclude = ('user', 'university')
 
 class PostListSerializer(serializers.ModelSerializer):
     class Meta:

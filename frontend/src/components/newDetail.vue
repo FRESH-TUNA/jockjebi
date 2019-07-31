@@ -168,7 +168,9 @@
                         this.readComments()
                     })
                     }
-                catch {}
+                catch(error) {
+                    alert(error)
+                }
             },
             async scrap() {
                 try {
@@ -185,7 +187,9 @@
                         this.post = {...post, isBookmarked: true};
                     })
                 }
-                catch {}
+                catch(error) {
+                    alert(error)
+                }
             },
             async unscrap() {
                 try {
@@ -202,11 +206,18 @@
                         this.post = {...post, isBookmarked: false};
                     })
                 }
-                catch {}
+                catch(error) {
+                    alert(error)
+                }
             }
         },
         async mounted() {
-            await this.$store.dispatch('inspectToken')
+            try {
+                await this.$store.dispatch('inspectToken')
+            }
+            catch(error) {
+                alert(error)
+            }
             await this.readPost()
             this.readComments()
         }

@@ -174,9 +174,13 @@
                     query += '&sort=' + 'recently'
                 else if(this.sort === 'like')
                     query += '&sort=' + 'like'
-
-                await this.$store.dispatch('inspectToken')
-                this.$router.push('/jockbolist' + query)
+                try {
+                    await this.$store.dispatch('inspectToken')
+                    this.$router.push('/jockbolist' + query)
+                }
+                catch(error) {
+                    alert(error)
+                }
             }
         }
     }
