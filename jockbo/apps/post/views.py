@@ -60,19 +60,26 @@ class PostViewSet(viewsets.ModelViewSet):
         serializer = PostSerializer(post, context={'isBookmarked': isBookmarked})
         return Response(serializer.data, status=status.HTTP_200_OK) 
 
-    def partial_update(self, request, postPk):
+    def update(self, request, postPk):
         post = None
-        serializer = PostSerializer(post, data=request.data)
-        try:
-            post=Post.objects.get(id=postPk)
-            self.check_object_permissions(request, post)
-            serializer.is_valid()
-            serializer.save()
+        post=Post.objects.get(id=postPk)
+        serializer = PostCreateSerializer(post, data=request.data, partial=True)
+        # self.check_object_permissions(request, post)
+        if serializer.is_valid():
+            university = request.data.get('university', False)
+
+            if university is not False:
+                university, newUniversity = University.objects.get_or_create(title=university)
+                if university == None:
+                    serializer.save(university=newUniversity)
+                else:
+                    serializer.save(university=university)
+            else:
+                serializer.save()
             return Response(serializer.validated_data, status=status.HTTP_200_OK) 
-        except Post.DoesNotExist:
-            return Response({'error': 'post is none'}, status=status.HTTP_400_BAD_REQUEST)      
-        except:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
+        else:
+            return Response({'update':'failed'}, status=status.HTTP_400_BAD_REQUEST) 
+
 
     def create(self, request):
         serializer = PostCreateSerializer(data=request.data)
