@@ -14,6 +14,8 @@
                                  :fixed-points="3"
                                  :show-rating="false"
                     ></star-rating>
+                    <button @click="$router.history.push('/updatejockbo/' + post.id)">수정</button>
+                    <button @click="deletePost">삭제</button>
                 </div>
                 <div style="font-size:15px; margin-top: 15px;">{{post.universityTitle}}</div>
                 <div style="font-size:15px;">{{post.year}}년도 {{post.semester}}학기</div>
@@ -143,6 +145,20 @@
                         authorization: this.$store.state.access,
                     },
                 })
+            },
+            deletePost() {
+                if (confirm('족보를 삭제하시겠습니까?')) {
+                    axios({
+                        method: 'delete',
+                        url: '/api/post/' + this.post.id,
+                        headers: {
+                            authorization: this.$store.state.access,
+                        },
+                    }).then((response) => {
+                        alert('삭제 되었습니다!')
+                        this.$router.history.push('/jockbolist?subject=')
+                    })
+                } 
             },
             readComments() {
                 axios({

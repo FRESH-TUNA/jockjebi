@@ -2,7 +2,10 @@
     <div id="wrapper">
         <div style="background-color: #fafafa;height:100vh;">
         <div style="padding-up:50px;padding-left:110px">
-            <div style="padding: 20px 20px 20px 20px"><span  style="font-size:1.5em"><b>족보 업로드</b></span><span style="padding-right:450px;"></span><span style="padding-left:40px;text-align:left;font-size:1.0em">업로드가 처음이세요?</span></div><br/>
+            <div style="padding: 20px 20px 20px 20px"><span  style="font-size:1.5em">
+                <b v-if="$router.history.current.name === 'updateJockbo'">족보 수정</b>
+                <b v-else>족보 업로드</b>
+                </span><span style="padding-right:450px;"></span><span style="padding-left:40px;text-align:left;font-size:1.0em">업로드가 처음이세요?</span></div><br/>
             <div class="text"style="padding: 20px 20px 5px 20px">
                 <span style="padding-right:40px">
                     <label style="padding-right:20px;font-size:1.3em"for="male"><b>과목</b></label>
@@ -67,9 +70,35 @@ export default {
             university: this.$store.state.useruni
         }
     },
+    mounted() {
+        if(this.$router.history.current.name === 'updateJockbo') {
+            axios({
+                method: 'get',
+                url: '/api/post/' + this.$router.history.current.params.id,
+                headers: {
+                    authorization: this.$store.state.access,
+                },
+            }).then(response => {
+                console.log(response.data)
+                this.subject = response.data.subject
+                this.professor = response.data.professor
+                this.year = response.data.year
+                this.semester = response.data.semester
+                this.category = response.data.category
+                this.university = response.data.universityTitle
+                this.explain = response.data.explain
+            })
+        }
+    },
     methods: {
         handleFileUpload() {
             this.file = this.$refs.file.files[0];
+        },
+        submit() {
+            if(this.$router.history.current.name === 'updateJockbo') 
+                this.updateJockbo()
+            else
+                this.createJockbo()
         },
         validator() {
             let error = ''
@@ -87,7 +116,7 @@ export default {
                 error += '대학교이름\n'
             if(this.category === '')
                 error += '과목유형\n'
-            if(this.file === '')
+            if(this.file === '' && this.$router.history.current.name === 'createJockbo')
                 error += 'jpeg형태의 족보파일\n'
             
             if(error !== '')
@@ -110,6 +139,40 @@ export default {
                 axios({
                     method: 'post',
                     url: '/api/post',
+                    data: bodyFormData,
+                    headers: {
+                        authorization: this.$store.state.access,
+                        'Content-Type': 'multipart/form-data'
+                    },
+                }).then(
+                    (response) => {
+                        this.$router.push('/detail/' + response.data.id)
+                    }
+                )
+            }
+            catch(error) {
+                alert(error)
+            }
+        },
+        async updateJockbo() {
+            try {
+                await this.$store.dispatch('inspectToken')
+                this.validator()
+                let bodyFormData = new FormData();
+                bodyFormData.append('subject', this.subject);
+                bodyFormData.append('professor', this.professor);
+                bodyFormData.append('year', this.year);
+                bodyFormData.append('semester', this.semester);
+                bodyFormData.append('category', this.category);
+                bodyFormData.append('university', this.university);
+                bodyFormData.append('explain', this.explain);
+
+                if(this.file !== '')
+                    bodyFormData.append('file', this.file);
+                
+                axios({
+                    method: 'put',
+                    url: '/api/post' + this.$router.history.current.params.id,
                     data: bodyFormData,
                     headers: {
                         authorization: this.$store.state.access,

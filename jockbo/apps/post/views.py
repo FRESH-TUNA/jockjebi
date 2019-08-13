@@ -95,7 +95,8 @@ class PostViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, postPk):
-        post = Post.objects.get(id=postPk)     
+        post = Post.objects.get(id=postPk)
+        logging.error(request.user)     
         self.check_object_permissions(request, post)
         post.delete()
         return Response({'post': 'deleted'}, status=status.HTTP_204_NO_CONTENT) 

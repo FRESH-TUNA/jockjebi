@@ -21,6 +21,11 @@ const routes = [
         component: () => import('../components/createJockbo')
     },
     {
+        path: '/updatejockbo/:id',
+        name: 'updateJockbo',
+        component: () => import('../components/createJockbo')
+    },
+    {
         path: '/detail/:id',
         name: 'detail',
         component: () => import('../components/newDetail'),
