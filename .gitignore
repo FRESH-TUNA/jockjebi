@@ -1,4 +1,5 @@
 __pycache__/
+media/
 .idea/
 .idea
 .vscode/*
@@ -15,7 +16,6 @@ yarn-error.log*
 /test/e2e/reports
 selenium-debug.log
 package-lock.json
-
 *.suo
 *.ntvs*
 *.njsproj

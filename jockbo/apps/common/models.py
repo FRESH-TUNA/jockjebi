@@ -4,17 +4,13 @@ from django.conf import settings
 class University(models.Model):
     title = models.CharField(max_length=50)
 
-# class Enrollment(models.Model):
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
-#     university = models.ForeignKey(University, on_delete=models.CASCADE)
-
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     university = models.ForeignKey(University, on_delete=models.CASCADE)
     subject = models.CharField(max_length=50)
     professor = models.CharField(max_length=50)
-    year = models.IntegerField()
-    semester = models.IntegerField(default = 0)
+    year = models.IntegerField() 
+    semester = models.IntegerField(default = 0)   #0, 1, 2, 3, 1학기 여름학기 2학기 겨울학기
 
     haveAnswer = models.BooleanField(default=False)
     category = models.CharField(max_length=50)

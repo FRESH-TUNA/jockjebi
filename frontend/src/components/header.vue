@@ -213,23 +213,8 @@
                 }).catch(err => alert('입력하지 않은 필드가 있거나 패스워드가 일치하지 않습니다.')) 
             },
             async onClickGetUserScrapedData() {
-                if(this.$store.state.access) {
-                    try {
-                        const response = await this.$store.dispatch('inspectToken')
-                        this.$router.push('/jockbolist?bookmark=true') 
-                    }
-                    catch(error) {
-                        try {
-                            await this.$store.dispatch('refreshToken')
-                            this.$router.push('/jockbolist?bookmark=true') 
-                        }
-                        catch(error) {
-                            this.$store.commit('removeToken')
-                            alert('다시 로그인해주세요 호호')       //alert은 동기적 실행구조를 따른다. (동기알고리즘들은 일시중지)
-                            this.showSigninModal()
-                        } 
-                    }
-                }
+                if(this.$store.state.access) 
+                    this.$router.push('/jockbolist?bookmark=true') 
                 else 
                     this.showSigninModal()
             },

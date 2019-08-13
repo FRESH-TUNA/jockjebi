@@ -48,6 +48,9 @@
                 dummy: [],
             }
         },
+        mounted() {
+            this.$store.dispatch('inspectToken')
+        },
         computed: {
             searchBarTitle: function() {
                 if(this.$store.state.useruni)
@@ -65,7 +68,6 @@
                     searchBeginButton.style.backgroundColor = '#6A4CFF'
             },
             sendToCondition (newCount, oldCount) {
-                console.log(newCount);
                 if (newCount == "로그인")
                     document.getElementsByClassName("needpad")[0].style.padding = "20px";
                 else
@@ -73,12 +75,6 @@
             }
         },
         methods: {
-            // searchBarTitle: function() {
-            //     if(this.$store.state.useruni)
-            //         return this.$store.state.useruni
-            //     else
-            //         return '족보 검색하기'
-            // }  
             async searchBegin() {
                 let query = '?subject=' + this.subject
 
@@ -98,8 +94,7 @@
                 }
                 if(this.$store.state.useruni)
                     query += '&university=' + this.$store.state.useruni
-
-                this.$router.push('/jockbolist' + query)
+                this.$router.push({ path: '/jockbolist' + query })
             }
         }
     }

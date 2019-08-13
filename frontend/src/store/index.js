@@ -32,6 +32,7 @@ export default new Vuex.Store({
             state.useruni= data.university
         },
         updateToken(state, access){
+            localStorage.setItem('access', 'Bearer ' + access);
             state.access = 'Bearer ' + access
         },
         removeToken(state){
@@ -65,9 +66,24 @@ export default new Vuex.Store({
                     throw error
                 })
         },
-        inspectToken(context){
+        inspectTokenRequest(context){
             return axios.post(this.state.endpoints.inspectJWT, {token: this.state.access.substring(7)})
         },
+        async inspectToken(context) {
+            if(context.state.access) {
+                try {
+                    await context.dispatch('inspectTokenRequest')
+                } catch (error) {
+                    try {
+                        await context.dispatch('refreshToken')
+                    }
+                    catch (error) {
+                        context.commit('removeToken')
+                        throw '다시 로그인해주세요 호호'
+                    }
+                }
+            }
+        }
     }
 })
 

@@ -5,7 +5,7 @@ class PostSerializer(serializers.ModelSerializer):
     publishedDate = serializers.ReadOnlyField()
     username = serializers.ReadOnlyField()
     universityTitle = serializers.ReadOnlyField()
-    isBookmarked = serializers.SerializerMethodField('getIsBookmarked') #custom 필드는 이렇게
+    isBookmarked = serializers.SerializerMethodField('getIsBookmarked', required=False) #custom 필드는 이렇게
 
     class Meta:
         model = Post
@@ -18,7 +18,7 @@ class PostSerializer(serializers.ModelSerializer):
 class PostCreateSerializer(serializers.ModelSerializer):    
     class Meta:
         model = Post
-        exclude = ('user', 'university',)
+        exclude = ('user', 'university')
 
 class PostListSerializer(serializers.ModelSerializer):
     class Meta:

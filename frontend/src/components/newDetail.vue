@@ -14,6 +14,8 @@
                                  :fixed-points="3"
                                  :show-rating="false"
                     ></star-rating>
+                    <button @click="$router.history.push('/updatejockbo/' + post.id)">수정</button>
+                    <button @click="deletePost">삭제</button>
                 </div>
                 <div style="font-size:15px; margin-top: 15px;">{{post.universityTitle}}</div>
                 <div style="font-size:15px;">{{post.year}}년도 {{post.semester}}학기</div>
@@ -144,6 +146,20 @@
                     },
                 })
             },
+            deletePost() {
+                if (confirm('족보를 삭제하시겠습니까?')) {
+                    axios({
+                        method: 'delete',
+                        url: '/api/post/' + this.post.id,
+                        headers: {
+                            authorization: this.$store.state.access,
+                        },
+                    }).then((response) => {
+                        alert('삭제 되었습니다!')
+                        this.$router.history.push('/jockbolist?subject=')
+                    })
+                } 
+            },
             readComments() {
                 axios({
                     method: 'get',
@@ -152,55 +168,72 @@
                     this.comments = response.data
                 })
             },
-            postComment() {
-                axios({
-                    method: 'post',
-                    url: '/api/post/' + this.id + '/comment',
-                    data: {
-                        content: this.content
-                    },
-                    headers: {
-                        authorization: this.$store.state.access,
-                    },
-                }).then((response) => {
-                    this.readComments()
-                })
-            },
-            scrap() {
-                const post = this.post
-                axios({
-                    method: 'post',
-                    url: '/api/post/' + this.id + '/bookmark',
-                    headers: {
-                        authorization: this.$store.state.access,
-                    },
-                }).then((response) => {
-                    alert('스크랩 되었습니다!')
-                    this.post = {...post, isBookmarked: true};
-                }).catch((error) => {
-                    if(this.$store.state.access) {
-                        this.$store.commit('removeToken')
-                        alert('다시 로그인 해주세요')
+            async postComment() {
+                try {
+                    await this.$store.dispatch('inspectToken')
+                    axios({
+                        method: 'post',
+                        url: '/api/post/' + this.id + '/comment',
+                        data: {
+                            content: this.content
+                        },
+                        headers: {
+                            authorization: this.$store.state.access,
+                        },
+                    }).then((response) => {
+                        this.readComments()
+                    })
                     }
-                    else
-                        alert('로그인후에 다시 이용해주세요')
-                })
+                catch(error) {
+                    alert(error)
+                }
             },
-            unscrap() {
-                const post = this.post
-                axios({
-                    method: 'delete',
-                    url: '/api/post/' + this.id + '/bookmark',
-                    headers: {
-                        authorization: this.$store.state.access,
-                    },
-                }).then((response) => {
-                    alert('스크랩이 취소 되었습니다!')
-                    this.post = {...post, isBookmarked: false};
-                })
+            async scrap() {
+                try {
+                    await this.$store.dispatch('inspectToken')
+                    const post = this.post
+                    axios({
+                        method: 'post',
+                        url: '/api/post/' + this.id + '/bookmark',
+                        headers: {
+                            authorization: this.$store.state.access,
+                        },
+                    }).then((response) => {
+                        alert('스크랩 되었습니다!')
+                        this.post = {...post, isBookmarked: true};
+                    })
+                }
+                catch(error) {
+                    alert(error)
+                }
+            },
+            async unscrap() {
+                try {
+                    await this.$store.dispatch('inspectToken')
+                    const post = this.post
+                    axios({
+                        method: 'delete',
+                        url: '/api/post/' + this.id + '/bookmark',
+                        headers: {
+                            authorization: this.$store.state.access,
+                        },
+                    }).then((response) => {
+                        alert('스크랩이 취소 되었습니다!')
+                        this.post = {...post, isBookmarked: false};
+                    })
+                }
+                catch(error) {
+                    alert(error)
+                }
             }
         },
         async mounted() {
+            try {
+                await this.$store.dispatch('inspectToken')
+            }
+            catch(error) {
+                alert(error)
+            }
             await this.readPost()
             this.readComments()
         }
