@@ -57,7 +57,7 @@ class PostViewSet(viewsets.ModelViewSet):
             except BookMark.DoesNotExist:
                 pass
 
-        serializer = PostSerializer(post, context={'isBookmarked': isBookmarked})
+        serializer = PostSerializer(post, context={'request': request, 'isBookmarked': isBookmarked})
         return Response(serializer.data, status=status.HTTP_200_OK) 
 
     def update(self, request, postPk):

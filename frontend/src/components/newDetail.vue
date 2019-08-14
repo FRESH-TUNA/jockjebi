@@ -14,8 +14,10 @@
                                  :fixed-points="3"
                                  :show-rating="false"
                     ></star-rating>
-                    <button @click="$router.history.push('/updatejockbo/' + post.id)">수정</button>
-                    <button @click="deletePost">삭제</button>
+                    <template v-if="post.isOwner && $store.state.access">
+                    <button @click="$router.history.push('/updatejockbo/' + post.id)" class="modify-delete">수정</button>
+                    <button @click="deletePost" class="modify-delete">삭제</button>
+                    </template>
                 </div>
                 <div style="font-size:15px; margin-top: 15px;">{{post.universityTitle}}</div>
                 <div style="font-size:15px;">{{post.year}}년도 {{post.semester}}학기</div>
@@ -34,7 +36,7 @@
                         <button style="font-size:15px;color:#0729d4;background-color:#ffffff;width:100px;height:40px;border-style:solid;border-radius: 10px;"><b>추천하기</b></button>
                     </div>
                     <div>
-                        <button style="font-size:15px;color:#0729d4;background-color:#ffffff;width:100px;height:40px;border-style:solid;border-radius: 10px;" @click="deterScrap"><b>{{isScraped}}</b></button>
+                        <button style="font-size:15px;color:#0729d4;background-color:#ffffff;width:100px;height:40px;border-style:solid;border-radius: 10px;" @click="deterScrap" v-if="$store.state.access"><b>{{isScraped}}</b></button>
                     </div>
                 </div>
             </span>
@@ -51,9 +53,10 @@
 
 
                     <div style="padding-top:30px;">
-                        <div style="font-size:18px; color:#6c60f5"><b>댓글(18)</b></div>
+                        <div style="font-size:18px; color:#6c60f5"><b>댓글</b></div>
                         <br/>
-                        <div v-for="comment in comments" style="padding: 10px 10px 10px 10px;border-style:solid;width:690px;border-radius:10px;border-width:1px;border-color:#e4e4e4">
+                        <div v-for="comment in comments" style="display: flex; justify-content: space-between; padding: 10px 10px 10px 10px;border-style:solid;width:690px;border-radius:10px;border-width:1px;border-color:#e4e4e4">
+                            <div>
                             <div style="display: flex;">
                                 <div style="padding-right:10px;"><b>{{comment.nickname}}</b></div>
                                 <star-rating :max="5"
@@ -64,6 +67,8 @@
                                 ></star-rating>
                             </div>
                             <div style="font-size:13px;">{{comment.content}}</div>
+                            </div>
+                            <button @click="deleteComment(comment)" class="modify-delete comment-delete" v-if="comment.isOwner">삭제</button>
                         </div>
                         
                         <div style="font-size:18px; padding-top:20px;color:#6c60f5"><b>의견 남기기</b></div>
@@ -164,6 +169,9 @@
                 axios({
                     method: 'get',
                     url: '/api/post/' + this.id + '/comment',
+                    headers: {
+                        authorization: this.$store.state.access,
+                    },
                 }).then((response) => {
                     this.comments = response.data
                 })
@@ -187,6 +195,21 @@
                 catch(error) {
                     alert(error)
                 }
+            },
+            deleteComment(comment) {
+                if (confirm('댓글을 삭제하시겠습니까?')) {
+                    axios({
+                        method: 'delete',
+                        url: '/api/comment/' + comment.id,
+                        headers: {
+                            authorization: this.$store.state.access,
+                        },
+                    }).then((response) => {
+                        alert('삭제 되었습니다!')
+                        comment.content = '삭제 되었습니다'
+                        comment.isOwner = false
+                    })
+                } 
             },
             async scrap() {
                 try {
@@ -263,5 +286,19 @@
         padding-top: 5px;
         color: #d5d5d5;
         opacity: 1; /* Firefox */
+    }
+
+    .modify-delete {
+        color: black;
+        background-color: yellow;
+        width: 30px;
+        height: 30px;
+        border-style: solid;
+        border-radius: 10px;
+        margin-left: 10px;
+    }
+
+    .modify-delete:nth-of-type(2), .comment-delete {
+        background-color: red;
     }
 </style>

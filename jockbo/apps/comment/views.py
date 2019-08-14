@@ -5,6 +5,7 @@ from jockbo.apps.common.models import Post, Comment
 from jockbo.apps.common.permissions import IsOwnerOrReadOnly
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+import logging
 
 class CommentList(APIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
@@ -13,11 +14,12 @@ class CommentList(APIView):
         queryset = Comment.objects.all()
         if postPk is not None:
             queryset = queryset.filter(post=Post.objects.get(id=postPk))
-        serializer = CommentSerializer(queryset, many=True)
+        serializer = CommentSerializer(queryset, many=True, context={'request':request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, postPk=None):
-        serializer = CommentSerializer(data=request.data)
+        logging.error(request.user)
+        serializer = CommentCreateSerializer(data=request.data)
         try:
             serializer.is_valid()
             serializer.save(user=request.user, post=Post.objects.get(id=postPk))
