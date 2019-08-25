@@ -158,8 +158,7 @@
             },
             async search() {
                 let query = '?subject=' + this.subject
-                console.log(this.bookmark)
-                console.log(this.bookmark === true)
+
                 if(this.university !== '') 
                     query += '&university=' + this.university
                 if(this.professorName !== '')

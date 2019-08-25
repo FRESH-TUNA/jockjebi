@@ -79,7 +79,6 @@ export default {
                     authorization: this.$store.state.access,
                 },
             }).then(response => {
-                console.log(response.data)
                 this.subject = response.data.subject
                 this.professor = response.data.professor
                 this.year = response.data.year

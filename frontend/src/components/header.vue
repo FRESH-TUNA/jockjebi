@@ -99,9 +99,9 @@
 
         <div class="signin-modal" @click="closeSigninModal">
             <div class="auth-modal-body" @click="blockPropagate">
-                <input placeholder="email" type="text" v-model="email">
+                <input placeholder="email" type="text" v-model="email" v-on:keyup.enter="login">
                 <label for="male"></label>
-                <input placeholder="Password" type="password" v-model="password">
+                <input placeholder="Password" type="password" v-model="password" v-on:keyup.enter="login">
                 <button style="backgroud-color:black" class="login-button" @click="login"><b>로그인</b></button>
                 <div style="padding:50px 0px 0px 100px;color:white">비밀번호를 잊으셨나요? | <b style="color:#FDC335;">회원가입</b></div>
             </div>

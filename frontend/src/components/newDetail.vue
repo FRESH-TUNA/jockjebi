@@ -144,7 +144,7 @@
                     this.post = response.data
                 }
                 catch(error) {
-                    console.log(error)
+                    alert('서버가 불안정합니다 잠시후에 시도하세요!')
                 }
             },
             readPostResponse() {
@@ -162,7 +162,7 @@
                         await this.$store.dispatch('inspectToken')
                         axios.get(url, { responseType: 'blob' })
                         .then(({ data }) => {
-                            console.log(data)
+                       
                             let blob = new Blob([data], { type: 'image/png' })
                             let link = document.createElement('a')
                             const filename = url.split("/")

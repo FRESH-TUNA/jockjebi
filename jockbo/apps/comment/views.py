@@ -18,7 +18,6 @@ class CommentList(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, postPk=None):
-        logging.error(request.user)
         serializer = CommentCreateSerializer(data=request.data)
         try:
             serializer.is_valid()
