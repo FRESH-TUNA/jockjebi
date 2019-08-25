@@ -38,7 +38,7 @@
                         for="radio-one">최신 족보 순</label>
                     <br/>
                     <input type="radio" name="sort" value="like" v-model="sort" id="radio-one" class="form-radio"><label
-                        for="radio-one">좋아요 순</label>
+                        for="radio-one">평점 순</label>
                 </div>
 
                 <!-- <div style="padding-top:30px; padding-bottom:50px">
