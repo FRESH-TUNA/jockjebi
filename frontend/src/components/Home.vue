@@ -10,7 +10,7 @@
                     <div style="padding-bottom: 10px; padding-top:10px;">
                         <div style="float:left;font-size:24px;"><b>{{searchBarTitle}}</b></div>
                         <input placeholder="🔍 과목명, 교수명으로 검색" style="width:400px;border-bottom: 2px solid #8a7afa;"
-                               type="text" v-model="subject">
+                               type="text" v-model="subject" v-on:keyup.enter="searchBegin">
                     </div>
                     <div class="needpad" style="padding-top:20px;">
                         <v-btn class="searchBeginButton"

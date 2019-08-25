@@ -3,7 +3,7 @@
         <div style="background-color:#fefefe;height:100vh;">
             <div style="padding-left:110px;padding-right:140px">
                 <div style="display: flex;">
-                    <img v-bind:src="post.file"
+                    <img src="https://image.flaticon.com/icons/svg/149/149346.svg"
                          style="padding: 40px 20px 20px 20px;width:240px; height:320px;border-radius: 30px; ">
                     <span style="padding: 40px 20px 20px 20px">
                 <div style="display: flex;">
@@ -11,8 +11,10 @@
                     <star-rating :max="5"
                                  :star-size="13"
                                  :rounded-corners="true"
-                                 :fixed-points="3"
+                                 :increment="0.1"
+                                 :read-only="true"
                                  :show-rating="false"
+                                 :rating="post.star"
                     ></star-rating>
                     <template v-if="post.isOwner && $store.state.access">
                     <button @click="$router.history.push('/updatejockbo/' + post.id)" class="modify-delete">수정</button>
@@ -23,18 +25,19 @@
                 <div style="font-size:15px;">{{post.year}}년도 {{post.semester}}학기</div>
                 <div style="font-size:15px">{{post.category}} | {{post.professor}}</div>
                 <br/>
-                <div>조회수 {{post.views}} | 다운로드 {{post.downloads}}건</div>
+                <!-- <div>조회수 {{post.views}} | 다운로드 {{post.downloads}}건</div> -->
                 <div>정답 및 해설 {{haveAnswer}}</div>
                 <br/>
                 <div>{{post.publishedDate}}에 <b style="color:#6c60f5">{{post.username}}</b>가 업로드함</div>
                 <br/>
                 <div style="display: flex">
                     <div style="padding-right:10px;">
-                        <button style="font-size:15px;color:white;background-color:#5f52ed;width:100px;height:40px;border-style:solid;border-radius: 10px;"><b>다운로드</b></button>
+                        <a v-bind:href="post.file" @click.prevent="downloadJockbo(post.file)">
+                        <button style="font-size:15px;color:white;background-color:#5f52ed;width:100px;height:40px;border-style:solid;border-radius: 10px;"><b>다운로드</b></button></a>
                     </div>
-                    <div style="padding-right:10px;">
+                    <!-- <div style="padding-right:10px;">
                         <button style="font-size:15px;color:#0729d4;background-color:#ffffff;width:100px;height:40px;border-style:solid;border-radius: 10px;"><b>추천하기</b></button>
-                    </div>
+                    </div> -->
                     <div>
                         <button style="font-size:15px;color:#0729d4;background-color:#ffffff;width:100px;height:40px;border-style:solid;border-radius: 10px;" @click="deterScrap" v-if="$store.state.access"><b>{{isScraped}}</b></button>
                     </div>
@@ -63,7 +66,9 @@
                                              :star-size="13"
                                              :rounded-corners="true"
                                              :fixed-points="3"
+                                             :read-only="true"
                                              :show-rating="false"
+                                             :rating="comment.star"
                                 ></star-rating>
                             </div>
                             <div style="font-size:13px;">{{comment.content}}</div>
@@ -79,7 +84,7 @@
                                                 :star-size="20"
                                                 :rounded-corners="true"
                                                 :show-rating="false"
-                                                v-model="test"
+                                                v-model="star"
                                     ></star-rating>
                                 </div>
                                 <div>
@@ -112,7 +117,7 @@
         props: ['id'],
         data() {
             return {
-                test: 3,
+                star: 0,
                 content: '',
                 post: {},
                 comments: []
@@ -151,19 +156,51 @@
                     },
                 })
             },
-            deletePost() {
+            async downloadJockbo (url) {
+                if(this.$store.state.access) {
+                    try {
+                        await this.$store.dispatch('inspectToken')
+                        axios.get(url, { responseType: 'blob' })
+                        .then(({ data }) => {
+                            console.log(data)
+                            let blob = new Blob([data], { type: 'image/png' })
+                            let link = document.createElement('a')
+                            const filename = url.split("/")
+                            link.href = window.URL.createObjectURL(blob)
+                            link.download = filename[filename.length - 1]
+                            link.click()
+                        .catch(error => {
+                            alert('서버가 불안정합니다 잠시후 다시 시도해주세요')
+                        })
+                        })
+                    }
+                    catch(error) {
+                        alert(error)
+                    }
+                }
+                else {
+                    alert('로그인후에 이용해주세요!')
+                }
+            },
+            async deletePost() {
                 if (confirm('족보를 삭제하시겠습니까?')) {
-                    axios({
-                        method: 'delete',
-                        url: '/api/post/' + this.post.id,
-                        headers: {
-                            authorization: this.$store.state.access,
-                        },
-                    }).then((response) => {
-                        alert('삭제 되었습니다!')
-                        this.$router.history.push('/jockbolist?subject=')
-                    })
-                } 
+                    try {
+                        await this.$store.dispatch('inspectToken')
+                        axios({
+                            method: 'delete',
+                            url: '/api/post/' + this.post.id,
+                            headers: {
+                                authorization: this.$store.state.access,
+                            },
+                        }).then((response) => {
+                            alert('삭제 되었습니다!')
+                            this.$router.history.push('/jockbolist?subject=')
+                        })
+                    }
+                    catch(error) {
+                        alert('세션이 만료되었습니다. 다시 로그인 해주세요')
+                    }
+                }
             },
             readComments() {
                 axios({
@@ -177,38 +214,50 @@
                 })
             },
             async postComment() {
-                try {
-                    await this.$store.dispatch('inspectToken')
-                    axios({
-                        method: 'post',
-                        url: '/api/post/' + this.id + '/comment',
-                        data: {
-                            content: this.content
-                        },
-                        headers: {
-                            authorization: this.$store.state.access,
-                        },
-                    }).then((response) => {
-                        this.readComments()
-                    })
+                if(this.$store.state.access) {
+                    try {
+                        await this.$store.dispatch('inspectToken')
+                        axios({
+                            method: 'post',
+                            url: '/api/post/' + this.id + '/comment',
+                            data: {
+                                content: this.content,
+                                star: this.star
+                            },
+                            headers: {
+                                authorization: this.$store.state.access,
+                            },
+                        }).then((response) => {
+                            this.readComments()
+                        })
+                        }
+                    catch(error) {
+                        alert(error)
                     }
-                catch(error) {
-                    alert(error)
+                }
+                else {
+                    alert('로그인후 이용해주세요')
                 }
             },
-            deleteComment(comment) {
+            async deleteComment(comment) {
                 if (confirm('댓글을 삭제하시겠습니까?')) {
-                    axios({
+                    try {
+                        await this.$store.dispatch('inspectToken')
+                        axios({
                         method: 'delete',
                         url: '/api/comment/' + comment.id,
                         headers: {
                             authorization: this.$store.state.access,
                         },
-                    }).then((response) => {
-                        alert('삭제 되었습니다!')
-                        comment.content = '삭제 되었습니다'
-                        comment.isOwner = false
-                    })
+                        }).then((response) => {
+                            alert('삭제 되었습니다!')
+                            comment.content = '삭제 되었습니다'
+                            comment.isOwner = false
+                        })
+                    }
+                    catch(error) {
+                        alert(error)
+                    }
                 } 
             },
             async scrap() {
@@ -291,14 +340,15 @@
     .modify-delete {
         color: black;
         background-color: yellow;
-        width: 30px;
+        width: 50px;
         height: 30px;
         border-style: solid;
         border-radius: 10px;
         margin-left: 10px;
+        font-weight: bold;
     }
 
     .modify-delete:nth-of-type(2), .comment-delete {
-        background-color: red;
+        background-color: pink;
     }
 </style>

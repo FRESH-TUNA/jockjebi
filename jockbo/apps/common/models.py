@@ -14,7 +14,7 @@ class Post(models.Model):
 
     haveAnswer = models.BooleanField(default=False)
     category = models.CharField(max_length=50)
-    file = models.ImageField(blank=True)
+    file = models.FileField(null=True)
     explain = models.TextField(blank=True)
     bookmark_user_list = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='bookmark_user_set', through='BookMark')
     pub_date = models.DateTimeField(auto_now_add=True)
@@ -34,8 +34,9 @@ class Post(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    content = models.TextField()
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    content = models.TextField(blank=True)
+    star = models.IntegerField(default=0)
 
 
 class BookMark(models.Model):

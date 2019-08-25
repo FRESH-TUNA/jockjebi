@@ -1,7 +1,7 @@
 <template>
     <div class="jockboList">
         <div class="search-bar">
-            <input type="text" placeholder="족보 검색하기" v-model="subject">
+            <input type="text" placeholder="족보 검색하기" v-model="subject" v-on:keyup.enter="search">
             <button type="button" @click="search"><img src="https://image.flaticon.com/icons/svg/149/149852.svg"></button>
         </div>
         <div class="jockboList-body">
@@ -22,14 +22,14 @@
                     <input type="checkbox" name="1" v-model="semester" :value="1" id="radio-one" class="form-radio"><label
                         for="radio-one"> 1학기</label>
                     <br/>
-                    <input type="checkbox" name="1" v-model="semester" :value="2" id="radio-one" class="form-radio"><label
+                    <!-- <input type="checkbox" name="1" v-model="semester" :value="2" id="radio-one" class="form-radio"><label
                         for="radio-one"> 여름학기</label>
-                    <br/>
-                    <input type="checkbox" name="1" v-model="semester" :value="3" id="radio-one" class="form-radio"><label
+                    <br/> -->
+                    <input type="checkbox" name="1" v-model="semester" :value="2" id="radio-one" class="form-radio"><label
                         for="radio-one"> 2학기</label>
                     <br/>
-                    <input type="checkbox" name="1" v-model="semester" :value="4" id="radio-one" class="form-radio"><label
-                        for="radio-one"> 겨울학기</label>
+                    <!-- <input type="checkbox" name="1" v-model="semester" :value="4" id="radio-one" class="form-radio"><label
+                        for="radio-one"> 겨울학기</label> -->
                 </div>
 
                 <div style="padding-top:20px;">
@@ -77,9 +77,11 @@
                     관련된 족보가 <b style="color:#6256f5;">{{jockboList.length}}</b>개있네요!
                 </h2>
 
-                <div style="padding: 20px 20px 20px 20px" class="jockbo" v-for="item in jockboList" v-bind:key="item.id">
-                    <div @click="detail(item.id)" style="font-size:16px;"><b>{{item.subject}} </b><b style="color:#f5c353;">★</b> <span
-                            style="font-size:13px;">3.5</span></div>
+                <div style="padding: 20px 20px 20px 20px" class="jockbo" v-for="item in jockboList" v-bind:key="item.id" @click="detail(item.id)">
+                    <div  style="font-size:16px;"><b>{{item.subject}} </b><b style="color:#f5c353;">★</b> 
+                    <span style="font-size:13px;" v-if="item.star !== null">{{item.star}}</span>
+                    <span style="font-size:13px;" v-else>평가없음</span>
+                    </div>
                     <span style="padding-right:20px;">{{item.year}}년 {{item.semester}}학기</span>
                     <span>전공필수 | {{item.professor}}</span>
                     <div style="display: flex;">
@@ -149,6 +151,7 @@
                     },
                 }).then(result => {
                     this.jockboList = result.data;
+                    document.getElementsByClassName("jockboBundle")[0].scrollTop = 0;
                 }, error => {
             
                 });
@@ -346,6 +349,11 @@
         border: 0.5px solid rgb(200, 200, 200);
 
         border-radius: 10px;
+    }
+
+    .jockbo:hover { 
+        background-color: rgb(253, 195, 53); 
+        cursor: pointer;
     }
 
     .search-bar {

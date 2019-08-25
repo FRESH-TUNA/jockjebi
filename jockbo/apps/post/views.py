@@ -3,7 +3,14 @@ from rest_framework.response import Response
 from jockbo.apps.common.models import Post, University, BookMark
 from jockbo.apps.common.permissions import IsOwnerOrReadOnly
 from .serializers import *
+from django.db.models import Avg, Count, Func
+from django.db.models.functions import Coalesce
+
 import logging
+
+class Round(Func):
+    function = "ROUND"
+    template = "%(function)s(%(expressions)s::numeric, 1)"
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
@@ -38,11 +45,17 @@ class PostViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(id__in=[bookmark.post.id for bookmark in BookMark.objects.all().filter(user=request.user)])
         if haveAnswer is not False:
             queryset = queryset.filter(haveAnswer=True)
-        if sort is False or sort is 'recently': queryset = queryset.order_by('-year')
-        else: queryset = queryset.order_by('-year') #차후에 구현한다.
+        
+        queryset = queryset.annotate(
+            star=Coalesce(Round(Avg('comments__star')), 0.0))
+        
+        if sort is False or sort == 'recently': 
+            queryset = queryset.order_by('-year')
+        else: 
+            queryset = queryset.order_by('-star') #차후에 구현한다.
         return queryset
 
-    def list(self, request):        
+    def list(self, request):   
         serializer = PostListSerializer(self.makeListQueryset(request), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
