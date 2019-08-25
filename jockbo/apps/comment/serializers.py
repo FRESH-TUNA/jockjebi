@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from jockbo.apps.common.models import Comment
-import logging
 
 class CommentSerializer(serializers.ModelSerializer):
     isOwner = serializers.SerializerMethodField('getIsOwner') #custom 필드는 이렇게
@@ -10,6 +9,7 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def getIsOwner(self, obj):
+        logging.error(self.context['request'].user)
         return self.context['request'].user == obj.user
 
 class CommentCreateSerializer(serializers.ModelSerializer):
